@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/recipe_item_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        />
+
+    <TextView
+        android:id="@+id/recipe_item_title"
+        style = "@style/TitleStyle"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/recipe_item_image"/>
+
+
+
+</RelativeLayout>

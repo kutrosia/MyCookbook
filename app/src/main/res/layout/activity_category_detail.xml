@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.pwr.mycookbook.category_detail.CategoryDetailActivity"
+    >
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar">
+    </include>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        class="com.pwr.mycookbook.category_detail.CategoryDetailFragment"
+        android:id="@+id/category_detail_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </fragment>
+
+
+
+</LinearLayout>

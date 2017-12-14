@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/edit20"
+        android:id="@+id/action_edit_recipe"
+        android:title="@string/menu_item_edit"
+        app:showAsAction="ifRoom"
+        >
+
+    </item>
+
+    <item
+        android:icon="@drawable/waste_filled20"
+        android:id="@+id/action_remove_recipe"
+        android:title="@string/menu_item_remove_recipe"
+        app:showAsAction="ifRoom"
+        >
+
+    </item>
+
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/menu_item_share"
+        android:icon="@drawable/share20"
+        app:showAsAction="ifRoom"
+        >
+    </item>
+
+</menu>

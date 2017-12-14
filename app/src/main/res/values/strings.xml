@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">  My cookbook</string>
+    <string name="recipes_list">Spis treści</string>
+    <string name="category">Kategoria</string>
+    <string name="menuitem_detail_menu">Menu</string>
+    <string name="menuitem_recipes_search">Szukaj</string>
+    <string name="memnutitem_icon">Ikona</string>
+
+
+    <string name="menu_item_add_recipe">Dodaj przepis</string>
+    <string name="menu_item_add_category">Dodaj kategorię</string>
+    <string name="menu_item_add_photo">Dodaj zdjęcie</string>
+    <string name="menu_item_add_ingredient">Dodaj składnik</string>
+    <string name="menu_item_remove_recipe">Usuń przepis</string>
+    <string name="menu_item_remove_category">Usuń kategorię</string>
+    <string name="menu_item_remove_photo">Usuń zdjęcie</string>
+    <string name="menu_item_remove_ingredient">Usuń składnik</string>
+    <string name="menu_item_share">Udostępnij</string>
+    <string name="menu_item_edit">Edytuj</string>
+    <string name="menu_item_save">Zapisz</string>
+
+    <string name="category_name">Nazwa kategorii</string>
+
+    <string name="recipe_title">Tytuł</string>
+    <string name="recipe_detail_description">Sposób przygotowania</string>
+    <string name="recipe_detail_ingredients">Składniki</string>
+    <string name="recipe_detail_note">Notatka</string>
+    <string name="recipe_detail_category">Kategoria</string>
+    <string name="recipe_detail_time">Czas</string>
+    <string name="recipe_detail_portions">Porcje</string>
+    <string name="ingredient_name">Nazwa składnika</string>
+    <string name="new_ingredient_title">Nowy składnik</string>
+    <string name="edit_igredient_title">Edytuj składnik</string>
+    <string name="edit_ingredient_title">Edytuj składnik</string>
+    <string name="ingredient">Składniki</string>
+    <string name="ingredient_measure">miara</string>
+    <string name="ingredient_quantity">ilość</string>
+    <string name="category_icon">Ikona kategorii</string>
+    <string name="open_drawer">Otwórz szufladę</string>
+    <string name="close_drawer">Zamknij szufladę</string>
+    <string name="drawer_item_profile">Profil</string>
+    <string name="drawer_item_recipes">Przepisy</string>
+    <string name="drawer_item_shopping_lists">Listy zakupów</string>
+    <string name="drawer_item_weight_counter">Przelicznik miar i wag</string>
+    <string name="drawer_item_timer">Minutnik</string>
+    <string name="drawer_item_video">Filmy</string>
+    <string name="drawer_item_sync">Synchronizacja</string>
+    <string name="drawer_item_options">Ustawienia</string>
+    <string name="menu_item_add_shoppinglist">Dodaj listę zakupów</string>
+    <string name="measure">miara</string>
+    <string name="quantity">0,0</string>
+
+
+</resources>

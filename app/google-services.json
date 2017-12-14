@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "140610280294",
+    "firebase_url": "https://cookbook-de1e3.firebaseio.com",
+    "project_id": "cookbook-de1e3",
+    "storage_bucket": "cookbook-de1e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140610280294:android:342702f29c2d4fe1",
+        "android_client_info": {
+          "package_name": "com.pwr.mycookbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "140610280294-bassve0jlqp95qlklm0e5vea41vo1has.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPqnl4BZzsYz7I7ShQPfn8Zq2weLuyBJ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

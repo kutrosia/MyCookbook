@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/recipe_photo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/dossier_25"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        />
+
+    <TextView
+        android:id="@+id/add_edit_ingredient_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nowy składnik"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/recipe_photo"
+        android:layout_alignBottom="@+id/recipe_photo"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_edit_ingredient_title"
+        android:layout_marginTop="10dp"
+        android:id="@+id/ingredient_name_TextInputLayout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ingredient_name_editText"
+            android:hint="@string/ingredient_name"
+            android:imeOptions="actionNext"
+            android:inputType="textMultiLine"/>
+    </android.support.design.widget.TextInputLayout>
+
+
+    <Button
+        android:id="@+id/create_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ingredient_name_TextInputLayout"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        />
+
+    <Button
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ingredient_name_TextInputLayout"
+        android:layout_toLeftOf="@id/create_button"
+        android:layout_marginRight="30dp"
+
+        />
+
+</RelativeLayout>

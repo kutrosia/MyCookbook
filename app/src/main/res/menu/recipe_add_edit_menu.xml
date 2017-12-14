@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ok20"
+        android:id="@+id/action_save"
+        android:title="@string/menu_item_save"
+        app:showAsAction="ifRoom"
+
+        ></item>
+
+    <item
+        android:icon="@drawable/camera_filled20"
+        android:id="@+id/action_add_photo"
+        android:title="@string/menu_item_add_photo"
+        app:showAsAction="ifRoom"
+        ></item>
+
+
+</menu>
