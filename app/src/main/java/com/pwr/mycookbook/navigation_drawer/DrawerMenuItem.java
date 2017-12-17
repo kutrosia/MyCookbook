@@ -1,6 +1,7 @@
 package com.pwr.mycookbook.navigation_drawer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,6 +11,7 @@ import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.user_profile.UserProfileActivity;
 
 /**
  * Created by olaku on 06.12.2017.
@@ -85,6 +87,7 @@ public class DrawerMenuItem {
         switch (mMenuPosition){
             case DRAWER_MENU_ITEM_PROFILE:
                 Toast.makeText(mContext, "Profil", Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext.getApplicationContext(), UserProfileActivity.class));
                 if(mCallBack != null)mCallBack.onProfileMenuSelected();
                 break;
             case DRAWER_MENU_ITEM_RECIPES:

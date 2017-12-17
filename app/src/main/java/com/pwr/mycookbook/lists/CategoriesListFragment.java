@@ -42,7 +42,6 @@ public class CategoriesListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

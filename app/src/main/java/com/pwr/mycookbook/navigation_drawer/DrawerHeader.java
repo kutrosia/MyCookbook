@@ -3,6 +3,8 @@ package com.pwr.mycookbook.navigation_drawer;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.NonReusable;
 import com.mindorks.placeholderview.annotations.Resolve;
@@ -27,7 +29,12 @@ public class DrawerHeader {
 
     @Resolve
     private void onResolved() {
-        nameTxt.setText("Aleksandra Kutrowska");
-        emailTxt.setText("olakutrowska@gmail.com");
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user != null){
+            nameTxt.setText(user.getDisplayName());
+            emailTxt.setText(user.getEmail());
+        }
+
     }
 }

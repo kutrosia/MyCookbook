@@ -34,6 +34,7 @@ dependencies {
     compile 'com.github.jrvansuita:PickImage:+'
     compile 'com.itextpdf:itextg:5.5.10'
     compile 'com.mindorks:placeholderview:0.2.7'
+    compile "com.google.firebase:firebase-auth:9.0.2"
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
     testCompile 'junit:junit:4.12'
 }
