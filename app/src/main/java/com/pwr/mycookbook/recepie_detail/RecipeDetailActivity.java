@@ -1,6 +1,7 @@
 package com.pwr.mycookbook.recepie_detail;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -12,11 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pwr.mycookbook.RecipePDF;
 import com.pwr.mycookbook.lists.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.add_edit_recipe.AddEditRecipeActivity;
 import com.pwr.mycookbook.data.AppDatabase;
 import com.pwr.mycookbook.tables.*;
+
+import java.io.File;
 
 
 public class RecipeDetailActivity extends AppCompatActivity {
@@ -77,6 +81,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_share:
+                File file = new RecipePDF().writeRecipeToPDF(recipe, getApplicationContext(), db);
+
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("application/pdf");
+                share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                startActivity(Intent.createChooser(share, "Share document"));
                 break;
         }
         return super.onOptionsItemSelected(item);

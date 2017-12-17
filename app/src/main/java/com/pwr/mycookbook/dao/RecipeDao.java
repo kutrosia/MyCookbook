@@ -13,7 +13,7 @@ import java.util.List;
 public interface RecipeDao {
 
     @Insert
-    void insertAll(Recipe... recipes);
+    long[] insertAll(Recipe... recipes);
 
     @Update
     void updateAll(Recipe... recipes);

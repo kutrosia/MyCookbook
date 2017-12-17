@@ -1,5 +1,6 @@
 package com.pwr.mycookbook.add_edit_recipe;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -95,5 +96,10 @@ public class AddEditRecipePreparationFragment extends Fragment implements IRecip
             recipe.setNote(recipe_note.getText().toString());
             ((IRecipeChange) getActivity()).setRecipeDescription(recipe);
         }
+    }
+
+    @Override
+    public void setPhoto(Bitmap bitmap) {
+
     }
 }

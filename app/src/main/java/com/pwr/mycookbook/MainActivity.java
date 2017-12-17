@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.pwr.mycookbook.add_edit_category.AddEditCategoryFragment;
+import com.pwr.mycookbook.category_detail.CategoryDetailFragment;
 import com.pwr.mycookbook.lists.CategoriesListFragment;
 import com.pwr.mycookbook.category_detail.CategoryDetailActivity;
 import com.pwr.mycookbook.ingredient.AddEditIngredientFragment;
@@ -165,9 +166,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void categoryItemClicked(Category category) {
-        Intent intent = new Intent(this, CategoryDetailActivity.class);
-        intent.putExtra(CategoryDetailActivity.EXTRA_CATEGORY, category);
-        startActivity(intent);
+        if(category!=null){
+            Intent intent = new Intent(this, CategoryDetailActivity.class);
+            intent.putExtra(CategoryDetailActivity.EXTRA_CATEGORY, category);
+            startActivity(intent);
+        }
     }
 
     @Override

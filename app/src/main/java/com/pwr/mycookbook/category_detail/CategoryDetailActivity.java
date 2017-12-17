@@ -46,14 +46,7 @@ public class CategoryDetailActivity extends AppCompatActivity
         category = (Category) getIntent().getExtras().get(EXTRA_CATEGORY);
         getSupportActionBar().setSubtitle(category.getName());
 
-        categoryDetailFragment = new CategoryDetailFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(CategoryDetailFragment.EXTRA_CATEGORY, category);
-        categoryDetailFragment.setArguments(args);
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction
-                .replace(R.id.category_detail_fragment, categoryDetailFragment)
-                .commit();
+        categoryDetailFragment = CategoryDetailFragment.newInstance(category);
     }
 
 

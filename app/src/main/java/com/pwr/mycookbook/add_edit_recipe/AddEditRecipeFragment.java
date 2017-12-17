@@ -1,6 +1,7 @@
 package com.pwr.mycookbook.add_edit_recipe;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
     private Recipe recipe;
     private AppDatabase db;
@@ -170,9 +172,16 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
             recipe.setTitle(title);
             recipe.setTime(Integer.parseInt(time));
             recipe.setPortion(Integer.parseInt(portion));
-            Category category = categoryList.get(category_pos);
-            recipe.setCategory_id(category.getId());
+            if(category_pos >= 0){
+                Category category = categoryList.get(category_pos);
+                recipe.setCategory_id(category.getId());
+            }
             ((IRecipeChange) getActivity()).setRecipeDetail(recipe);
         }
+    }
+
+    @Override
+    public void setPhoto(Bitmap bitmap) {
+        recipe_photo.setImageBitmap(bitmap);
     }
 }

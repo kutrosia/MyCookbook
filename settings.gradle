@@ -1,1 +1,1 @@
-include ':app', ':apwlibrary'
+include ':app'

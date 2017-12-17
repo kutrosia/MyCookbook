@@ -2,6 +2,7 @@ package com.pwr.mycookbook.add_edit_recipe;
 
 import android.annotation.SuppressLint;
 import android.arch.persistence.room.EntityDeletionOrUpdateAdapter;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,7 +27,7 @@ import java.util.List;
  * Created by olaku on 27.11.2017.
  */
 
-public class AddEditRecipeIngredientsFragment extends Fragment {
+public class AddEditRecipeIngredientsFragment extends Fragment implements IRecipeSave {
 
     private Recipe recipe;
     private AppDatabase db;
@@ -40,6 +41,7 @@ public class AddEditRecipeIngredientsFragment extends Fragment {
     private EditText ingredient_measure_EditText;
     private ImageButton ingredient_add_button;
     private Integer[] iconsRes;
+    private List<Recipe_Ingredient> recipe_ingredients;
 
 
     public static AddEditRecipeIngredientsFragment newInstance(Recipe recipe) {
@@ -56,6 +58,7 @@ public class AddEditRecipeIngredientsFragment extends Fragment {
         db = AppDatabase.getAppDatabase(getContext());
         Bundle bundle = this.getArguments();
         recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
+        recipe_ingredients = db.recipe_ingredientDao().getIngredientsForRecipe(recipe.getId());
 
     }
 
@@ -112,12 +115,22 @@ public class AddEditRecipeIngredientsFragment extends Fragment {
                         ingredient_id = db.ingredientDao().insertAll(ingredient)[0];
                     }else
                         ingredient_id = ingredient.getId();
-                    Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(recipe.getId(), ingredient_id);
+                    Recipe_Ingredient recipe_ingredient;
+                    //if(recipe.isNew()){
+                        recipe_ingredient = new Recipe_Ingredient(-1, ingredient_id);
+                    //}else {
+                      //  recipe_ingredient = new Recipe_Ingredient(recipe.getId(), ingredient_id);
+                    //}
                     recipe_ingredient.setMeasure(measure);
                     recipe_ingredient.setQuantity(quantity);
-                    db.recipe_ingredientDao().insertAll(recipe_ingredient);
+                    recipe_ingredients.add(recipe_ingredient);
+                    //db.recipe_ingredientDao().insertAll(recipe_ingredient);
                     setRecipeInfo();
                 }
+
+                ingredient_name_EditText.setText("");
+                ingredient_quantity_EditText.setText("");
+                ingredient_measure_EditText.setText("");
             }
         };
     }
@@ -142,14 +155,11 @@ public class AddEditRecipeIngredientsFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     public void setRecipeInfo(){
-        if(recipe != null){
             new AsyncTask<Void, Void, Void>(){
 
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    List<Recipe_Ingredient> recipe_ingredients =
-                            db.recipe_ingredientDao().getIngredientsForRecipe(recipe.getId());
-                    adapter = new AddEditRecipeIngredientsAdapter(getContext(),
+                   adapter = new AddEditRecipeIngredientsAdapter(getContext(),
                             R.layout.list_recipe_ingredient_item, recipe_ingredients);
                     return null;
                 }
@@ -162,7 +172,6 @@ public class AddEditRecipeIngredientsFragment extends Fragment {
                 }
 
             }.execute();
-        }
 
     }
 
@@ -178,4 +187,13 @@ public class AddEditRecipeIngredientsFragment extends Fragment {
         this.recipe = recipe;
     }
 
+    @Override
+    public void saveRecipe() {
+        ((IRecipeChange) getActivity()).setRecipeIngredients(recipe_ingredients);
+    }
+
+    @Override
+    public void setPhoto(Bitmap bitmap) {
+
+    }
 }

@@ -49,6 +49,11 @@
     <string name="menu_item_add_shoppinglist">Dodaj listę zakupów</string>
     <string name="measure">miara</string>
     <string name="quantity">0,0</string>
+    <string name="doc_time">Czas przygotowania:</string>
+    <string name="doc_portion">Porcje:</string>
+    <string name="doc_ingredients">Składniki:</string>
+    <string name="doc_description">Przygotowanie:</string>
+    <string name="doc_note">Notatka:</string>
 
 
 </resources>

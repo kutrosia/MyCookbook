@@ -52,11 +52,10 @@ public class AddEditCategoryFragment extends DialogFragment {
 
     public static AddEditCategoryFragment newInstance(Category category) {
         AddEditCategoryFragment frag = new AddEditCategoryFragment();
-        if(category != null){
-            Bundle args = new Bundle();
-            args.putSerializable("category", category);
-            frag.setArguments(args);
-        }
+        Bundle args = new Bundle();
+        args.putSerializable("category", category);
+        frag.setArguments(args);
+
         return frag;
     }
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +40,35 @@ public class CategoryDetailFragment extends Fragment {
     private RecipeListAdapter adapter;
     private List<Recipe> recipes;
 
+
+    public static CategoryDetailFragment newInstance(Category category)
+    {
+        CategoryDetailFragment fragment = new CategoryDetailFragment();
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(EXTRA_CATEGORY, category);
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
+
+    @SuppressLint("StaticFieldLeak")
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_category_detail, container, false);
         db = AppDatabase.getAppDatabase(getContext());
-        Bundle bundle = getArguments();
-        if(bundle!=null){
-            this.category = (Category) bundle.getSerializable(EXTRA_CATEGORY);
-        }
         recipes_list_view = view.findViewById(R.id.recepies_categorized_list_view);
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(bundle != null){
+            this.category = (Category) bundle.getSerializable(EXTRA_CATEGORY);
+            Toast.makeText(getContext(), this.category.getName(), Toast.LENGTH_LONG).show();
+            try {
+                recipes = db.recipeDao().findAllByCategory(category.getId());
+                adapter = new RecipeListAdapter(getContext(), R.layout.list_recipe_item, recipes);
+            }catch(Exception e){
+                Log.e("CATEGORY DETAIL", e.getMessage());
+            }
+        }
         return view;
 
     }
@@ -57,33 +77,32 @@ public class CategoryDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new AsyncTask<String, Void, String>(){
+        if(category!=null){
+            new AsyncTask<String, Void, String>(){
 
-            @Override
-            protected String doInBackground(String... params) {
-                try {
-                    recipes = db.recipeDao().findAllByCategory(category.getId());
-                    adapter = new RecipeListAdapter(getContext(), R.layout.list_recipe_item, recipes);
-
-                }catch(Exception e){
-                    return e.getMessage();
-                }
-                return "ok";
-            }
-
-            @Override
-            protected void onPostExecute(String text) {
-                super.onPostExecute(text);
-                if(text.equals("ok")) {
-                    recipes_list_view.setAdapter(adapter);
-                    recipes_list_view.setOnItemClickListener(onItemClick());
-                    adapter.notifyDataSetChanged();
+                @Override
+                protected String doInBackground(String... params) {
+                    try {
+                        recipes = db.recipeDao().findAllByCategory(category.getId());
+                        adapter = new RecipeListAdapter(getContext(), R.layout.list_recipe_item, recipes);
+                    }catch(Exception e){
+                        return e.getMessage();
+                    }
+                    return "ok";
                 }
 
-            }
-        }.execute();
+                @Override
+                protected void onPostExecute(String text) {
+                    super.onPostExecute(text);
+                    if(text.equals("ok")) {
+                        recipes_list_view.setAdapter(adapter);
+                        recipes_list_view.setOnItemClickListener(onItemClick());
+                        adapter.notifyDataSetChanged();
+                    }
 
-
+                }
+            }.execute();
+        }
     }
 
     private AdapterView.OnItemClickListener onItemClick() {

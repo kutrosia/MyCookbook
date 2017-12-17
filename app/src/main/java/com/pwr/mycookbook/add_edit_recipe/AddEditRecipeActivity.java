@@ -35,11 +35,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Locale;
 
 public class AddEditRecipeActivity extends AppCompatActivity implements IPickResult, IRecipeChange {
     public static final String EXTRA_RECIPE = "recipe";
     private Recipe recipe;
+    private List<Recipe_Ingredient> recipe_ingredients;
     private AppDatabase db;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private ViewPager viewPager;
@@ -95,6 +97,7 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
             case R.id.action_save:
                 addEditRecipeFragment.saveRecipe();
                 addEditRecipePreparationFragment.saveRecipe();
+                addEditRecipeIngredientsFragment.saveRecipe();
                 if(recipe.getTitle().equals("")){
                     Toast.makeText(getApplicationContext(), "Przepis musi mieć tytuł", Toast.LENGTH_LONG).show();
                 }else{
@@ -109,10 +112,24 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
 
     public void insertOrUpdateRecipeToDb(){
+        long recipe_id;
             if (recipe.isNew()) {
-                db.recipeDao().insertAll(recipe);
+                recipe_id = db.recipeDao().insertAll(recipe)[0];
             } else {
+                recipe_id = recipe.getId();
                 db.recipeDao().updateAll(recipe);
+            }
+            for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
+                if(recipe_ingredient.getRecipe_id() == -1){
+                    float quantity = recipe_ingredient.getQuantity();
+                    String measure = recipe_ingredient.getMeasure();
+                    long ingredient_id = recipe_ingredient.ingredient_id;
+                    recipe_ingredient = new Recipe_Ingredient(recipe_id, ingredient_id);
+                    recipe_ingredient.setQuantity(quantity);
+                    recipe_ingredient.setMeasure(measure);
+                    db.recipe_ingredientDao().insertAll(recipe_ingredient);
+
+                }
             }
     }
 
@@ -177,7 +194,9 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
             OutputStream fOut = null;
             File file = new File(getAlbumStorageDir("/MyCookbook"), "IMG_" + System.currentTimeMillis() + ".jpg");
             String path = file.getPath();
+            recipe.setPhoto_bitmap(bitmap);
             recipe.setPhoto(path);
+            addEditRecipeFragment.setPhoto(bitmap);
             try {
                 fOut = new FileOutputStream(file);
             } catch (FileNotFoundException e) {
@@ -227,5 +246,10 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
     public void setRecipeDescription(Recipe recipe) {
         this.recipe.setDescription(recipe.getDescription());
         this.recipe.setNote(recipe.getNote());
+    }
+
+    @Override
+    public void setRecipeIngredients(List<Recipe_Ingredient> recipeIngredients) {
+        this.recipe_ingredients = recipeIngredients;
     }
 }
