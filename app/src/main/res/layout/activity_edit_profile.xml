@@ -77,7 +77,7 @@
             android:id="@+id/profil_edit_old_password_editText"
             android:hint="@string/hint_old_password"
             android:imeOptions="actionNext"
-            android:inputType="text"/>
+            android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
 
@@ -92,7 +92,7 @@
             android:id="@+id/profil_edit_new_password_editText"
             android:hint="@string/hint_new_password"
             android:imeOptions="actionNext"
-            android:inputType="text"/>
+            android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button

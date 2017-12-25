@@ -10,10 +10,10 @@
         android:id="@+id/recipe_photo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:src="@drawable/cupcake100"
+        android:src="@drawable/restaurant_menu100"
         />
 
-    <!--Title of recipe-->
+    <!--TitlemRecipecipe-->
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

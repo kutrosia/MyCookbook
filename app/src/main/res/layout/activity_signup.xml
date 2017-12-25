@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_name"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine" />
+            android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -46,7 +46,7 @@
             android:id="@+id/signup_email_editText"
             android:hint="@string/hint_email"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
+            android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -61,7 +61,7 @@
             android:id="@+id/signup_password_editText"
             android:hint="@string/hint_password"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
+            android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button

@@ -46,7 +46,7 @@
             android:id="@+id/login_password_editText"
             android:hint="@string/hint_password"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
+            android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
     <Button
