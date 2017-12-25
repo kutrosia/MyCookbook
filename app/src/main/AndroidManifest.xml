@@ -7,27 +7,26 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".MyCookbookApp"
         android:allowBackup="true"
         android:icon="@mipmap/dossier"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/dossier"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.main.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.recipe_detail.RecipeDetailActivity"> </activity>
-        <activity android:name=".view.add_edit_recipe.AddEditRecipeActivity"> </activity>
-        <activity android:name=".view.category_detail.CategoryDetailActivity"> </activity>
-        <activity android:name=".view.user_profile.LoginActivity"> </activity>
-        <activity android:name=".view.user_profile.SignupActivity"> </activity>
-        <activity android:name=".view.user_profile.UserProfileActivity"> </activity>
-        <activity android:name=".view.user_profile.EditUserProfileActivity"> </activity>
+        <activity android:name=".recepie_detail.RecipeDetailActivity"> </activity>
+        <activity android:name=".add_edit_recipe.AddEditRecipeActivity"> </activity>
+        <activity android:name=".category_detail.CategoryDetailActivity"> </activity>
+        <activity android:name=".user_profile.LoginActivity"> </activity>
+        <activity android:name=".user_profile.SignupActivity"> </activity>
+        <activity android:name=".user_profile.UserProfileActivity"> </activity>
+        <activity android:name=".user_profile.EditUserProfileActivity"> </activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"

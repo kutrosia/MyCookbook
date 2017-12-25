@@ -15,7 +15,7 @@
         />
 
 
-    <!--TitlemRecipecipe-->
+    <!--Title of recipe-->
 
     <TextView
         android:id="@+id/recipe_title"

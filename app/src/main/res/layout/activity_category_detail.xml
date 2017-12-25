@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.pwr.mycookbook.view.category_detail.CategoryDetailActivity"
+    tools:context="com.pwr.mycookbook.category_detail.CategoryDetailActivity"
     >
 
     <include
@@ -14,7 +14,7 @@
 
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
-        class="com.pwr.mycookbook.view.category_detail.CategoryDetailFragment"
+        class="com.pwr.mycookbook.category_detail.CategoryDetailFragment"
         android:id="@+id/category_detail_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
