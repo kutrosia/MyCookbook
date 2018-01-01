@@ -5,21 +5,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.pwr.mycookbook.data.AppDatabase;
-import com.pwr.mycookbook.tables.Ingredient;
-import com.pwr.mycookbook.tables.Recipe;
-import com.pwr.mycookbook.tables.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model.Ingredient;
+import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model.Recipe_Ingredient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
