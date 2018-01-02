@@ -3,6 +3,7 @@ package com.pwr.mycookbook.data.dao;
 import android.arch.persistence.room.*;
 
 import com.pwr.mycookbook.data.model.Category;
+import com.pwr.mycookbook.data.model.Recipe;
 
 import java.util.List;
 
@@ -27,6 +28,9 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM categories where id LIKE :category_id")
     Category findById(long category_id);
+
+    @Query("SELECT * FROM categories WHERE `key` = :key")
+    Category findByKey(String key);
 
 
     @Query("SELECT * FROM categories where modification_date > :modify_date")

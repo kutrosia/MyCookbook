@@ -29,7 +29,13 @@ public interface ShoppingListDao {
     @Query("SELECT * FROM shoppinglists where modification_date > :modify_date")
     List<ShoppingList> getNotModified(long modify_date);
 
+    @Query("SELECT * FROM shoppinglists WHERE `key` = :key")
+    ShoppingList findByKey(String key);
+
     @Query("SELECT * FROM shoppinglists where id LIKE  :shoppinglist_id")
     ShoppingList findById(long shoppinglist_id);
+
+    @Query("SELECT COUNT(*) from shoppinglists")
+    int getCount();
 
 }

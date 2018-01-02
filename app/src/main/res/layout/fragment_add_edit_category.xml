@@ -12,7 +12,7 @@
         android:id="@+id/recipe_photo"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/open50"
+        android:src="@drawable/category_filled50"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         />
@@ -24,7 +24,7 @@
         android:text="Nowa kategoria"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/recipe_photo"
         android:layout_alignBottom="@+id/recipe_photo"/>
 

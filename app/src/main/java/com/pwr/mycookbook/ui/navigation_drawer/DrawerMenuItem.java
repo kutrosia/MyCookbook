@@ -58,7 +58,7 @@ public class DrawerMenuItem {
                 break;
             case DRAWER_MENU_ITEM_SHOPPING_LISTS:
                 itemNameTxt.setText(R.string.drawer_item_shopping_lists);
-                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ingredients20));
+                itemIcon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ingredients_filled_50));
                 break;
             case DRAWER_MENU_ITEM_PORTIONS_COUNTER:
                 itemNameTxt.setText(R.string.drawer_item_weight_counter);

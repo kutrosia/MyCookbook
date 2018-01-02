@@ -31,8 +31,14 @@ public interface IngredientDao {
     @Query("SELECT * FROM ingredients where id LIKE  :ingredient_id")
     Ingredient findById(long ingredient_id);
 
+    @Query("SELECT * FROM ingredients where name LIKE  :name")
+    Ingredient findByName(String name);
+
+    @Query("SELECT * FROM ingredients WHERE `key` = :key")
+    Ingredient findByKey(String key);
+
     @Query("SELECT COUNT(*) from ingredients")
-    int countCategories();
+    int getCount();
 
 
 

@@ -9,7 +9,7 @@
         android:id="@+id/item_recipe_ingredient_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ingredients20"
+        android:src="@drawable/vegetarian_food_filled50"
         android:paddingLeft="5dp"/>
 
     <TextView
@@ -31,16 +31,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="10dp"
-        android:layout_toLeftOf="@+id/item_recipe_ingredient_edit_button"/>
+        android:layout_toLeftOf="@+id/item_recipe_ingredient_remove_button"/>
 
-    <ImageButton
+    <!--<ImageButton
         android:id="@+id/item_recipe_ingredient_edit_button"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/edit_grey20"
         android:paddingRight="10dp"
         android:layout_toLeftOf="@+id/item_recipe_ingredient_remove_button"
-        />
+        />-->
 
     <ImageButton
         android:id="@+id/item_recipe_ingredient_remove_button"

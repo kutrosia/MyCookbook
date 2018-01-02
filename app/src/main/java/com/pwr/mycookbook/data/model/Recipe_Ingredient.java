@@ -3,6 +3,9 @@ package com.pwr.mycookbook.data.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
+
+import com.vansuita.pickimage.bundle.PickSetup;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -20,14 +23,28 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         })
 public class Recipe_Ingredient {
 
-    public final long recipe_id;
+    public long recipe_id;
 
-    public final long ingredient_id;
+    public long ingredient_id;
 
     public Recipe_Ingredient(long recipe_id, long ingredient_id) {
         this.recipe_id = recipe_id;
         this.ingredient_id = ingredient_id;
     }
+
+    @Ignore
+    public Recipe_Ingredient(double quantity, String measure, String name) {
+        this.quantity = quantity;
+        this.measure = measure;
+        this.name = name;
+    }
+
+    @Ignore
+    public Recipe_Ingredient() {
+    }
+
+    @Ignore
+
 
     @ColumnInfo(name = "quantity")
     private double quantity;
@@ -35,12 +52,34 @@ public class Recipe_Ingredient {
     @ColumnInfo(name = "measure")
     private String measure;
 
+    @ColumnInfo(name = "name")
+    private String name;
+
     @ColumnInfo(name = "modification_date")
     private long modification_date;
 
     @ColumnInfo(name = "key")
     private String key;
 
+    @Ignore
+    private boolean isNew;
+
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getKey() {
         return key;

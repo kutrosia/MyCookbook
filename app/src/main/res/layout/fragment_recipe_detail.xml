@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="200dp"
-        android:src="@drawable/cupcake100"
+        android:src="@drawable/restaurant_menu100"
         />
 
 
@@ -21,6 +21,7 @@
         android:id="@+id/recipe_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         />
 
@@ -37,6 +38,8 @@
         android:id="@+id/recipe_category_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/recipe_detail_category"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
@@ -46,6 +49,7 @@
         android:id="@+id/recipe_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         />
 
@@ -57,6 +61,8 @@
         android:id="@+id/recipe_time_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/recipe_detail_time"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
@@ -65,6 +71,7 @@
         android:id="@+id/recipe_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         />
 
@@ -76,6 +83,8 @@
         android:id="@+id/recipe_portions_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:text="@string/recipe_detail_portions"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
@@ -84,6 +93,7 @@
         android:id="@+id/recipe_portions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
         />
 

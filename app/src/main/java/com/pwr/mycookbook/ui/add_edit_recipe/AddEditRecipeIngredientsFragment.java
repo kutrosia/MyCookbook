@@ -99,40 +99,7 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = ingredient_name_EditText.getText().toString();
-                double quantity;
-                try{
-                    quantity = Double.parseDouble(ingredient_quantity_EditText.getText().toString());
-                }catch (Exception e){
-                    Toast.makeText(getContext(), "Nieprawidłowa ilość. Należy podać liczbę zmiennoprzecinkową po '.'", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                String measure = ingredient_measure_EditText.getText().toString();
-
-                if(name.equals("")){
-                    Toast.makeText(getContext(), "Składnik musi posiadać nazwę", Toast.LENGTH_LONG).show();
-                }else{
-
-                    Ingredient ingredient = checkIfNewIgredient(name);
-                    long ingredient_id;
-                    if(ingredient == null){
-                        ingredient = new Ingredient();
-                        ingredient.setName(name);
-                        ingredient_id = db.ingredientDao().insertAll(ingredient)[0];
-                    }else
-                        ingredient_id = ingredient.getId();
-                    Recipe_Ingredient recipe_ingredient;
-                    //if(recipe.isNew()){
-                        recipe_ingredient = new Recipe_Ingredient(-1, ingredient_id);
-                    //}else {
-                      //  recipe_ingredient = new Recipe_Ingredient(recipe.getId(), ingredient_id);
-                    //}
-                    recipe_ingredient.setMeasure(measure);
-                    recipe_ingredient.setQuantity(quantity);
-                    recipe_ingredients.add(recipe_ingredient);
-                    //db.recipe_ingredientDao().insertAll(recipe_ingredient);
-                    setRecipeInfo();
-                }
+                addNewRecipeIngredientToList();
 
                 ingredient_name_EditText.setText("");
                 ingredient_quantity_EditText.setText("");
@@ -141,14 +108,24 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
         };
     }
 
-    private Ingredient checkIfNewIgredient(String name) {
-        List<Ingredient> ingredients = db.ingredientDao().getAll();
-        for(Ingredient ingredient: ingredients){
-            if(ingredient.getName().equals(name)){
-                return ingredient;
-            }
+    private void addNewRecipeIngredientToList() {
+        String name = ingredient_name_EditText.getText().toString();
+        double quantity = 0;
+        try {
+            quantity = Double.parseDouble(ingredient_quantity_EditText.getText().toString());
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Nieprawidłowa ilość. Należy podać liczbę zmiennoprzecinkową po '.'", Toast.LENGTH_LONG).show();
         }
-        return null;
+        String measure = ingredient_measure_EditText.getText().toString();
+
+        if (name.equals("")) {
+            Toast.makeText(getContext(), "Składnik musi posiadać nazwę", Toast.LENGTH_LONG).show();
+        } else {
+            Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(quantity, measure, name);
+            recipe_ingredient.setNew(true);
+            recipe_ingredients.add(recipe_ingredient);
+            setRecipeInfo();
+        }
     }
 
     @Override

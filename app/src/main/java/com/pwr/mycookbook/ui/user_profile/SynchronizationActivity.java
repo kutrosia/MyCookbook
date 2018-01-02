@@ -235,75 +235,232 @@ public class SynchronizationActivity extends AppCompatActivity {
 
             @Override
             protected String doInBackground(Void... voids) {
-                String message;
-                List<Recipe> recipes = db.recipeDao().getNotModified(firebaseSyncDate);
-                message = String.valueOf(recipes.size());
-                //Toast.makeText(getApplicationContext(), String.valueOf(recipes.size()), Toast.LENGTH_LONG).show();
-                for(Recipe recipe: recipes){
-                    if(recipe.getKey() != null){
-                        //Toast.makeText(getApplicationContext(), "Aktualizowanie przepisu...", Toast.LENGTH_SHORT).show();
-                        message += recipe.getKey()+  " aktualizowanie przepisu";
-                        remoteDatabase.updateRecipe(recipe);
+
+                int recipes_size = db.recipeDao().getCount();
+                remoteDatabase.getRecipesCount().addOnCompleteListener(new OnCompleteListener<Long>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Long> task) {
+                        if(recipes_size < task.getResult()){
+                            deleteOrUpdateRecipesInFirebase();
+
+                        }else{
+                            List<Recipe> recipes = db.recipeDao().getNotModified(firebaseSyncDate);
+                            for(Recipe recipe: recipes){
+                                if(recipe.getKey() != null){
+                                    remoteDatabase.updateRecipe(recipe);
+                                }
+                                else{
+                                    remoteDatabase.writeNewRecipe(recipe);
+                                }
+                            }
+                        }
                     }
-                    else{
-                        //Toast.makeText(getApplicationContext(), "Dodawanie przepisu...", Toast.LENGTH_SHORT).show();
-                        message += " dodawanie przepisu";
-                        remoteDatabase.writeNewRecipe(recipe);
+                });
+
+                int categories_size = db.categoryDao().countCategories();
+                remoteDatabase.getCategoriesCount().addOnCompleteListener(new OnCompleteListener<Long>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Long> task) {
+                        if(categories_size < task.getResult()){
+                            deleteOrUpdateCategoriesInFirebase();
+                        }else{
+                            List<Category> categories = db.categoryDao().getNotModified(firebaseSyncDate);
+                            for(Category category: categories){
+                                if(category.getKey() != null)
+                                    remoteDatabase.updateCategory(category);
+                                else
+                                    remoteDatabase.writeNewCategory(category);
+                            }
+                        }
+
                     }
-                }
+                });
 
-                List<Category> categories = db.categoryDao().getNotModified(firebaseSyncDate);
-                for(Category category: categories){
-                    if(category.getKey() != null)
-                        remoteDatabase.updateCategory(category);
-                    else
-                        remoteDatabase.writeNewCategory(category);
-                }
+                int ingredients_size = db.ingredientDao().getCount();
+                remoteDatabase.getIngredientsCount().addOnCompleteListener(new OnCompleteListener<Long>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Long> task) {
+                        if(ingredients_size < task.getResult())
+                            deleteOrUpdateIngredientsInFirebase();
+                        else{
+                            List<Ingredient> ingredients = db.ingredientDao().getNotModified(firebaseSyncDate);
+                            for(Ingredient ingredient: ingredients){
+                                if(ingredient.getKey() != null)
+                                    remoteDatabase.updateIngredient(ingredient);
+                                else
+                                    remoteDatabase.writeNewIngredient(ingredient);
+                            }
+                        }
+                    }
+                });
 
-                List<Ingredient> ingredients = db.ingredientDao().getNotModified(firebaseSyncDate);
-                for(Ingredient ingredient: ingredients){
-                    if(ingredient.getKey() != null)
-                        remoteDatabase.updateIngredient(ingredient);
-                    else
-                        remoteDatabase.writeNewIngredient(ingredient);
-                }
+                int recipes_ingredients_size = db.recipe_ingredientDao().getCount();
+                remoteDatabase.getRecipeIngredientsCount().addOnCompleteListener(new OnCompleteListener<Long>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Long> task) {
+                        if(recipes_ingredients_size < task.getResult()){
+                            deleteOrUpdateRecipesIngredientsInFirebase();
+                        }else{
+                            List<Recipe_Ingredient> recipe_ingredients = db.recipe_ingredientDao().getNotModified(firebaseSyncDate);
+                            for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
+                                if(recipe_ingredient.getKey() != null)
+                                    remoteDatabase.updateRecipe_Ingredient(recipe_ingredient);
+                                else
+                                    remoteDatabase.writeNewRecipe_Ingredient(recipe_ingredient);
+                            }
+                        }
+                    }
+                });
 
-                List<Recipe_Ingredient> recipe_ingredients = db.recipe_ingredientDao().getNotModified(firebaseSyncDate);
-                for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
-                    if(recipe_ingredient.getKey() != null)
-                        remoteDatabase.updateRecipe_Ingredient(recipe_ingredient);
-                    else
-                        remoteDatabase.writeNewRecipe_Ingredient(recipe_ingredient);
-                }
+                int shoppinglists_size = db.shoppingListDao().getCount();
+                remoteDatabase.getShoppinglistsCount().addOnCompleteListener(new OnCompleteListener<Long>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Long> task) {
+                        if(shoppinglists_size < task.getResult()){
+                            deleteOrUpdateShoppinglistsInFirebase();
+                        }else{
+                            List<ShoppingList> shoppingLists = db.shoppingListDao().getNotModified(firebaseSyncDate);
+                            for(ShoppingList shoppingList: shoppingLists){
+                                if(shoppingList.getKey() != null)
+                                    remoteDatabase.updateShoppinglist(shoppingList);
+                                else
+                                    remoteDatabase.writeNewShoppinglist(shoppingList);
+                            }
+                        }
+                    }
+                });
 
-                List<ShoppingList> shoppingLists = db.shoppingListDao().getNotModified(firebaseSyncDate);
-                for(ShoppingList shoppingList: shoppingLists){
-                    if(shoppingList.getKey() != null)
-                        remoteDatabase.updateShoppinglist(shoppingList);
-                    else
-                        remoteDatabase.writeNewShoppinglist(shoppingList);
-                }
-
-                List<ShoppingList_Ingredient> shoppingList_ingredients = db.shoppingList_ingredientDao().getNotModified(firebaseSyncDate);
-                for(ShoppingList_Ingredient shoppingList_ingredient: shoppingList_ingredients){
-                    if(shoppingList_ingredient.getKey() != null)
-                        remoteDatabase.updateShoppinglist_Ingredient(shoppingList_ingredient);
-                    else
-                        remoteDatabase.writeNewShoppinglist_Ingredient(shoppingList_ingredient);
-                }
+                int shoppinglists_ingredients_size = db.shoppingList_ingredientDao().getCount();
+                remoteDatabase.getShoppinglistIngredientsCount().addOnCompleteListener(new OnCompleteListener<Long>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Long> task) {
+                        if(shoppinglists_ingredients_size < task.getResult()){
+                            deleteOrUpdateShoppinglistsIngredientsInFirebase();
+                        }else{
+                            List<ShoppingList_Ingredient> shoppingList_ingredients = db.shoppingList_ingredientDao().getNotModified(firebaseSyncDate);
+                            for(ShoppingList_Ingredient shoppingList_ingredient: shoppingList_ingredients){
+                                if(shoppingList_ingredient.getKey() != null)
+                                    remoteDatabase.updateShoppinglist_Ingredient(shoppingList_ingredient);
+                                else
+                                    remoteDatabase.writeNewShoppinglist_Ingredient(shoppingList_ingredient);
+                            }
+                        }
+                    }
+                });
 
                 remoteDatabase.setDatabaseSyncDate(databaseSyncDate);
-                return message;
+                return "Proces synchronizacji zakończony: ";
             }
 
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Toast.makeText(getApplicationContext(), "Proces synchronizacji zakończony: " + s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
             }
         }.execute();
     }
 
+    private void deleteOrUpdateShoppinglistsIngredientsInFirebase() {
+        remoteDatabase.getShoppinglistIngredientList().addOnCompleteListener(new OnCompleteListener<List<ShoppingList_Ingredient>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<ShoppingList_Ingredient>> task) {
+                for(ShoppingList_Ingredient shoppingList_ingredient: task.getResult()){
+                    ShoppingList_Ingredient shoppingList_ingredientInDb = db.shoppingList_ingredientDao().findByKey(shoppingList_ingredient.getKey());
+                    if(shoppingList_ingredientInDb == null){
+                        remoteDatabase.deleteShoppinglist_Ingredient(shoppingList_ingredient);
+                    }else{
+                        if(shoppingList_ingredientInDb.getModification_date() > shoppingList_ingredient.getModification_date())
+                            remoteDatabase.updateShoppinglist_Ingredient(shoppingList_ingredientInDb);
+                    }
+                }
+            }
+        });
+    }
+
+    private void deleteOrUpdateShoppinglistsInFirebase() {
+        remoteDatabase.getShoppinglistList().addOnCompleteListener(new OnCompleteListener<List<ShoppingList>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<ShoppingList>> task) {
+                for(ShoppingList shoppingList: task.getResult()){
+                    ShoppingList shoppingListInDb = db.shoppingListDao().findByKey(shoppingList.getKey());
+                    if(shoppingListInDb == null){
+                        remoteDatabase.deleteShoppinglist(shoppingList);
+                    }else{
+                        if(shoppingListInDb.getModification_date() > shoppingList.getModification_date())
+                            remoteDatabase.updateShoppinglist(shoppingListInDb);
+                    }
+                }
+            }
+        });
+    }
+
+    private void deleteOrUpdateRecipesIngredientsInFirebase() {
+        remoteDatabase.getRecipeIngredientList().addOnCompleteListener(new OnCompleteListener<List<Recipe_Ingredient>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<Recipe_Ingredient>> task) {
+                for(Recipe_Ingredient recipe_ingredient: task.getResult()){
+                    Recipe_Ingredient recipe_ingredientInDb = db.recipe_ingredientDao().findByKey(recipe_ingredient.getKey());
+                    if(recipe_ingredientInDb == null){
+                        remoteDatabase.deleteRecipe_Ingredient(recipe_ingredient);
+                    }else{
+                        if(recipe_ingredientInDb.getModification_date() > recipe_ingredient.getModification_date())
+                            remoteDatabase.updateRecipe_Ingredient(recipe_ingredientInDb);
+                    }
+                }
+            }
+        });
+    }
+
+    private void deleteOrUpdateIngredientsInFirebase() {
+        remoteDatabase.getIngredientList().addOnCompleteListener(new OnCompleteListener<List<Ingredient>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<Ingredient>> task) {
+                for(Ingredient ingredient: task.getResult()){
+                    Ingredient ingredientInDb = db.ingredientDao().findByKey(ingredient.getKey());
+                    if(ingredientInDb == null){
+                        remoteDatabase.deleteIngredient(ingredient);
+                    }else{
+                        if(ingredientInDb.getModification_date() > ingredient.getModification_date())
+                            remoteDatabase.updateIngredient(ingredientInDb);
+                    }
+                }
+            }
+        });
+    }
+
+    private void deleteOrUpdateCategoriesInFirebase() {
+        remoteDatabase.getCategoryList().addOnCompleteListener(new OnCompleteListener<List<Category>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<Category>> task) {
+                for(Category category: task.getResult()){
+                    Category categoryInDb = db.categoryDao().findByKey(category.getKey());
+                    if(categoryInDb == null){
+                        remoteDatabase.deleteCategory(category);
+                    }else{
+                        if(categoryInDb.getModification_date() > category.getModification_date())
+                            remoteDatabase.updateCategory(categoryInDb);
+                    }
+                }
+            }
+        });
+    }
+
+    private void deleteOrUpdateRecipesInFirebase() {
+        remoteDatabase.getRecipesList().addOnCompleteListener(new OnCompleteListener<List<Recipe>>() {
+            @Override
+            public void onComplete(@NonNull Task<List<Recipe>> task) {
+                for(Recipe recipe: task.getResult()){
+                    Recipe recipeInDb = db.recipeDao().findByKey(recipe.getKey());
+                    if(recipeInDb == null){
+                        remoteDatabase.deleteRecipe(recipe);
+                    }else{
+                        if(recipeInDb.getModification_date() > recipe.getModification_date())
+                            remoteDatabase.updateRecipe(recipeInDb);
+                    }
+                }
+            }
+        });
+    }
 
 
 }

@@ -60,9 +60,8 @@ public class RecipeDetailIngredientsAdapter extends ArrayAdapter<Recipe_Ingredie
         }
 
         Recipe_Ingredient ingredient = ingredients.get(position);
-        Ingredient ingredient1 = AppDatabase.getAppDatabase(getContext()).ingredientDao().findById(ingredient.ingredient_id);
-        holder.nameTextView.setText(ingredient1.getName());
-        holder.image.setImageResource(R.drawable.dossier_25);
+        holder.nameTextView.setText(ingredient.getName());
+        holder.image.setImageResource(R.drawable.vegetarian_food_filled50);
         holder.quantityTextView.setText(String.valueOf(ingredient.getQuantity()));
         holder.measureTextView.setText(ingredient.getMeasure());
 

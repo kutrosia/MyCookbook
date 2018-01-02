@@ -35,6 +35,11 @@ public class Ingredient implements Serializable {
         this.modification_date = modification_date;
     }
 
+    public Ingredient(String name, long modification_date) {
+        this.name = name;
+        this.modification_date = modification_date;
+    }
+
     public Ingredient() {
     }
 

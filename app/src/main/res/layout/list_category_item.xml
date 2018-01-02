@@ -9,7 +9,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"
-        android:src="@drawable/open50"/>
+        android:src="@drawable/category_filled50"/>
 
     <TextView
         android:id="@+id/category_item_name"

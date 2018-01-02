@@ -15,7 +15,7 @@
         android:id="@+id/item_recipe_ingredient_icon_spinner"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/ingredients20"
+        android:src="@drawable/vegetarian_food_filled50"
         android:layout_marginTop="10dp"/>
 
 
@@ -48,7 +48,7 @@
         android:id="@+id/item_recipe_ingredient_add_button"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/add_new30"
+        android:background="@drawable/plus_green50"
         android:layout_marginTop="20dp"
         android:layout_marginRight="5dp"
         android:layout_alignParentEnd="true"

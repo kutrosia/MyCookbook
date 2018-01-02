@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.pwr.mycookbook.data.model.Ingredient;
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.data.model.Recipe_Ingredient;
 import com.pwr.mycookbook.data.model.SyncDate;
@@ -115,32 +116,53 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
 
     public void insertOrUpdateRecipeToDb(){
-        long recipe_id;
         SyncDate syncDate = db.syncDateDao().getAll();
         Calendar rightNow = Calendar.getInstance();
         long currentTime = rightNow.getTimeInMillis();
         syncDate.setDate(currentTime);
         db.syncDateDao().update(syncDate);
-        recipe.setModification_date(currentTime);
-            if (recipe.isNew()) {
-                recipe_id = db.recipeDao().insertAll(recipe)[0];
-            } else {
-                recipe_id = recipe.getId();
-                db.recipeDao().updateAll(recipe);
-            }
-            for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
-                if(recipe_ingredient.getRecipe_id() == -1){
-                    double quantity = recipe_ingredient.getQuantity();
-                    String measure = recipe_ingredient.getMeasure();
-                    long ingredient_id = recipe_ingredient.ingredient_id;
-                    recipe_ingredient = new Recipe_Ingredient(recipe_id, ingredient_id);
-                    recipe_ingredient.setModification_date(currentTime);
-                    recipe_ingredient.setQuantity(quantity);
-                    recipe_ingredient.setMeasure(measure);
-                    db.recipe_ingredientDao().insertAll(recipe_ingredient);
 
-                }
+        long recipe_id = addRecipeAndGetId(currentTime);
+        addIngredients(currentTime);
+        addRecipeIngredients(currentTime, recipe_id);
+
+
+    }
+
+    private void addRecipeIngredients(long currentTime, long recipe_id) {
+        for(Recipe_Ingredient recipe_ingredient: recipe_ingredients) {
+            if(recipe_ingredient.isNew()){
+                recipe_ingredient.recipe_id = recipe_id;
+                recipe_ingredient.setModification_date(currentTime);
+                db.recipe_ingredientDao().insertAll(recipe_ingredient);
+            }else{
+                db.recipe_ingredientDao().update(recipe_ingredient);
             }
+        }
+    }
+
+    private void addIngredients(long currentTime) {
+        for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
+            String name = recipe_ingredient.getName();
+            Ingredient ingredient = db.ingredientDao().findByName(name);
+            if(ingredient == null){
+                ingredient = new Ingredient(name, currentTime);
+                long ingredient_id = db.ingredientDao().insertAll(ingredient)[0];
+                recipe_ingredient.ingredient_id = ingredient_id;
+            }
+        }
+    }
+
+    private long addRecipeAndGetId(long currentTime) {
+        long recipe_id;
+        recipe.setModification_date(currentTime);
+        if (recipe.isNew()) {
+            recipe_id = db.recipeDao().insertAll(recipe)[0];
+        } else {
+            recipe_id = recipe.getId();
+            db.recipeDao().updateAll(recipe);
+        }
+        return recipe_id;
     }
 
 

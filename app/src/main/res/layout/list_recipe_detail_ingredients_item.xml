@@ -8,7 +8,7 @@
         android:id="@+id/item_recipe_ingredient_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:src="@drawable/ingredients20"
+        android:src="@drawable/vegetarian_food_filled50"
         android:paddingLeft="5dp"/>
 
     <TextView

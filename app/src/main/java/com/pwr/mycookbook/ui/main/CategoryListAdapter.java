@@ -59,7 +59,7 @@ public class CategoryListAdapter extends ArrayAdapter<Category> {
         try{
             holder.image.setImageResource(category.getImage());
         }catch (Exception e){
-            holder.image.setImageResource(R.drawable.open50);
+            holder.image.setImageResource(R.drawable.category_filled50);
         }
 
         return row;

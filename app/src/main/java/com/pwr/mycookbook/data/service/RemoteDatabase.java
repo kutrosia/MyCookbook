@@ -494,6 +494,105 @@ public class RemoteDatabase {
         return tcs.getTask();
     }
 
+    public Task<Long> getRecipesCount(){
+        final TaskCompletionSource<Long> tcs = new TaskCompletionSource();
+        recipesEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tcs.setResult(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setException(databaseError.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Long> getCategoriesCount(){
+        final TaskCompletionSource<Long> tcs = new TaskCompletionSource();
+        categoriesEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tcs.setResult(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setException(databaseError.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Long> getIngredientsCount(){
+        final TaskCompletionSource<Long> tcs = new TaskCompletionSource();
+        ingredientsEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tcs.setResult(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setException(databaseError.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Long> getRecipeIngredientsCount(){
+        final TaskCompletionSource<Long> tcs = new TaskCompletionSource();
+        recipe_ingredientsEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tcs.setResult(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setException(databaseError.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Long> getShoppinglistsCount(){
+        final TaskCompletionSource<Long> tcs = new TaskCompletionSource();
+        shoppinglistsEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tcs.setResult(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setException(databaseError.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public Task<Long> getShoppinglistIngredientsCount(){
+        final TaskCompletionSource<Long> tcs = new TaskCompletionSource();
+        shoppinglist_ingredientsEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                tcs.setResult(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setException(databaseError.toException());
+            }
+        });
+        return tcs.getTask();
+    }
+
+
+
+
     public void setDatabaseSyncDate(long date){
         sync_dateEndPoint.setValue(date);
     }

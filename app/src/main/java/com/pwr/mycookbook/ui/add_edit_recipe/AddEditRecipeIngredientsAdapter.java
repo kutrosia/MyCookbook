@@ -54,7 +54,6 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
             holder.image = row.findViewById(R.id.item_recipe_ingredient_icon);
             holder.quantity = row.findViewById(R.id.item_recipe_ingredient_quantity);
             holder.measure = row.findViewById(R.id.item_recipe_ingredient_measure);
-            holder.edit = row.findViewById(R.id.item_recipe_ingredient_edit_button);
             holder.remove = row.findViewById(R.id.item_recipe_ingredient_remove_button);
             row.setTag(holder);
         }
@@ -63,17 +62,10 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
         }
 
         Recipe_Ingredient ingredient = ingredients.get(position);
-        Ingredient ingredient1 = AppDatabase.getAppDatabase(getContext()).ingredientDao().findById(ingredient.ingredient_id);
-        holder.name.setText(ingredient1.getName());
-        holder.image.setImageResource(R.drawable.ingredients20);
+        holder.name.setText(ingredient.getName());
+        holder.image.setImageResource(R.drawable.vegetarian_food_filled50);
         holder.quantity.setText(String.valueOf(ingredient.getQuantity()));
         holder.measure.setText(ingredient.getMeasure());
-        holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +80,6 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
         private TextView name;
         private TextView quantity;
         private TextView measure;
-        private ImageButton edit;
         private ImageButton remove;
     }
 
