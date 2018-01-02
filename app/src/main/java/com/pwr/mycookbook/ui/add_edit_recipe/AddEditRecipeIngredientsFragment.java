@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Ingredient;
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.data.model.Recipe_Ingredient;
@@ -100,7 +100,13 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
             @Override
             public void onClick(View view) {
                 String name = ingredient_name_EditText.getText().toString();
-                double quantity = Double.parseDouble(ingredient_quantity_EditText.getText().toString());
+                double quantity;
+                try{
+                    quantity = Double.parseDouble(ingredient_quantity_EditText.getText().toString());
+                }catch (Exception e){
+                    Toast.makeText(getContext(), "Nieprawidłowa ilość. Należy podać liczbę zmiennoprzecinkową po '.'", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 String measure = ingredient_measure_EditText.getText().toString();
 
                 if(name.equals("")){

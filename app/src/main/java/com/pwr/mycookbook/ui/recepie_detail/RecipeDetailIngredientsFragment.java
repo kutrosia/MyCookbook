@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.data.model.Recipe_Ingredient;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

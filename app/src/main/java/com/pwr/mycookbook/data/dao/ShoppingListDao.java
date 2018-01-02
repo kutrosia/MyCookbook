@@ -26,7 +26,7 @@ public interface ShoppingListDao {
     @Query("SELECT * FROM shoppinglists")
     List<ShoppingList> getAll();
 
-    @Query("SELECT * FROM shoppinglists where modification_date < :modify_date")
+    @Query("SELECT * FROM shoppinglists where modification_date > :modify_date")
     List<ShoppingList> getNotModified(long modify_date);
 
     @Query("SELECT * FROM shoppinglists where id LIKE  :shoppinglist_id")

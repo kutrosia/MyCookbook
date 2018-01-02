@@ -1,4 +1,4 @@
-package com.pwr.mycookbook.data;
+package com.pwr.mycookbook.data.service;
 
 import android.arch.persistence.room.*;
 import android.content.Context;

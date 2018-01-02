@@ -71,6 +71,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = email_editText.getText().toString().trim();
                 String password = password_editText.getText().toString().trim();
+                String name = name_editText.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Podaj adres email", Toast.LENGTH_SHORT).show();

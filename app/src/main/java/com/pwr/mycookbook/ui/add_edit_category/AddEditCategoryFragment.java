@@ -15,8 +15,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.model.SyncDate;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Category;
+
+import java.util.Calendar;
 
 /**
  * Created by olaku on 23.11.2017.
@@ -133,18 +136,25 @@ public class AddEditCategoryFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String name = nameTextInputLayout.getEditText().getText().toString();
+                SyncDate syncDate = db.syncDateDao().getAll();
+                Calendar rightNow = Calendar.getInstance();
+                long currentTime = rightNow.getTimeInMillis();
+                syncDate.setDate(currentTime);
                 if(nameTextInputLayout.getEditText().getText() != null){
                     if(category == null){
                         category = new Category();
+                        category.setModification_date(currentTime);
                         category.setName(name);
                         category.setImage(iconsRes[icons_spinner.getSelectedItemPosition()]);
                         db.categoryDao().insertAll(category);
                     }else{
                         category.setName(name);
+                        category.setModification_date(currentTime);
                         category.setImage(iconsRes[icons_spinner.getSelectedItemPosition()]);
                         db.categoryDao().update(category);
                     }
                 }
+                db.syncDateDao().update(syncDate);
                 AddEditCategoryFragment.this.dismiss();
             }
         };

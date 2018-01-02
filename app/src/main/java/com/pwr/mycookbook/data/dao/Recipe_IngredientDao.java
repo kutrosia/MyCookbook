@@ -31,7 +31,7 @@ public interface Recipe_IngredientDao {
     @Query("SELECT * FROM recipes_ingredients")
     List<Recipe_Ingredient> getAll();
 
-    @Query("SELECT * FROM recipes_ingredients where modification_date < :modify_date")
+    @Query("SELECT * FROM recipes_ingredients where modification_date > :modify_date")
     List<Recipe_Ingredient> getNotModified(long modify_date);
 
     @Query("DELETE from recipes_ingredients where recipe_id LIKE  :recipe_id")

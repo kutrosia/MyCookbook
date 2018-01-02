@@ -18,7 +18,7 @@ import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 
 import java.io.File;
 

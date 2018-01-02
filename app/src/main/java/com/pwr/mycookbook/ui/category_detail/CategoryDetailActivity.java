@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.add_edit_category.AddEditCategoryFragment;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Category;
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;

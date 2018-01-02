@@ -47,17 +47,18 @@ public class UserProfileActivity extends AppCompatActivity {
         actions_list = findViewById(R.id.user_actions_listView);
 
         String[] titles = new String[] {
-                "Edytuj",
-                "Moje przepisy",
-                "Moje zdjęcia",
-                "Moje filmy"
+                "Zmiana adresu e-mail",
+                "Zmiana nazwy użytkownika",
+                "Zmiana hasła",
+                "Wyloguj",
+
         };
 
         Integer[] icons = new Integer[]{
-                R.drawable.edit_grey50,
-                R.drawable.restaurant_menu50,
-                R.drawable.compact_camera_filled_grey50,
-                R.drawable.play_button_filled50
+                R.drawable.email50,
+                R.drawable.user_male50,
+                R.drawable.lock50,
+                R.drawable.login_filled50
         };
 
 
@@ -93,13 +94,17 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 switch (position){
                     case 0:
-                        startActivity(new Intent(UserProfileActivity.this, EditUserProfileActivity.class));
+                        startActivity(new Intent(UserProfileActivity.this, EditUserEmailActivity.class));
                         break;
                     case 1:
+                        startActivity(new Intent(UserProfileActivity.this, EditUserNameActivity.class));
                         break;
                     case 2:
+                        startActivity(new Intent(UserProfileActivity.this, EditUserPasswordActivity.class));
                         break;
                     case 3:
+                        firebaseAuth.signOut();
+                        finish();
                         break;
                 }
             }

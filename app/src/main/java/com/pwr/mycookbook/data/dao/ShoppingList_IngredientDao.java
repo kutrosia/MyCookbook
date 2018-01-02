@@ -32,7 +32,7 @@ public interface ShoppingList_IngredientDao {
     @Query("SELECT * FROM shoppinglists_ingredients")
     List<ShoppingList_Ingredient> getAll();
 
-    @Query("SELECT * FROM shoppinglists_ingredients where modification_date < :modify_date")
+    @Query("SELECT * FROM shoppinglists_ingredients where modification_date > :modify_date")
     List<ShoppingList_Ingredient> getNotModified(long modify_date);
 
     @Query("DELETE from shoppinglists_ingredients where shoppinglist_id LIKE  :shoppinglist_id")

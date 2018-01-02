@@ -59,7 +59,7 @@ public class IngredientsListAdapter extends ArrayAdapter<Ingredient> {
         try{
             //holder.image.setImageURI(Uri.fromFile(new File(ingredient.getPhoto())));
         }catch (Exception e){
-            holder.image.setImageResource(R.drawable.dossier_25);
+            holder.image.setImageResource(R.drawable.ingredients50);
         }
 
         return row;

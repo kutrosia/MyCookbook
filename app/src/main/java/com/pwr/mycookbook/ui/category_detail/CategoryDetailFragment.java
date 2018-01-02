@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Category;
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.ui.main.RecipeListAdapter;

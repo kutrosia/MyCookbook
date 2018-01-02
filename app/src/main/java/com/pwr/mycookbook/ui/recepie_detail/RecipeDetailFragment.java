@@ -12,12 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Category;
 import com.pwr.mycookbook.data.model.Recipe;
 
 import java.io.File;
-import java.io.Serializable;
 
 public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;

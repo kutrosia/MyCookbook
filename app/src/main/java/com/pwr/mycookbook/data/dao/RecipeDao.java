@@ -25,7 +25,7 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipes")
     List<Recipe> getAll();
 
-    @Query("SELECT * FROM recipes where modification_date < :modify_date")
+    @Query("SELECT * FROM recipes where modification_date > :modify_date")
     List<Recipe> getNotModified(long modify_date);
 
     @Query("SELECT * FROM recipes WHERE id = :recipe_id")

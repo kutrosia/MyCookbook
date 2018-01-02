@@ -14,10 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.model.SyncDate;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.pwr.mycookbook.data.model.Ingredient;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * Created by olaku on 25.11.2017.
@@ -116,16 +118,24 @@ public class AddEditIngredientFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String name = nameTextInputLayout.getEditText().getText().toString();
+                SyncDate syncDate = db.syncDateDao().getAll();
+                Calendar rightNow = Calendar.getInstance();
+                long currentTime = rightNow.getTimeInMillis();
+
                 if(nameTextInputLayout.getEditText().getText() != null){
                     if(ingredient == null){
                         ingredient = new Ingredient();
+                        ingredient.setModification_date(currentTime);
                         ingredient.setName(name);
                         db.ingredientDao().insertAll(ingredient);
                     }else{
                         ingredient.setName(name);
+                        ingredient.setModification_date(currentTime);
                         db.ingredientDao().update(ingredient);
                     }
                 }
+                syncDate.setDate(currentTime);
+                db.syncDateDao().update(syncDate);
                 AddEditIngredientFragment.this.dismiss();
             }
         };

@@ -29,7 +29,7 @@ public interface CategoryDao {
     Category findById(long category_id);
 
 
-    @Query("SELECT * FROM categories where modification_date < :modify_date")
+    @Query("SELECT * FROM categories where modification_date > :modify_date")
     List<Category> getNotModified(long modify_date);
 
 

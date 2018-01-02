@@ -25,7 +25,7 @@ public interface IngredientDao {
     @Query("SELECT * FROM ingredients")
     List<Ingredient> getAll();
 
-    @Query("SELECT * FROM ingredients where modification_date < :modify_date")
+    @Query("SELECT * FROM ingredients where modification_date > :modify_date")
     List<Ingredient> getNotModified(long modify_date);
 
     @Query("SELECT * FROM ingredients where id LIKE  :ingredient_id")

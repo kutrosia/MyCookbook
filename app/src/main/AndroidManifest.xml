@@ -26,8 +26,10 @@
         <activity android:name=".ui.user_profile.LoginActivity"> </activity>
         <activity android:name=".ui.user_profile.SignupActivity"> </activity>
         <activity android:name=".ui.user_profile.UserProfileActivity"> </activity>
-        <activity android:name=".ui.user_profile.EditUserProfileActivity"> </activity>
+        <activity android:name=".ui.user_profile.EditUserEmailActivity"> </activity>
         <activity android:name=".ui.user_profile.SynchronizationActivity"></activity>
+        <activity android:name=".ui.user_profile.EditUserNameActivity"></activity>
+        <activity android:name=".ui.user_profile.EditUserPasswordActivity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"

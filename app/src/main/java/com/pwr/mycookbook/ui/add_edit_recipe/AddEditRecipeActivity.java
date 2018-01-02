@@ -23,9 +23,10 @@ import android.widget.Toast;
 
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model.SyncDate;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -36,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,6 +116,12 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
     public void insertOrUpdateRecipeToDb(){
         long recipe_id;
+        SyncDate syncDate = db.syncDateDao().getAll();
+        Calendar rightNow = Calendar.getInstance();
+        long currentTime = rightNow.getTimeInMillis();
+        syncDate.setDate(currentTime);
+        db.syncDateDao().update(syncDate);
+        recipe.setModification_date(currentTime);
             if (recipe.isNew()) {
                 recipe_id = db.recipeDao().insertAll(recipe)[0];
             } else {
@@ -126,6 +134,7 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
                     String measure = recipe_ingredient.getMeasure();
                     long ingredient_id = recipe_ingredient.ingredient_id;
                     recipe_ingredient = new Recipe_Ingredient(recipe_id, ingredient_id);
+                    recipe_ingredient.setModification_date(currentTime);
                     recipe_ingredient.setQuantity(quantity);
                     recipe_ingredient.setMeasure(measure);
                     db.recipe_ingredientDao().insertAll(recipe_ingredient);

@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.data.model.Category;
 import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.AppDatabase;
+import com.pwr.mycookbook.data.service.AppDatabase;
 
 import java.io.File;
 import java.util.ArrayList;
