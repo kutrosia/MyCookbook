@@ -54,7 +54,7 @@ public class AddEditIngredientFragment extends DialogFragment {
         AddEditIngredientFragment frag = new AddEditIngredientFragment();
         if(ingredient != null){
             Bundle args = new Bundle();
-            args.putSerializable("ingredient", (Serializable) ingredient);
+            args.putSerializable("ingredient", ingredient);
             frag.setArguments(args);
         }
         return frag;
@@ -134,7 +134,8 @@ public class AddEditIngredientFragment extends DialogFragment {
                         db.ingredientDao().update(ingredient);
                     }
                 }
-                syncDate.setDate(currentTime);
+                if(syncDate!=null)
+                    syncDate.setDate(currentTime);
                 db.syncDateDao().update(syncDate);
                 AddEditIngredientFragment.this.dismiss();
             }

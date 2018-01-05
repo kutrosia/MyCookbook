@@ -49,6 +49,12 @@ public class Recipe implements Serializable {
     @Ignore
     private boolean isNew;
 
+    @Ignore
+    private boolean isImported;
+
+    @Ignore
+    private String ingredients;
+
     @ColumnInfo(name = "modification_date")
     private long modification_date;
 
@@ -70,6 +76,21 @@ public class Recipe implements Serializable {
     }
 
 
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public boolean isImported() {
+        return isImported;
+    }
+
+    public void setImported(boolean imported) {
+        isImported = imported;
+    }
 
     public String getKey() {
         return key;

@@ -6,22 +6,27 @@
     <item
         android:id="@+id/action_add_recipe"
         android:title="@string/menu_item_add_recipe"
-        ></item>
+        > </item>
+
+    <item
+        android:id="@+id/action_import_recipe_from_website"
+        android:title="@string/menu_item_import_recipe_from_website"
+        > </item>
 
     <item
         android:id="@+id/action_add_category"
         android:title="@string/menu_item_add_category"
-        ></item>
+        > </item>
 
     <item
         android:id="@+id/action_add_ingredient"
         android:title="@string/menu_item_add_ingredient"
-        ></item>
+        > </item>
 
     <item
         android:id="@+id/action_add_shoppinglist"
         android:title="@string/menu_item_add_shoppinglist"
-        ></item>
+        > </item>
 
 </menu>
 

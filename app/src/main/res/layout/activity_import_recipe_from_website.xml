@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar">
+    </include>
+
+    <Button
+        android:id="@+id/copy_recipe_title"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/document_header_filled50"
+        android:text="Tytuł"
+        android:textSize="10sp"
+        android:layout_below="@+id/toolbar"/>
+
+    <Button
+        android:id="@+id/copy_recipe_ingredients"
+        android:layout_width="71dp"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ingredients_filled_grey50"
+        android:text="Składniki"
+        android:textSize="9sp"
+        android:layout_below="@+id/toolbar"
+
+        android:layout_toRightOf="@+id/copy_recipe_title"/>
+
+    <Button
+        android:id="@+id/copy_recipe_description"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/align_text_left_filled50"
+        android:text="Opis"
+        android:textSize="10sp"
+        android:layout_below="@+id/toolbar"
+        android:layout_toRightOf="@+id/copy_recipe_ingredients"/>
+
+    <Button
+        android:id="@+id/copy_recipe_time"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/sand_timer_filled_grey50"
+        android:textSize="9sp"
+        android:text="Czas"
+        android:layout_below="@+id/toolbar"
+        android:layout_toRightOf="@+id/copy_recipe_description"/>
+
+    <Button
+        android:id="@+id/copy_recipe_photo"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/image_filled50"
+        android:textSize="10dp"
+        android:text="Obraz"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/copy_recipe_time"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/copy_recipe_title"
+        >
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </WebView>
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>

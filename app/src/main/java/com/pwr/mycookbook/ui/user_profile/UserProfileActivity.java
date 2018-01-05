@@ -90,8 +90,6 @@ public class UserProfileActivity extends AppCompatActivity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Position: " + String.valueOf(position), Toast.LENGTH_LONG).show();
-
                 switch (position){
                     case 0:
                         startActivity(new Intent(UserProfileActivity.this, EditUserEmailActivity.class));

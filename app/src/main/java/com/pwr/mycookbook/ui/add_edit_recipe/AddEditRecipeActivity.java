@@ -119,14 +119,13 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         SyncDate syncDate = db.syncDateDao().getAll();
         Calendar rightNow = Calendar.getInstance();
         long currentTime = rightNow.getTimeInMillis();
-        syncDate.setDate(currentTime);
+        if(syncDate!=null)
+            syncDate.setDate(currentTime);
         db.syncDateDao().update(syncDate);
 
         long recipe_id = addRecipeAndGetId(currentTime);
         addIngredients(currentTime);
         addRecipeIngredients(currentTime, recipe_id);
-
-
     }
 
     private void addRecipeIngredients(long currentTime, long recipe_id) {
@@ -136,6 +135,7 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
                 recipe_ingredient.setModification_date(currentTime);
                 db.recipe_ingredientDao().insertAll(recipe_ingredient);
             }else{
+                recipe_ingredient.setModification_date(currentTime);
                 db.recipe_ingredientDao().update(recipe_ingredient);
             }
         }
@@ -149,14 +149,16 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
                 ingredient = new Ingredient(name, currentTime);
                 long ingredient_id = db.ingredientDao().insertAll(ingredient)[0];
                 recipe_ingredient.ingredient_id = ingredient_id;
-            }
+            }else
+                recipe_ingredient.ingredient_id = ingredient.getId();
+
         }
     }
 
     private long addRecipeAndGetId(long currentTime) {
         long recipe_id;
         recipe.setModification_date(currentTime);
-        if (recipe.isNew()) {
+        if (recipe.isNew() || recipe.isImported()) {
             recipe_id = db.recipeDao().insertAll(recipe)[0];
         } else {
             recipe_id = recipe.getId();

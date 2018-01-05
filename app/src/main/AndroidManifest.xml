@@ -30,6 +30,8 @@
         <activity android:name=".ui.user_profile.SynchronizationActivity"></activity>
         <activity android:name=".ui.user_profile.EditUserNameActivity"></activity>
         <activity android:name=".ui.user_profile.EditUserPasswordActivity"></activity>
+        <activity android:name=".ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity"></activity>
+        <activity android:name=".ui.import_recipe_from_website.WebsiteImagesGalleryActivity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"

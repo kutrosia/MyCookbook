@@ -85,11 +85,13 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
                 title = recipe.getTitle();
                 time = String.valueOf(recipe.getTime());
                 portion = String.valueOf(recipe.getPortion());
+
                 try{
                     recipe_photo.setImageURI(Uri.fromFile(new File(recipe.getPhoto())));
                 }catch (Exception e){
                     recipe_photo.setImageResource(R.drawable.restaurant_menu100);
                 }
+
             }else{
                 title = "";
                 time = "0";

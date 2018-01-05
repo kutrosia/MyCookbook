@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <WebView
+        android:id="@+id/webview_item"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:longClickable="false">
+
+    </WebView>
+
+    <TextView
+        android:id="@+id/button_choose"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="@string/btn_choose_image"
+        android:textAlignment="center"
+        android:layout_below="@+id/webview_item"/>
+
+</RelativeLayout>

@@ -139,7 +139,8 @@ public class AddEditCategoryFragment extends DialogFragment {
                 SyncDate syncDate = db.syncDateDao().getAll();
                 Calendar rightNow = Calendar.getInstance();
                 long currentTime = rightNow.getTimeInMillis();
-                syncDate.setDate(currentTime);
+                if(syncDate!=null)
+                    syncDate.setDate(currentTime);
                 if(nameTextInputLayout.getEditText().getText() != null){
                     if(category == null){
                         category = new Category();

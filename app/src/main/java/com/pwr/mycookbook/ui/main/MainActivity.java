@@ -23,6 +23,7 @@ import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.ui.add_edit_category.AddEditCategoryFragment;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
 import com.pwr.mycookbook.ui.category_detail.CategoryDetailActivity;
+import com.pwr.mycookbook.ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity;
 import com.pwr.mycookbook.ui.ingredient.AddEditIngredientFragment;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerHeader;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerMenuItem;
@@ -81,16 +82,16 @@ public class MainActivity extends AppCompatActivity implements
     private void setupDrawer() {
         mDrawerView
                 .addView(new DrawerHeader())
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_PROFILE))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_RECIPES))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_PORTIONS_COUNTER))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_SHOPPING_LISTS))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_TIMER))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_SYNC))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_VIDEOS))
-                .addView(new DrawerMenuItem(this.getApplicationContext(), DrawerMenuItem.DRAWER_MENU_ITEM_OPTIONS));
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_PROFILE))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_RECIPES))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_PORTIONS_COUNTER))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_SHOPPING_LISTS))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_TIMER))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_SYNC))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_VIDEOS))
+                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_OPTIONS));
 
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.open_drawer, R.string.close_drawer) {
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(MainActivity.this, mDrawer, mToolbar, R.string.open_drawer, R.string.close_drawer) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
@@ -147,6 +148,10 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 });
                 addEditIngredientFragment.show(fm, "New ingredient");
+                break;
+            case R.id.action_import_recipe_from_website:
+                intent = new Intent(this, ImportRecipeFromWebsiteActivity.class);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

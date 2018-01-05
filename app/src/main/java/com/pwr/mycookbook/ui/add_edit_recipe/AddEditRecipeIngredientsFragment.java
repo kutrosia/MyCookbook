@@ -21,6 +21,7 @@ import com.pwr.mycookbook.data.model.Ingredient;
 import com.pwr.mycookbook.data.model.Recipe;
 import com.pwr.mycookbook.data.model.Recipe_Ingredient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,6 +63,21 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
 
     }
 
+    private void importIngredients() {
+        String ingredients_txt = recipe.getIngredients();
+        if(ingredients_txt != null){
+            String[] ingredients_set = ingredients_txt.split("[@]");
+            for(int i=0; i<ingredients_set.length; i++){
+                Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(0, "", ingredients_set[i]);
+                recipe_ingredient.setNew(true);
+                if(recipe_ingredients == null)
+                    recipe_ingredients = new ArrayList<>();
+                recipe_ingredients.add(recipe_ingredient);
+            }
+            setRecipeInfo();
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,9 +87,13 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
          ingredient_quantity_EditText = view.findViewById(R.id.item_recipe_ingredient_quantity);
          ingredient_measure_EditText = view.findViewById(R.id.item_recipe_ingredient_measure);
          ingredient_add_button = view.findViewById(R.id.item_recipe_ingredient_add_button);
-
+         listView = view.findViewById(R.id.ingredients_list_view);
          ingredient_add_button.setOnClickListener(onButtonAddClick());
+        if(recipe.isImported())
+            importIngredients();
          setIconsToSpinner();
+        setRecipeInfo();
+
 
         return view;
     }
@@ -126,13 +146,6 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
             recipe_ingredients.add(recipe_ingredient);
             setRecipeInfo();
         }
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        listView = view.findViewById(R.id.ingredients_list_view);
-        setRecipeInfo();
     }
 
 

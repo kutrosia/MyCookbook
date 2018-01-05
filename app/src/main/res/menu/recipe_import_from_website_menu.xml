@@ -10,13 +10,4 @@
 
     </item>
 
-    <item
-        android:icon="@drawable/camera_filled20"
-        android:id="@+id/action_add_photo"
-        android:title="@string/menu_item_add_photo"
-        app:showAsAction="ifRoom">
-
-    </item>
-
-
 </menu>
