@@ -16,10 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.android.gms.tasks.Task;
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.service_db.RecipeRepository;
 
 import java.util.List;
 
@@ -29,8 +28,7 @@ public class RecipesListFragment extends Fragment {
     public interface RecipesListListener{
         void recipeItemClicked(Recipe recipe);
     }
-    private AppDatabase db;
-
+    private RecipeRepository recipeRepository;
     private ListView recipes_list_view;
     private RecipesListListener listener;
     private List<Recipe> recipeList;
@@ -45,7 +43,6 @@ public class RecipesListFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        db = AppDatabase.getAppDatabase(getContext());
         View view = inflater.inflate(R.layout.fragment_recipes_list, container, false);
         category_filter_button = view.findViewById(R.id.category_filter_button);
         name_filter_button = view.findViewById(R.id.name_filter_button);
@@ -54,7 +51,8 @@ public class RecipesListFragment extends Fragment {
         search_button = view.findViewById(R.id.search_button);
         recipes_list_view = view.findViewById(R.id.list_view_item);
 
-        recipeList = db.recipeDao().filterByTitle();
+        recipeRepository = new RecipeRepository(getContext());
+        recipeList = recipeRepository.filterByTitle();
         setRecipeList();
         return view;
     }
@@ -96,9 +94,9 @@ public class RecipesListFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String sequence = "%" + charSequence.toString() + "%";
-                recipeList = db.recipeDao().getAllWithSubstring(sequence, sequence, sequence);
+                recipeList = recipeRepository.getAllWithSubstring(sequence, sequence, sequence);
                 if(recipeList.size() == 0){
-                    recipeList = db.recipeDao().getAllWithIngredients(sequence, sequence, sequence);
+                    recipeList = recipeRepository.getAllWithIngredients(sequence, sequence, sequence);
                 }
                 setRecipeList();
             }
@@ -125,7 +123,7 @@ public class RecipesListFragment extends Fragment {
 
                     @Override
                     protected Void doInBackground(Void... voids) {
-                        recipeList = db.recipeDao().filterByTime();
+                        recipeList = recipeRepository.filterByTime();
                         return null;
                     }
                 }.execute();
@@ -149,7 +147,7 @@ public class RecipesListFragment extends Fragment {
 
                     @Override
                     protected Void doInBackground(Void... voids) {
-                        recipeList = db.recipeDao().filterByTitle();
+                        recipeList = recipeRepository.filterByTitle();
                         return null;
                     }
                 }.execute();
@@ -172,7 +170,7 @@ public class RecipesListFragment extends Fragment {
 
                     @Override
                     protected Void doInBackground(Void... voids) {
-                        recipeList = db.recipeDao().filterByCategory();
+                        recipeList = recipeRepository.filterByCategory();
                         return null;
 
                     }
@@ -197,6 +195,7 @@ public class RecipesListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        recipeList = recipeRepository.getAll();
         setRecipeList();
 
     }

@@ -11,8 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Category;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.service_db.CategoryRepository;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class CategoriesListFragment extends Fragment {
         void categoryItemClicked(Category category);
     }
 
-    private AppDatabase db;
+    private CategoryRepository categoryRepository;
     private ListView categories_list_view;
     private CategoriesListFragment.CategoryListListener listener;
     private CategoryListAdapter adapter;
@@ -36,7 +36,7 @@ public class CategoriesListFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        db = AppDatabase.getAppDatabase(getContext());
+        categoryRepository = new CategoryRepository(getContext());
         return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
@@ -73,7 +73,7 @@ public class CategoriesListFragment extends Fragment {
     }
 
     private void setCategoriesList() {
-        categories = db.categoryDao().getAll();
+        categories = categoryRepository.getAll();
         adapter = new CategoryListAdapter(getContext(), R.layout.list_category_item, categories);
         categories_list_view.setAdapter(adapter);
         categories_list_view.setOnItemClickListener(onItemClick());

@@ -13,10 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Trash;
+import com.pwr.mycookbook.data.service_db.AppDatabase;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -52,8 +53,6 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
             holder = new AddEditRecipeIngredientsAdapter.IngredientHolder();
             holder.name = row.findViewById(R.id.item_recipe_ingredient_name);
             holder.image = row.findViewById(R.id.item_recipe_ingredient_icon);
-            holder.quantity = row.findViewById(R.id.item_recipe_ingredient_quantity);
-            holder.measure = row.findViewById(R.id.item_recipe_ingredient_measure);
             holder.remove = row.findViewById(R.id.item_recipe_ingredient_remove_button);
             row.setTag(holder);
         }
@@ -64,12 +63,15 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
         Recipe_Ingredient ingredient = ingredients.get(position);
         holder.name.setText(ingredient.getName());
         holder.image.setImageResource(R.drawable.vegetarian_food_filled50);
-        holder.quantity.setText(String.valueOf(ingredient.getQuantity()));
-        holder.measure.setText(ingredient.getMeasure());
         holder.remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Calendar calendar = Calendar.getInstance();
+                long currentTime = calendar.getTimeInMillis();
+                Trash trash = new Trash("RecipeIngredient", ingredient.getKey(), currentTime);
+                AppDatabase db = AppDatabase.getAppDatabase(context);
+                db.recipe_ingredientDao().delete(ingredient);
+                db.trashDao().insert(trash);
             }
         });
         return row;
@@ -78,8 +80,6 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
     private class IngredientHolder{
         private ImageView image;
         private TextView name;
-        private TextView quantity;
-        private TextView measure;
         private ImageButton remove;
     }
 

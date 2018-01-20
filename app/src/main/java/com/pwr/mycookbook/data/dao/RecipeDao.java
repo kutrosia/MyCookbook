@@ -2,8 +2,7 @@ package com.pwr.mycookbook.data.dao;
 
 import android.arch.persistence.room.*;
 
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe;
 
 import java.util.List;
 

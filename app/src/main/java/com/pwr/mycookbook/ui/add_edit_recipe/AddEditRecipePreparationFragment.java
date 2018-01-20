@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe;
 
 /**
  * Created by olaku on 27.11.2017.

@@ -15,11 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.SyncDate;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Category;
-
-import java.util.Calendar;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.service_db.CategoryRepository;
 
 /**
  * Created by olaku on 23.11.2017.
@@ -35,7 +32,7 @@ public class AddEditCategoryFragment extends DialogFragment {
     private CategoryIconsListAdapter adapter;
     private Integer[] iconsRes;
     private Category category;
-    private AppDatabase db;
+    private CategoryRepository categoryRepository;
     private DialogInterface.OnDismissListener onDismissListener;
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
@@ -65,7 +62,7 @@ public class AddEditCategoryFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        db = AppDatabase.getAppDatabase(getContext());
+        categoryRepository = new CategoryRepository(getContext());
         return inflater.inflate(R.layout.fragment_add_edit_category, container);
     }
 
@@ -136,26 +133,19 @@ public class AddEditCategoryFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String name = nameTextInputLayout.getEditText().getText().toString();
-                SyncDate syncDate = db.syncDateDao().getAll();
-                Calendar rightNow = Calendar.getInstance();
-                long currentTime = rightNow.getTimeInMillis();
-                if(syncDate!=null)
-                    syncDate.setDate(currentTime);
+
                 if(nameTextInputLayout.getEditText().getText() != null){
                     if(category == null){
                         category = new Category();
-                        category.setModification_date(currentTime);
                         category.setName(name);
                         category.setImage(iconsRes[icons_spinner.getSelectedItemPosition()]);
-                        db.categoryDao().insertAll(category);
+                        categoryRepository.insertAll(category);
                     }else{
                         category.setName(name);
-                        category.setModification_date(currentTime);
                         category.setImage(iconsRes[icons_spinner.getSelectedItemPosition()]);
-                        db.categoryDao().update(category);
+                        categoryRepository.update(category);
                     }
                 }
-                db.syncDateDao().update(syncDate);
                 AddEditCategoryFragment.this.dismiss();
             }
         };

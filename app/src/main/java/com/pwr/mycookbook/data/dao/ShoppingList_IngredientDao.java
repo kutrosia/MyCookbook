@@ -3,8 +3,7 @@ package com.pwr.mycookbook.data.dao;
 
 import android.arch.persistence.room.*;
 
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.ShoppingList_Ingredient;
+import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
 
 import java.util.List;
 
@@ -24,13 +23,11 @@ public interface ShoppingList_IngredientDao {
     @Delete
     void delete(ShoppingList_Ingredient shoppinglist_ingredients);
 
-    @Query("SELECT * FROM ingredients INNER JOIN shoppinglists_ingredients ON " +
-            "ingredients.id = shoppinglists_ingredients.ingredient_id " +
-            "WHERE shoppinglists_ingredients.shoppinglist_id=:shoppinglist_id")
-    List<Ingredient> getIngredientsForShoppinglist(final long shoppinglist_id);
-
     @Query("SELECT * FROM shoppinglists_ingredients")
     List<ShoppingList_Ingredient> getAll();
+
+    @Query("SELECT * FROM shoppinglists_ingredients WHERE shoppinglist_id LIKE :shoppinglist_id")
+    List<ShoppingList_Ingredient> getIngredientsForShoppinglist(long shoppinglist_id);
 
     @Query("SELECT * FROM shoppinglists_ingredients where modification_date > :modify_date")
     List<ShoppingList_Ingredient> getNotModified(long modify_date);

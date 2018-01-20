@@ -1,13 +1,9 @@
 package com.pwr.mycookbook.ui.add_edit_recipe;
 
 import android.Manifest;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -16,41 +12,31 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
-import com.pwr.mycookbook.data.model.SyncDate;
+import com.pwr.mycookbook.data.file.BitmapSave;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
+import com.pwr.mycookbook.data.service_db.RecipeIngredientRepository;
+import com.pwr.mycookbook.data.service_db.RecipeRepository;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class AddEditRecipeActivity extends AppCompatActivity implements IPickResult, IRecipeChange {
     public static final String EXTRA_RECIPE = "recipe";
     private Recipe recipe;
     private List<Recipe_Ingredient> recipe_ingredients;
-    private AppDatabase db;
+    private RecipeRepository recipeRepository;
+    private RecipeIngredientRepository recipeIngredientRepository;
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
-    private TabLayout tabLayout;
 
     private AddEditRecipeFragment addEditRecipeFragment;
     private AddEditRecipeIngredientsFragment addEditRecipeIngredientsFragment;
@@ -65,23 +51,28 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         toolbar.setLogo(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dossier_50));
         setSupportActionBar(toolbar);
 
-        db = AppDatabase.getAppDatabase(getApplicationContext());
-
+        recipeRepository = new RecipeRepository(getApplicationContext());
+        recipeIngredientRepository = new RecipeIngredientRepository(getApplicationContext());
         recipe = (Recipe) getIntent().getExtras().get(EXTRA_RECIPE);
-
-        viewPager = findViewById(R.id.pager);
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        if(recipe.isNew() || recipe.isImported()){
+            long recipe_id = recipeRepository.insertAll(recipe)[0];
+            recipe = recipeRepository.findById(recipe_id);
+        }
+        ViewPager viewPager = findViewById(R.id.pager);
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
         addEditRecipeFragment = AddEditRecipeFragment.newInstance(recipe);
         addEditRecipeIngredientsFragment = AddEditRecipeIngredientsFragment.newInstance(recipe);
         addEditRecipePreparationFragment = AddEditRecipePreparationFragment.newInstance(recipe);
+
         pagerAdapter.addFragment(addEditRecipeFragment, "Szczegóły");
         pagerAdapter.addFragment(addEditRecipeIngredientsFragment, "Składniki");
         pagerAdapter.addFragment(addEditRecipePreparationFragment, "Instrukcje");
 
         viewPager.setAdapter(pagerAdapter);
 
-        tabLayout = findViewById(R.id.tabs);
+
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -116,42 +107,17 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
 
     public void insertOrUpdateRecipeToDb(){
-        SyncDate syncDate = db.syncDateDao().getAll();
-        Calendar rightNow = Calendar.getInstance();
-        long currentTime = rightNow.getTimeInMillis();
-        if(syncDate!=null)
-            syncDate.setDate(currentTime);
-        db.syncDateDao().update(syncDate);
-
-        long recipe_id = addRecipeAndGetId(currentTime);
-        addIngredients(currentTime);
-        addRecipeIngredients(currentTime, recipe_id);
+        recipeRepository.updateAll(recipe);
+        addRecipeIngredients();
     }
 
-    private void addRecipeIngredients(long currentTime, long recipe_id) {
+    private void addRecipeIngredients() {
         for(Recipe_Ingredient recipe_ingredient: recipe_ingredients) {
             if(recipe_ingredient.isNew()){
-                recipe_ingredient.recipe_id = recipe_id;
-                recipe_ingredient.setModification_date(currentTime);
-                db.recipe_ingredientDao().insertAll(recipe_ingredient);
+                recipeIngredientRepository.insertAll(recipe_ingredient);
             }else{
-                recipe_ingredient.setModification_date(currentTime);
-                db.recipe_ingredientDao().update(recipe_ingredient);
+                recipeIngredientRepository.update(recipe_ingredient);
             }
-        }
-    }
-
-    private void addIngredients(long currentTime) {
-        for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
-            String name = recipe_ingredient.getName();
-            Ingredient ingredient = db.ingredientDao().findByName(name);
-            if(ingredient == null){
-                ingredient = new Ingredient(name, currentTime);
-                long ingredient_id = db.ingredientDao().insertAll(ingredient)[0];
-                recipe_ingredient.ingredient_id = ingredient_id;
-            }else
-                recipe_ingredient.ingredient_id = ingredient.getId();
-
         }
     }
 
@@ -159,10 +125,10 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         long recipe_id;
         recipe.setModification_date(currentTime);
         if (recipe.isNew() || recipe.isImported()) {
-            recipe_id = db.recipeDao().insertAll(recipe)[0];
+            recipe_id = recipeRepository.insertAll(recipe)[0];
         } else {
             recipe_id = recipe.getId();
-            db.recipeDao().updateAll(recipe);
+            recipeRepository.updateAll(recipe);
         }
         return recipe_id;
     }
@@ -225,47 +191,52 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         if (pickResult.getError() == null) {
             Bitmap bitmap = pickResult.getBitmap();
 
-            OutputStream fOut = null;
-            File file = new File(getAlbumStorageDir("/MyCookbook"), "IMG_" + System.currentTimeMillis() + ".jpg");
-            String path = file.getPath();
+            BitmapSave bs = new BitmapSave();
+            bs.saveBitmap(bitmap);
+            String path = bs.getFilePath();
+
             recipe.setPhoto_bitmap(bitmap);
             recipe.setPhoto(path);
             addEditRecipeFragment.setPhoto(bitmap);
-            try {
-                fOut = new FileOutputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
 
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-            try {
-                fOut.flush();
-                fOut.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-            ContentValues values = new ContentValues();
+            /*ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
             values.put(MediaStore.Images.ImageColumns.BUCKET_ID, file.toString().toLowerCase(Locale.US).hashCode());
             values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, file.getName().toLowerCase(Locale.US));
             values.put("_data", file.getAbsolutePath());
 
             ContentResolver cr = getContentResolver();
-            cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);*/
 
         }
     }
 
-    public File getAlbumStorageDir(String albumName) {
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
-            Log.e("ALBUM", "Directory not created");
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Toast.makeText(getApplicationContext(), "OnDestroy", Toast.LENGTH_SHORT).show();
+        if(recipe.getTitle() == null){
+            recipeRepository.deleteAll(recipe);
         }
-        return file;
     }
 
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Toast.makeText(getApplicationContext(), "OnDeatchedFromWindow", Toast.LENGTH_SHORT).show();
+        if(recipe.getTitle() == null){
+            recipeRepository.deleteAll(recipe);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        recipeRepository.deleteAll(recipe);
+        Toast.makeText(getApplicationContext(), "OnBackPressed", Toast.LENGTH_SHORT).show();
+
+    }
 
     @Override
     public void setRecipeDetail(Recipe recipe) {

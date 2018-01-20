@@ -31,7 +31,7 @@
     <string name="ingredient_name">Nazwa składnika</string>
     <string name="new_ingredient_title">Nowy składnik</string>
     <string name="edit_igredient_title">Edytuj składnik</string>
-    <string name="edit_ingredient_title">Edytuj składnik</string>
+    <string name="edit_shoppinglist_title">Edytuj listę zakupów</string>
     <string name="ingredient">Składniki</string>
     <string name="ingredient_measure">miara</string>
     <string name="ingredient_quantity">ilość</string>
@@ -92,6 +92,7 @@
     <string name="text_sync">Zalogowany użytkownik może umieścić swoje przepisy w chmurze, aby mieć do nich dostęp z wielu urządzeń z zainstalowaną aplikacją.</string>
     <string name="menu_item_import_recipe_from_website">Importuj przepis ze strony</string>
     <string name="btn_choose_image">Wybierz to zdjęcie</string>
+    <string name="new_shoppinglist_title">Nowa lista zakupów</string>
 
 
 </resources>

@@ -3,7 +3,7 @@ package com.pwr.mycookbook.data.dao;
 
 import android.arch.persistence.room.*;
 
-import com.pwr.mycookbook.data.model.ShoppingList;
+import com.pwr.mycookbook.data.model_db.ShoppingList;
 
 import java.util.List;
 

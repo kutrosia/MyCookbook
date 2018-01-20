@@ -1,16 +1,12 @@
 package com.pwr.mycookbook.ui.import_recipe_from_website;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -26,8 +22,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.file.BitmapSave;
+import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
 
 import org.jsoup.Jsoup;
@@ -35,13 +31,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.HashSet;
 
 
@@ -129,8 +120,8 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
     }
 
     private void setWebViewSettings() {
-        //url = "http://www.google.com/";
-        url = "http://przepisyjoli.com/2014/01/babka-piaskowa/";
+        url = "http://www.google.com/";
+        //url = "http://przepisyjoli.com/2014/01/babka-piaskowa/";
         webView.setWebViewClient(new MyBrowser());
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -238,7 +229,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                 @Override
                 protected Bitmap doInBackground(Void... voids) {
                     Bitmap bitmap = null;
-                    String imageURL = "";
+                    String imageURL;
                     if (requestCode == 2 && data != null) {
                         imageURL = data.getStringExtra("img");
                         try {
@@ -257,35 +248,12 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                     super.onPostExecute(bitmap);
                     if(bitmap != null){
                         Toast.makeText(getApplicationContext(), "Zapisywanie obrazu...", Toast.LENGTH_LONG).show();
-                        OutputStream fOut = null;
-                        File file = new File(getAlbumStorageDir("/MyCookbook"), "IMG_" + System.currentTimeMillis() + ".jpg");
-                        String path = file.getPath();
-                        recipe.setPhoto(path);
-                        try {
-                            fOut = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-                            fOut.flush();
-                            fOut.close();
-                        } catch (FileNotFoundException e) {
-                            Toast.makeText(getApplicationContext(), "Nie znaleziono pliku", Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
+                        BitmapSave bs = new BitmapSave();
+                        bs.saveBitmap(bitmap);
+                        recipe.setPhoto(bs.getFilePath());
                     }
                 }
             }.execute();
-    }
-
-
-    public File getAlbumStorageDir(String albumName) {
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
-            Log.e("ALBUM", "Directory not created");
-        }
-        return file;
     }
 
     private class MyBrowser extends WebViewClient {

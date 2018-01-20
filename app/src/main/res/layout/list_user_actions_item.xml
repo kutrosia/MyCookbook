@@ -15,7 +15,7 @@
 
     <TextView
         android:id="@+id/user_action_item_name"
-        style="@style/IngredientNameStyle"
+        style="@style/ShoppinglistNameStyle"
         android:layout_marginLeft="30dp"
         android:layout_toRightOf="@+id/user_action_item_image"/>
 

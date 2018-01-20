@@ -12,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
+import com.pwr.mycookbook.data.service_db.RecipeIngredientRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +29,12 @@ import java.util.List;
 public class AddEditRecipeIngredientsFragment extends Fragment implements IRecipeSave {
 
     private Recipe recipe;
-    private AppDatabase db;
+    private RecipeIngredientRepository recipeIngredientRepository;
     private static final String EXTRA_RECIPE = "recipe";
     private ListView listView;
     private AddEditRecipeIngredientsAdapter adapter;
-    private IngredientIconsListAdapter iconsListAdapter;
-    private Spinner icons_spinner;
     private EditText ingredient_name_EditText;
-    private EditText ingredient_quantity_EditText;
-    private EditText ingredient_measure_EditText;
     private ImageButton ingredient_add_button;
-    private Integer[] iconsRes;
     private List<Recipe_Ingredient> recipe_ingredients;
 
 
@@ -56,11 +49,12 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = AppDatabase.getAppDatabase(getContext());
+        recipeIngredientRepository = new RecipeIngredientRepository(getContext());
         Bundle bundle = this.getArguments();
         recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
-        recipe_ingredients = db.recipe_ingredientDao().getIngredientsForRecipe(recipe.getId());
-
+        recipe_ingredients = recipeIngredientRepository.getIngredientsForRecipe(recipe.getId());
+        if(recipe_ingredients == null)
+            recipe_ingredients = new ArrayList<>();
     }
 
     private void importIngredients() {
@@ -68,11 +62,7 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
         if(ingredients_txt != null){
             String[] ingredients_set = ingredients_txt.split("[@]");
             for(int i=0; i<ingredients_set.length; i++){
-                Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(0, "", ingredients_set[i]);
-                recipe_ingredient.setNew(true);
-                if(recipe_ingredients == null)
-                    recipe_ingredients = new ArrayList<>();
-                recipe_ingredients.add(recipe_ingredient);
+                addNewRecipeIngredientToList(ingredients_set[i]);
             }
             setRecipeInfo();
         }
@@ -82,66 +72,38 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_add_edit_recipe_ingredients, container, false);
-         icons_spinner = view.findViewById(R.id.item_recipe_ingredient_icon_spinner);
          ingredient_name_EditText = view.findViewById(R.id.item_recipe_ingredient_name);
-         ingredient_quantity_EditText = view.findViewById(R.id.item_recipe_ingredient_quantity);
-         ingredient_measure_EditText = view.findViewById(R.id.item_recipe_ingredient_measure);
          ingredient_add_button = view.findViewById(R.id.item_recipe_ingredient_add_button);
-         listView = view.findViewById(R.id.ingredients_list_view);
+         listView = view.findViewById(R.id.shoppinglist_list_view);
+
+
          ingredient_add_button.setOnClickListener(onButtonAddClick());
+
         if(recipe.isImported())
             importIngredients();
-         setIconsToSpinner();
-        setRecipeInfo();
 
+        setRecipeInfo();
 
         return view;
     }
 
-    private void setIconsToSpinner(){
-        iconsRes = new Integer[]{
-                R.drawable.noodles_black_white50,
-                R.drawable.pizza50,
-                R.drawable.rice_bowl_filled50,
-                R.drawable.steak50,
-                R.drawable.sushi50,
-                R.drawable.food_and_wine50,
-                R.drawable.cupcake_filled50,
-                R.drawable.cake_filled50,
-                R.drawable.pancake_filled50
-        };
-
-        iconsListAdapter = new IngredientIconsListAdapter(getContext(), R.layout.list_category_icon_item, iconsRes);
-        icons_spinner.setAdapter(iconsListAdapter);
-    }
 
     private View.OnClickListener onButtonAddClick() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewRecipeIngredientToList();
-
+                String name = ingredient_name_EditText.getText().toString();
+                addNewRecipeIngredientToList(name);
                 ingredient_name_EditText.setText("");
-                ingredient_quantity_EditText.setText("");
-                ingredient_measure_EditText.setText("");
             }
         };
     }
 
-    private void addNewRecipeIngredientToList() {
-        String name = ingredient_name_EditText.getText().toString();
-        double quantity = 0;
-        try {
-            quantity = Double.parseDouble(ingredient_quantity_EditText.getText().toString());
-        } catch (Exception e) {
-            Toast.makeText(getContext(), "Nieprawidłowa ilość. Należy podać liczbę zmiennoprzecinkową po '.'", Toast.LENGTH_LONG).show();
-        }
-        String measure = ingredient_measure_EditText.getText().toString();
-
+    private void addNewRecipeIngredientToList(String name) {
         if (name.equals("")) {
             Toast.makeText(getContext(), "Składnik musi posiadać nazwę", Toast.LENGTH_LONG).show();
         } else {
-            Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(quantity, measure, name);
+            Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(recipe.getId(), name);
             recipe_ingredient.setNew(true);
             recipe_ingredients.add(recipe_ingredient);
             setRecipeInfo();

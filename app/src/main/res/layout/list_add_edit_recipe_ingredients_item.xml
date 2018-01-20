@@ -6,12 +6,15 @@
 
     <ImageView
         android:id="@+id/ingredient_picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/vegetarian_food_filled50"/>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/ingredient_picture"
+        android:layout_marginStart="10dp"
         android:id="@+id/ingredient_name_TextInputLayout">
 
         <EditText
@@ -23,32 +26,5 @@
             android:inputType="textMultiLine"/>
     </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ingredient_quantity_TextInputLayout">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ingredient_quantity_editText"
-            android:hint="@string/ingredient_quantity"
-            android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ingredient_measure_TextInputLayout">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ingredient_measure_editText"
-            android:hint="@string/ingredient_measure"
-            android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
-    </android.support.design.widget.TextInputLayout>
 
 </RelativeLayout>

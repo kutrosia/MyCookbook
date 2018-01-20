@@ -16,9 +16,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.Category;
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.service.AppDatabase;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.service_db.CategoryRepository;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
     private Recipe recipe;
-    private AppDatabase db;
+    private CategoryRepository categoryRepository;
     private ImageView recipe_photo;
     private TextInputLayout title_TextInputLayout;
     private Spinner category_spinner;
@@ -63,7 +63,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = AppDatabase.getAppDatabase(getContext());
+        categoryRepository = new CategoryRepository(getContext());
         Bundle bundle = this.getArguments();
         this.recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
     }
@@ -107,7 +107,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
             @Override
             protected String doInBackground(Object... params) {
                 try {
-                    categoryList = db.categoryDao().getAll();
+                    categoryList = categoryRepository.getAll();
                     List<String> catgoryTitles = new ArrayList<>();
                     for(Category category: categoryList){
                         catgoryTitles.add(category.getName());

@@ -2,8 +2,7 @@ package com.pwr.mycookbook.data.dao;
 
 import android.arch.persistence.room.*;
 
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
 
 import java.util.List;
 
@@ -23,8 +22,7 @@ public interface Recipe_IngredientDao {
     @Delete
     void delete(Recipe_Ingredient recipe_ingredient);
 
-    @Query("SELECT * FROM ingredients INNER JOIN recipes_ingredients ON " +
-            "ingredients.id = recipes_ingredients.ingredient_id " +
+    @Query("SELECT * FROM recipes_ingredients " +
             "WHERE recipes_ingredients.recipe_id=:recipe_id")
             List<Recipe_Ingredient> getIngredientsForRecipe(final long recipe_id);
 

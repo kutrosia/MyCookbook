@@ -12,9 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
 
 import java.util.List;
 
@@ -50,8 +48,6 @@ public class RecipeDetailIngredientsAdapter extends ArrayAdapter<Recipe_Ingredie
             holder = new IngredientHolder();
             holder.nameTextView = row.findViewById(R.id.item_recipe_ingredient_name);
             holder.image = row.findViewById(R.id.item_recipe_ingredient_icon);
-            holder.quantityTextView = row.findViewById(R.id.item_recipe_ingredient_quantity);
-            holder.measureTextView = row.findViewById(R.id.item_recipe_ingredient_measure);
 
             row.setTag(holder);
         }
@@ -62,8 +58,6 @@ public class RecipeDetailIngredientsAdapter extends ArrayAdapter<Recipe_Ingredie
         Recipe_Ingredient ingredient = ingredients.get(position);
         holder.nameTextView.setText(ingredient.getName());
         holder.image.setImageResource(R.drawable.vegetarian_food_filled50);
-        holder.quantityTextView.setText(String.valueOf(ingredient.getQuantity()));
-        holder.measureTextView.setText(ingredient.getMeasure());
 
         return row;
     }
@@ -71,7 +65,6 @@ public class RecipeDetailIngredientsAdapter extends ArrayAdapter<Recipe_Ingredie
     private class IngredientHolder{
         private ImageView image;
         private TextView nameTextView;
-        private TextView quantityTextView;
-        private TextView measureTextView;
+
     }
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe;
 
 import java.io.Serializable;
 
@@ -28,7 +28,7 @@ public class RecipeDetailPreparationFragment extends Fragment{
     public static RecipeDetailPreparationFragment newInstance(Recipe recipe) {
         RecipeDetailPreparationFragment result = new RecipeDetailPreparationFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(EXTRA_RECIPE, (Serializable) recipe);
+        bundle.putSerializable(EXTRA_RECIPE, recipe);
         result.setArguments(bundle);
         return result;
     }
@@ -50,8 +50,8 @@ public class RecipeDetailPreparationFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recipe_description_TextView = (TextView) view.findViewById(R.id.recipe_description);
-        recipe_note_TextView = (TextView) view.findViewById(R.id.recipe_note);
+        recipe_description_TextView = view.findViewById(R.id.recipe_description);
+        recipe_note_TextView = view.findViewById(R.id.recipe_note);
     }
 
     @Override

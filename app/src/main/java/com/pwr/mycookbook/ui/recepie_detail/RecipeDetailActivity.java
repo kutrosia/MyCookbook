@@ -13,12 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.pwr.mycookbook.RecipePDF;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.file.RecipePDF;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.service_db.RecipeRepository;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
-import com.pwr.mycookbook.data.service.AppDatabase;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ import java.io.File;
 public class RecipeDetailActivity extends AppCompatActivity {
     public static final String EXTRA_RECIPE = "recipe";
     private Recipe recipe;
-    private AppDatabase db;
+    private RecipeRepository recipeRepository;
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
@@ -42,7 +42,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         toolbar.setLogo(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dossier_50));
         setSupportActionBar(toolbar);
 
-        db = AppDatabase.getAppDatabase(getApplicationContext());
+        recipeRepository = new RecipeRepository(getApplicationContext());
         recipe = (Recipe) getIntent().getExtras().get(EXTRA_RECIPE);
 
         viewPager = findViewById(R.id.pager);
@@ -77,12 +77,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_remove_recipe:
-                db.recipeDao().deleteAll(recipe);
+                recipeRepository.deleteAll(recipe);
                 finish();
                 break;
             case R.id.action_share:
-                File file = new RecipePDF().writeRecipeToPDF(recipe, getApplicationContext(), db);
-
+                File file = new RecipePDF().writeRecipeToPDF(recipe, getApplicationContext());
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("application/pdf");
                 share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));

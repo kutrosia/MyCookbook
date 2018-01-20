@@ -12,15 +12,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Category;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.service_db.CategoryRepository;
 
 import java.io.File;
 
 public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;
-    private AppDatabase db;
+    private CategoryRepository categoryRepository;
 
     private static final String EXTRA_RECIPE = "recipe";
     private TextView recipe_title;
@@ -41,7 +41,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        db = AppDatabase.getAppDatabase(getContext());
+        categoryRepository = new CategoryRepository(getContext());
         Bundle bundle = this.getArguments();
         recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
 
@@ -70,7 +70,7 @@ public class RecipeDetailFragment extends Fragment {
         if(recipe != null){
             recipe_title.setText(recipe.getTitle());
 
-            Category category = db.categoryDao().findById(recipe.getCategory_id());
+            Category category = categoryRepository.findById(recipe.getCategory_id());
             if(category!=null)
                 recipe_category.setText(category.getName());
 

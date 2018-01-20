@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
+import com.pwr.mycookbook.data.service_db.RecipeIngredientRepository;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
 public class RecipeDetailIngredientsFragment extends Fragment {
     private Recipe recipe;
     private static final String EXTRA_RECIPE = "recipe";
-    private AppDatabase db;
+    private RecipeIngredientRepository recipeIngredientRepository;
     private RecipeDetailIngredientsAdapter adapter;
     private ListView ingredients_list_view;
 
@@ -41,7 +41,7 @@ public class RecipeDetailIngredientsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Bundle bundle = this.getArguments();
         this.recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
-        db = AppDatabase.getAppDatabase(getContext());
+        recipeIngredientRepository = new RecipeIngredientRepository(getContext());
 
     }
 
@@ -62,7 +62,7 @@ public class RecipeDetailIngredientsFragment extends Fragment {
             @Override
             protected String doInBackground(Object... params) {
                 try {
-                    List<Recipe_Ingredient> ingredients = db.recipe_ingredientDao().getIngredientsForRecipe(recipe.getId());
+                    List<Recipe_Ingredient> ingredients = recipeIngredientRepository.getIngredientsForRecipe(recipe.getId());
                     adapter = new RecipeDetailIngredientsAdapter(
                             getContext(), R.layout.list_recipe_detail_ingredients_item, ingredients);
                 }catch(Exception e){

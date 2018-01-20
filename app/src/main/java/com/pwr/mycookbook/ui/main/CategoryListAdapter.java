@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.Category;
+import com.pwr.mycookbook.data.model_db.Category;
 
 import java.util.List;
 

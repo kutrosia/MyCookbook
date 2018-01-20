@@ -16,41 +16,26 @@
         android:id="@+id/item_recipe_ingredient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:layout_toRightOf="@+id/item_recipe_ingredient_icon"/>
+        android:layout_marginStart="10dp"
+        android:layout_toStartOf="@+id/item_recipe_ingredient_edit_button"
+        android:layout_toEndOf="@+id/item_recipe_ingredient_icon"/>
 
-    <TextView
-        android:id="@+id/item_recipe_ingredient_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:layout_toLeftOf="@+id/item_recipe_ingredient_measure" />
-
-    <TextView
-        android:id="@+id/item_recipe_ingredient_measure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:layout_toLeftOf="@+id/item_recipe_ingredient_remove_button"/>
-
-    <!--<ImageButton
+    <ImageButton
         android:id="@+id/item_recipe_ingredient_edit_button"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/edit_grey20"
-        android:paddingRight="10dp"
-        android:layout_toLeftOf="@+id/item_recipe_ingredient_remove_button"
-        />-->
+        android:background="@drawable/edit_filled_grey50"
+        android:layout_marginEnd="10dp"
+        android:layout_toStartOf="@+id/item_recipe_ingredient_remove_button"
+        />
 
     <ImageButton
         android:id="@+id/item_recipe_ingredient_remove_button"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:background="@drawable/waste_filled_grey20"
-        android:paddingRight="5dp"
+        android:background="@drawable/delete_filled50"
+        android:layout_marginEnd="5dp"
         android:layout_alignParentEnd="true"
         />
-
-
 
 </RelativeLayout>

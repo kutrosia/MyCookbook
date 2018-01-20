@@ -12,10 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.data.service_db.CategoryRepository;
 import com.pwr.mycookbook.ui.add_edit_category.AddEditCategoryFragment;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Category;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;
 
 /**
@@ -29,7 +29,7 @@ public class CategoryDetailActivity extends AppCompatActivity
     private Category category;
     private FragmentManager fm = getSupportFragmentManager();
     private CategoryDetailFragment categoryDetailFragment;
-    private AppDatabase db;
+    private CategoryRepository categoryRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class CategoryDetailActivity extends AppCompatActivity
         toolbar.setLogo(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dossier_50));
         setSupportActionBar(toolbar);
 
-        db = AppDatabase.getAppDatabase(getApplicationContext());
+        categoryRepository = new CategoryRepository(getApplicationContext());
         category = (Category) getIntent().getExtras().get(EXTRA_CATEGORY);
         getSupportActionBar().setSubtitle(category.getName());
 
@@ -70,7 +70,7 @@ public class CategoryDetailActivity extends AppCompatActivity
                 addEditCategoryFragment.show(fm, "New category");
                 break;
             case R.id.action_remove_category:
-                db.categoryDao().delete(category);
+                categoryRepository.delete(category);
                 finish();
                 break;
         }

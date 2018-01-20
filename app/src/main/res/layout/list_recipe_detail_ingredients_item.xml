@@ -9,28 +9,17 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:src="@drawable/vegetarian_food_filled50"
-        android:paddingLeft="5dp"/>
+        android:layout_marginStart="5dp"/>
 
     <TextView
         android:id="@+id/item_recipe_ingredient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:layout_toRightOf="@+id/item_recipe_ingredient_icon"/>
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/item_recipe_ingredient_icon"
+        android:layout_alignParentEnd="true"
+        />
 
-    <TextView
-        android:id="@+id/item_recipe_ingredient_quantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:layout_toLeftOf="@+id/item_recipe_ingredient_measure" />
-
-    <TextView
-        android:id="@+id/item_recipe_ingredient_measure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:layout_alignParentEnd="true"/>
 
 
 

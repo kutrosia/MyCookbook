@@ -1,7 +1,7 @@
 package com.pwr.mycookbook.ui.add_edit_recipe;
 
-import com.pwr.mycookbook.data.model.Recipe;
-import com.pwr.mycookbook.data.model.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
 
 import java.util.List;
 

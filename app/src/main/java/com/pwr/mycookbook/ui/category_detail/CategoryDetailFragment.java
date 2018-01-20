@@ -15,9 +15,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.service.AppDatabase;
-import com.pwr.mycookbook.data.model.Category;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.service_db.RecipeRepository;
 import com.pwr.mycookbook.ui.main.RecipeListAdapter;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public class CategoryDetailFragment extends Fragment {
     }
 
     public static final String EXTRA_CATEGORY = "category";
-    private AppDatabase db;
+    private RecipeRepository recipeRepository;
     private Category category;
     private ListView recipes_list_view;
     private CategoryDetailFragment.RecipesListListener listener;
@@ -56,14 +56,14 @@ public class CategoryDetailFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_category_detail, container, false);
-        db = AppDatabase.getAppDatabase(getContext());
+        recipeRepository = new RecipeRepository(getContext());
         recipes_list_view = view.findViewById(R.id.recepies_categorized_list_view);
         Bundle bundle = getActivity().getIntent().getExtras();
         if(bundle != null){
             this.category = (Category) bundle.getSerializable(EXTRA_CATEGORY);
             Toast.makeText(getContext(), this.category.getName(), Toast.LENGTH_LONG).show();
             try {
-                recipes = db.recipeDao().findAllByCategory(category.getId());
+                recipes = recipeRepository.findAllByCategory(category.getId());
                 adapter = new RecipeListAdapter(getContext(), R.layout.list_recipe_item, recipes);
             }catch(Exception e){
                 Log.e("CATEGORY DETAIL", e.getMessage());
@@ -83,7 +83,7 @@ public class CategoryDetailFragment extends Fragment {
                 @Override
                 protected String doInBackground(String... params) {
                     try {
-                        recipes = db.recipeDao().findAllByCategory(category.getId());
+                        recipes = recipeRepository.findAllByCategory(category.getId());
                         adapter = new RecipeListAdapter(getContext(), R.layout.list_recipe_item, recipes);
                     }catch(Exception e){
                         return e.getMessage();

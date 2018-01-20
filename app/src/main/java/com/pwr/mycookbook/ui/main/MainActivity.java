@@ -17,14 +17,14 @@ import android.view.View;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.pwr.mycookbook.R;
-import com.pwr.mycookbook.data.model.Category;
-import com.pwr.mycookbook.data.model.Ingredient;
-import com.pwr.mycookbook.data.model.Recipe;
+import com.pwr.mycookbook.data.model_db.Category;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.model_db.ShoppingList;
 import com.pwr.mycookbook.ui.add_edit_category.AddEditCategoryFragment;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
 import com.pwr.mycookbook.ui.category_detail.CategoryDetailActivity;
 import com.pwr.mycookbook.ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity;
-import com.pwr.mycookbook.ui.ingredient.AddEditIngredientFragment;
+import com.pwr.mycookbook.ui.add_edit_shoppinglist.AddEditShoppinglistFragment;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerHeader;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerMenuItem;
 import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;
@@ -36,7 +36,7 @@ import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;
 public class MainActivity extends AppCompatActivity implements
         RecipesListFragment.RecipesListListener,
         CategoriesListFragment.CategoryListListener,
-        IngredientsListFragment.IngredientsListListener {
+        ShoppinglistListFragment.IngredientsListListener {
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements
 
         pagerAdapter.addFragment(new CategoriesListFragment(), "Kategorie");
         pagerAdapter.addFragment(new RecipesListFragment(), "Przepisy");
-        pagerAdapter.addFragment(new IngredientsListFragment(), "Składniki");
+        pagerAdapter.addFragment(new ShoppinglistListFragment(), "Listy zakupów");
 
         viewPager.setAdapter(pagerAdapter);
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.recipes_list_menu, menu);
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return true;
     }
 
@@ -137,8 +137,8 @@ public class MainActivity extends AppCompatActivity implements
                 intent.putExtra(AddEditRecipeActivity.EXTRA_RECIPE, recipe);
                 startActivity(intent);
                 break;
-            case R.id.action_add_ingredient:
-                AddEditIngredientFragment addEditIngredientFragment = AddEditIngredientFragment.newInstance(null);
+            case R.id.action_add_shoppinglist:
+                AddEditShoppinglistFragment addEditIngredientFragment = AddEditShoppinglistFragment.newInstance(null);
                 addEditIngredientFragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements
 
                     }
                 });
-                addEditIngredientFragment.show(fm, "New ingredient");
+                addEditIngredientFragment.show(fm, "New shoppinglist");
                 break;
             case R.id.action_import_recipe_from_website:
                 intent = new Intent(this, ImportRecipeFromWebsiteActivity.class);
@@ -175,8 +175,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void ingredientItemClicked(Ingredient ingredient) {
-        AddEditIngredientFragment addEditIngredientFragment = AddEditIngredientFragment.newInstance(ingredient);
+    public void shoppinglistItemClicked(ShoppingList shoppingList) {
+
+        /*AddEditShoppinglistFragment addEditIngredientFragment = AddEditShoppinglistFragment.newInstance(ingredient);
         addEditIngredientFragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
@@ -187,6 +188,6 @@ public class MainActivity extends AppCompatActivity implements
 
             }
         });
-        addEditIngredientFragment.show(fm, "Nowy składnik");
+        addEditIngredientFragment.show(fm, "Nowy składnik");*/
     }
 }
