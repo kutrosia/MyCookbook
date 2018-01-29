@@ -93,6 +93,11 @@
     <string name="menu_item_import_recipe_from_website">Importuj przepis ze strony</string>
     <string name="btn_choose_image">Wybierz to zdjęcie</string>
     <string name="new_shoppinglist_title">Nowa lista zakupów</string>
+    <string name="menu_item_download_recipe">Pobierz przepis</string>
+    <string name="menu_item_generate_shoppinglist">Generuj listę zakupów</string>
+    <string name="menu_item_remove_shoppinglist">Usuń listę</string>
+    <string name="menu_item_edit_shoppinglist">Zmień nazwę</string>
+    <string name="to_buy">Do kupienia:</string>
 
 
 </resources>

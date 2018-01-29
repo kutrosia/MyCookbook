@@ -15,7 +15,7 @@ import java.util.List;
 public interface ShoppingListDao {
 
     @Insert
-    void insertAll(ShoppingList... shoppingLists);
+    long[] insertAll(ShoppingList... shoppingLists);
 
     @Update
     void update(ShoppingList ingredient);

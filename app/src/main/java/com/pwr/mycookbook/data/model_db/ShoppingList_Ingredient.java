@@ -23,6 +23,9 @@ public class ShoppingList_Ingredient {
     @PrimaryKey(autoGenerate = true)
     private long ingredient_id;
 
+    @ColumnInfo(name = "name")
+    private String name;
+
     @ColumnInfo(name = "isToBuy")
     private boolean isToBuy;
 
@@ -34,6 +37,9 @@ public class ShoppingList_Ingredient {
 
     @ColumnInfo(name = "shoppinglist_key")
     private String shoppinglist_key;
+
+    @ColumnInfo(name = "icon")
+    private int icon;
 
     public ShoppingList_Ingredient(long shoppinglist_id) {
         this.shoppinglist_id = shoppinglist_id;
@@ -50,6 +56,22 @@ public class ShoppingList_Ingredient {
         this.isToBuy = shoppingList_ingredient.isToBuy;
         this.modification_date = shoppingList_ingredient.modification_date;
         this.key = shoppingList_ingredient.key;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getShoppinglist_key() {

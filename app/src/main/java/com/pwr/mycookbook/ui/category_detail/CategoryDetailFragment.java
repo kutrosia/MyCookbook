@@ -51,7 +51,6 @@ public class CategoryDetailFragment extends Fragment {
         return fragment;
     }
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

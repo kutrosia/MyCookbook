@@ -28,6 +28,8 @@ import com.pwr.mycookbook.ui.add_edit_shoppinglist.AddEditShoppinglistFragment;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerHeader;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerMenuItem;
 import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;
+import com.pwr.mycookbook.ui.shoppinglist_detail.ShoppinglistDetailActivity;
+import com.pwr.mycookbook.ui.shoppinglist_detail.ShoppinglistDetailFragment;
 
 /**
  * Created by olaku on 22.11.2017.
@@ -177,6 +179,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void shoppinglistItemClicked(ShoppingList shoppingList) {
 
+        Intent intent = new Intent(this, ShoppinglistDetailActivity.class);
+        intent.putExtra(ShoppinglistDetailActivity.EXTRA_SHOPPINGLIST, shoppingList);
+        startActivity(intent);
         /*AddEditShoppinglistFragment addEditIngredientFragment = AddEditShoppinglistFragment.newInstance(ingredient);
         addEditIngredientFragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override

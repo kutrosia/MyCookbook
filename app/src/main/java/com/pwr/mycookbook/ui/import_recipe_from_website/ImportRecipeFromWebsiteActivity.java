@@ -121,7 +121,6 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
 
     private void setWebViewSettings() {
         url = "http://www.google.com/";
-        //url = "http://przepisyjoli.com/2014/01/babka-piaskowa/";
         webView.setWebViewClient(new MyBrowser());
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -191,10 +190,6 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                         }
                     });
 
-            webView.evaluateJavascript("(function(){return window.getSelection().toString()})()",
-                    new ValueCallback<String>() {
-                        @Override public void onReceiveValue(String value) {
-                            Log.v("JS SELECTION", "SELECTION:" + value); }});
         }else{
             webView.addJavascriptInterface(new WebAppInterface(), "js");
             webView.loadUrl("javascript:js.callback(window.getSelection().toString(), " + button +")");

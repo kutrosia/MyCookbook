@@ -586,7 +586,8 @@ public class RemoteDatabase {
         sync_dateEndPoint.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                tcs.setResult(dataSnapshot.getValue(Long.class));
+                if(dataSnapshot != null)
+                    tcs.setResult(dataSnapshot.getValue(Long.class));
             }
 
             @Override

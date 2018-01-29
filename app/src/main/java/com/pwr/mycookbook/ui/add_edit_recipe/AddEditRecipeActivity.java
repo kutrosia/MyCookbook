@@ -19,8 +19,12 @@ import android.widget.Toast;
 import com.pwr.mycookbook.data.file.BitmapSave;
 import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.ShoppingList;
+import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
 import com.pwr.mycookbook.data.service_db.RecipeIngredientRepository;
 import com.pwr.mycookbook.data.service_db.RecipeRepository;
+import com.pwr.mycookbook.data.service_db.ShoppinglistIngredientRepository;
+import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.vansuita.pickimage.bean.PickResult;
@@ -215,7 +219,6 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(getApplicationContext(), "OnDestroy", Toast.LENGTH_SHORT).show();
         if(recipe.getTitle() == null){
             recipeRepository.deleteAll(recipe);
         }
@@ -224,7 +227,6 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
     @Override
     public void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Toast.makeText(getApplicationContext(), "OnDeatchedFromWindow", Toast.LENGTH_SHORT).show();
         if(recipe.getTitle() == null){
             recipeRepository.deleteAll(recipe);
         }
@@ -234,7 +236,6 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
     public void onBackPressed() {
         super.onBackPressed();
         recipeRepository.deleteAll(recipe);
-        Toast.makeText(getApplicationContext(), "OnBackPressed", Toast.LENGTH_SHORT).show();
 
     }
 

@@ -25,7 +25,7 @@ import com.pwr.mycookbook.data.model_db.Trash;
  */
 @Database(entities = {Recipe.class, Category.class,
         Recipe_Ingredient.class, ShoppingList.class,
-        ShoppingList_Ingredient.class, DatabaseDate.class, Trash.class}, version = 14)
+        ShoppingList_Ingredient.class, DatabaseDate.class, Trash.class}, version = 15)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase INSTANCE;
     public static final String DB_NAME = "recipes-database";

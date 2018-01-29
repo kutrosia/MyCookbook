@@ -12,26 +12,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.pwr.mycookbook.data.file.RecipePDF;
 import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
+import com.pwr.mycookbook.data.model_db.ShoppingList;
+import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
+import com.pwr.mycookbook.data.service_db.RecipeIngredientRepository;
 import com.pwr.mycookbook.data.service_db.RecipeRepository;
+import com.pwr.mycookbook.data.service_db.ShoppinglistIngredientRepository;
+import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
 
 import java.io.File;
+import java.util.List;
 
 
 public class RecipeDetailActivity extends AppCompatActivity {
     public static final String EXTRA_RECIPE = "recipe";
     private Recipe recipe;
     private RecipeRepository recipeRepository;
-
+    private RecipeIngredientRepository recipeIngredientRepository;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
     private FragmentManager fm = getSupportFragmentManager();
+    private ShoppinglistRepository shoppinglistRepository;
+    private ShoppinglistIngredientRepository shoppinglistIngredientRepository;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +97,25 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                 share.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 startActivity(Intent.createChooser(share, "Share document"));
+                break;
+            case R.id.action_download_recipe:
+                new RecipePDF().writeRecipeToPDF(recipe, getApplicationContext());
+                Toast.makeText(getApplicationContext(), "Przepis został zapisany w folderze pobrane.", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.action_generate_shoppinglist:
+                shoppinglistRepository = new ShoppinglistRepository(getApplicationContext());
+                shoppinglistIngredientRepository = new ShoppinglistIngredientRepository(getApplicationContext());
+                recipeIngredientRepository = new RecipeIngredientRepository(getApplicationContext());
+                ShoppingList shoppingList = new ShoppingList();
+                shoppingList.setName(recipe.getTitle());
+                long shoppinglist_id = shoppinglistRepository.insertAll(shoppingList)[0];
+                List<Recipe_Ingredient> recipe_ingredients = recipeIngredientRepository.getIngredientsForRecipe(recipe.getId());
+                for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
+                    ShoppingList_Ingredient shoppingList_ingredient = new ShoppingList_Ingredient();
+                    shoppingList_ingredient.setName(recipe_ingredient.getName());
+                    shoppingList_ingredient.setShoppinglist_id(shoppinglist_id);
+                    shoppinglistIngredientRepository.insertAll(shoppingList_ingredient);
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

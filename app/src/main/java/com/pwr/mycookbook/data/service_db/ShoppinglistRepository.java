@@ -27,11 +27,11 @@ public class ShoppinglistRepository {
         this.shoppingListDao = db.shoppingListDao();
     }
 
-    public void insertAll(ShoppingList shoppingList) {
+    public long[] insertAll(ShoppingList shoppingList) {
         long currentTime = getCurrentTime();
         shoppingList.setModification_date(currentTime);
         setUpdateDate(currentTime);
-        shoppingListDao.insertAll(shoppingList);
+        return shoppingListDao.insertAll(shoppingList);
     }
 
     public void update(ShoppingList shoppingList) {

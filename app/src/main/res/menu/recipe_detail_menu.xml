@@ -28,4 +28,18 @@
         >
     </item>
 
+    <item
+        android:id="@+id/action_download_recipe"
+        android:title="@string/menu_item_download_recipe"
+        >
+
+    </item>
+
+    <item
+        android:id="@+id/action_generate_shoppinglist"
+        android:title="@string/menu_item_generate_shoppinglist"
+        >
+
+    </item>
+
 </menu>

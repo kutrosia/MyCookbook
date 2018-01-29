@@ -114,6 +114,7 @@ public class SynchronizationActivity extends AppCompatActivity {
 
             checkForUpdates();
             getFirebaseTrash();
+
         }
 
 
@@ -144,6 +145,7 @@ public class SynchronizationActivity extends AppCompatActivity {
         databaseSyncDate = databaseDate.getSync_date();
         databaseModifiedDate = databaseDate.getModified_date();
 
+        if(remoteDatabase != null)
         remoteDatabase.getDatabaseSyncDate().addOnCompleteListener(new OnCompleteListener<Long>() {
             @Override
             public void onComplete(@NonNull Task<Long> task) {
@@ -254,7 +256,8 @@ public class SynchronizationActivity extends AppCompatActivity {
                 for(Recipe recipe: recipes){
                     if(recipe.getKey() == null){
                         Category category = categoryRepository.findById(recipe.getCategory_id());
-                        recipe.setCategory_key(category.getKey());
+                        if(category != null)
+                            recipe.setCategory_key(category.getKey());
                         remoteDatabase.writeNewRecipe(recipe);
                         addRecipeIngredientsToFirebase(recipe.getId(), recipe.getKey());
                     }else{

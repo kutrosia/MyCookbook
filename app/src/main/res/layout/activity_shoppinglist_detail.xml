@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar">
+    </include>
+
+    <TextView
+        android:id="@+id/shoppinglist_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:textSize="30sp"
+        android:text="@string/to_buy"/>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        class="com.pwr.mycookbook.ui.shoppinglist_detail.ShoppinglistDetailFragment"
+        android:id="@+id/shoppinglist_detail_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </fragment>
+
+
+</LinearLayout>
