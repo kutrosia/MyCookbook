@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar">
+    </include>
+
+    <TextView
+        android:id="@+id/product_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/product_title"
+        android:textSize="30sp"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/toolbar"/>
+
+    <Spinner
+        android:id="@+id/product_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@id/product_title"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp">
+    </Spinner>
+
+    <ImageView
+        android:id="@+id/tea_spoon_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product_spinner"
+        android:src="@drawable/spoon_of_sugar_frame100"
+        android:layout_margin="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/glass_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tea_spoon_image"
+        android:src="@drawable/tea_cup_frame100"
+        android:layout_margin="10dp"
+        />
+
+    <TextView
+        android:id="@+id/spoon_value"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:layout_toRightOf="@+id/tea_spoon_image"
+        android:layout_alignBottom="@+id/tea_spoon_image"
+        android:hint="@string/spoon_value"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/glass_value"
+        android:layout_width="200dp"
+        android:layout_height="80dp"
+        android:hint="@string/glass_value"
+        android:layout_toRightOf="@+id/glass_image"
+        android:layout_alignBottom="@+id/glass_image"
+        android:textSize="30sp"/>
+
+
+</RelativeLayout>

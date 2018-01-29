@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/toolbar">
+    </include>
+
+    <TextView
+        android:id="@+id/timer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:text="@string/timer_title"
+        android:textColor="@color/colorAccent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:textSize="48sp"/>
+
+    <Button
+        android:id="@+id/timer_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sand_timer_filled_pink100"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/timer_title"
+        />
+
+    <TextView
+        android:id="@+id/timer_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/timer_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:text="12:12:12"
+        android:textSize="48sp"/>
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_time_start"
+        android:textColor="@color/white"
+        android:background="@drawable/timer_btn_selector"
+        android:layout_below="@+id/timer_value"
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:id="@+id/button_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_time_stop"
+        android:textColor="@color/white"
+        android:background="@drawable/timer_btn_selector"
+        android:layout_below="@+id/timer_value"
+        android:layout_margin="5dp"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:id="@+id/button_pause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_time_pause"
+        android:textColor="@color/white"
+        android:background="@drawable/timer_btn_selector"
+        android:layout_below="@+id/timer_value"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mDrawer = findViewById(R.id.drawerLayout);
         mDrawerView = findViewById(R.id.drawerView);
@@ -85,9 +88,7 @@ public class MainActivity extends AppCompatActivity implements
         mDrawerView
                 .addView(new DrawerHeader())
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_PROFILE))
-                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_RECIPES))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_PORTIONS_COUNTER))
-                .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_SHOPPING_LISTS))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_TIMER))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_SYNC))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_VIDEOS))
@@ -108,9 +109,6 @@ public class MainActivity extends AppCompatActivity implements
         mDrawer.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

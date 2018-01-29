@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -52,8 +53,9 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         setContentView(R.layout.activity_add_edit_recipe);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setLogo(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dossier_50));
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         recipeRepository = new RecipeRepository(getApplicationContext());
         recipeIngredientRepository = new RecipeIngredientRepository(getApplicationContext());

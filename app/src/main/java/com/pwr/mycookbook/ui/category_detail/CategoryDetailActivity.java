@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -37,8 +38,9 @@ public class CategoryDetailActivity extends AppCompatActivity
         setContentView(R.layout.activity_category_detail);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setLogo(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dossier_50));
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         categoryRepository = new CategoryRepository(getApplicationContext());
         category = (Category) getIntent().getExtras().get(EXTRA_CATEGORY);

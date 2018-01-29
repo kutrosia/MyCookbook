@@ -98,6 +98,34 @@
     <string name="menu_item_remove_shoppinglist">Usuń listę</string>
     <string name="menu_item_edit_shoppinglist">Zmień nazwę</string>
     <string name="to_buy">Do kupienia:</string>
+    <string name="btn_time_start">Start</string>
+    <string name="btn_time_stop">Stop</string>
+    <string name="btn_time_pause">Pauza</string>
+    <string name="timer_title">Minutnik</string>
+    <string name="product_title">Wybierz produkt</string>
+    <string name="spoon_value">łyżka - 15ml</string>
+    <string name="glass_value">szklanka - 250ml</string>
+
+    <string-array name="products">
+        <item>bułka tarta</item>
+        <item>cukier</item>
+        <item>cukier puder</item>
+        <item>kakao</item>
+        <item>kasza gryczana</item>
+        <item>masło</item>
+        <item>mąka pszenna</item>
+        <item>mąka ziemniaczana</item>
+        <item>mąka żytnia</item>
+        <item>mleko</item>
+        <item>olej</item>
+        <item>proszek do pieczenia</item>
+        <item>ryż</item>
+        <item>smalec</item>
+        <item>sól</item>
+        <item>śmietana</item>
+        <item>woda</item>
+
+    </string-array>
 
 
 </resources>

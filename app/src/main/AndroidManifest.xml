@@ -20,19 +20,117 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.recepie_detail.RecipeDetailActivity"> </activity>
-        <activity android:name=".ui.add_edit_recipe.AddEditRecipeActivity"> </activity>
-        <activity android:name=".ui.category_detail.CategoryDetailActivity"> </activity>
-        <activity android:name=".ui.user_profile.LoginActivity"> </activity>
-        <activity android:name=".ui.user_profile.SignupActivity"> </activity>
-        <activity android:name=".ui.user_profile.UserProfileActivity"> </activity>
-        <activity android:name=".ui.user_profile.EditUserEmailActivity"> </activity>
-        <activity android:name=".ui.user_profile.SynchronizationActivity"></activity>
-        <activity android:name=".ui.user_profile.EditUserNameActivity"></activity>
-        <activity android:name=".ui.user_profile.EditUserPasswordActivity"></activity>
-        <activity android:name=".ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity"></activity>
-        <activity android:name=".ui.import_recipe_from_website.WebsiteImagesGalleryActivity"></activity>
-        <activity android:name=".ui.shoppinglist_detail.ShoppinglistDetailActivity"></activity>
+        <activity
+            android:name=".ui.recepie_detail.RecipeDetailActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ui.main.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.add_edit_recipe.AddEditRecipeActivity"
+            android:parentActivityName=".ui.recepie_detail.RecipeDetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.recepie_detail.RecipeDetailActivity"
+            > </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.category_detail.CategoryDetailActivity"
+            android:parentActivityName=".ui.main.MainActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.LoginActivity"
+            android:parentActivityName=".ui.main.MainActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.SignupActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.UserProfileActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.EditUserEmailActivity"
+            android:parentActivityName=".ui.user_profile.UserProfileActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.user_profile.UserProfileActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.SynchronizationActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.EditUserNameActivity"
+            android:parentActivityName=".ui.user_profile.UserProfileActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.user_profile.UserProfileActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.user_profile.EditUserPasswordActivity"
+            android:parentActivityName=".ui.user_profile.UserProfileActivity"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.user_profile.UserProfileActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.import_recipe_from_website.WebsiteImagesGalleryActivity"
+            android:parentActivityName=".ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.import_recipe_from_website.ImportRecipeFromWebsiteActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.shoppinglist_detail.ShoppinglistDetailActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.timer.TimerActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+        <activity
+            android:name=".ui.measure_and_weight.MeasureAndWeightActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"
@@ -43,6 +141,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths" />
         </provider>
+        <receiver
+            android:name=".ui.timer.AlarmReicver"
+            android:exported="false"
+            > </receiver>
     </application>
 
 </manifest>
