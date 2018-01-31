@@ -72,6 +72,8 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
                 AppDatabase db = AppDatabase.getAppDatabase(context);
                 db.recipe_ingredientDao().delete(ingredient);
                 db.trashDao().insert(trash);
+                ingredients.remove(position);
+                notifyDataSetChanged();
             }
         });
         return row;

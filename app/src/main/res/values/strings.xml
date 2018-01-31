@@ -106,26 +106,30 @@
     <string name="spoon_value">łyżka - 15ml</string>
     <string name="glass_value">szklanka - 250ml</string>
 
-    <string-array name="products">
-        <item>bułka tarta</item>
-        <item>cukier</item>
-        <item>cukier puder</item>
-        <item>kakao</item>
-        <item>kasza gryczana</item>
-        <item>masło</item>
-        <item>mąka pszenna</item>
-        <item>mąka ziemniaczana</item>
-        <item>mąka żytnia</item>
-        <item>mleko</item>
-        <item>olej</item>
-        <item>proszek do pieczenia</item>
-        <item>ryż</item>
-        <item>smalec</item>
-        <item>sól</item>
-        <item>śmietana</item>
-        <item>woda</item>
+    <string name="title_activity_settings">Settings</string>
 
-    </string-array>
+   <!--Preferences strings-->
+    <string name="key_alarm_sound">key_alarm_sound</string>
+    <string name="title_alarm_sound">Dźwięk</string>
+    <string name="summary_alarm_sound">Włącz dźwięk alarmu</string>
+    <string name="key_vibrate">key_vibrate</string>
+    <string name="title_vibrate">Wibracje</string>
+    <string name="summary_vibrate">Włącz wibracje</string>
+    <string name="key_notification_actionbar">key_notification_actionbar</string>
+    <string name="summary_notification_actionbar">Włącz powiadomienia na pasku statusu</string>
+    <string name="title_notification_actionbar">Pasek statusu</string>
+    <string name="title_appearance_color">Kolorystyka</string>
+    <string name="key_appearance_color">key_appearance_color</string>
+    <string name="summary_appearance_color">Wybierz kolorystykę aplikacji</string>
+    <string name="title_gender">Awatar</string>
+    <string name="key_gender">key_gender</string>
+    <string name="summary_gender">Wybierz płeć w celu zmiany awatara.</string>
+    <string name="key_sync">key_sync</string>
+    <string name="summary_sync">Pozwól na synchronizację domyślną</string>
+    <string name="title_sync">Domyślna synchronizacja</string>
+    <string name="summary_about">Aplikacja stworzona na potrzeby własne i innych. Ułatwia kolekcjonowanie przepisów kulinarnych oraz oferuje się jako pomocnik kuchenny.</string>
+    <string name="title_version">Wersja</string>
+    <string name="app_version">1.0.0</string>
 
 
 </resources>

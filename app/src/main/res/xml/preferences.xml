@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Powiadomienia">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/key_alarm_sound"
+            android:title="@string/title_alarm_sound"
+            android:summary="@string/summary_alarm_sound"
+            />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/key_vibrate"
+            android:summary="@string/summary_vibrate"
+            android:title="@string/title_vibrate" />
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/key_notification_actionbar"
+            android:summary="@string/summary_notification_actionbar"
+            android:title="@string/title_notification_actionbar" />
+
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Wygląd">
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="@string/title_appearance_color"
+            android:entries="@array/pref_appearance_color_entries"
+            android:entryValues="@array/pref_appearance_color_values"
+            android:key="@string/key_appearance_color"
+            android:summary="@string/summary_appearance_color"
+            android:title="@string/title_appearance_color" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="@string/title_gender"
+            android:entries="@array/pref_gender_entries"
+            android:entryValues="@array/pref_gender_values"
+            android:key="@string/key_gender"
+            android:summary="@string/summary_gender"
+            android:title="@string/title_gender" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Synchronizacja">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/key_sync"
+            android:summary="@string/summary_sync"
+            android:title="@string/title_sync" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="O Aplikacji">
+        <Preference
+            android:selectable="false"
+            android:summary="@string/summary_about" />
+
+        <Preference
+            android:summary="@string/app_version"
+            android:title="@string/title_version" />
+
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

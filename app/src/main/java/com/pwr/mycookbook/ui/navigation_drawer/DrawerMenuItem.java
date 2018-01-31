@@ -12,6 +12,7 @@ import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.measure_and_weight.MeasureAndWeightActivity;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 import com.pwr.mycookbook.ui.timer.TimerActivity;
 import com.pwr.mycookbook.ui.user_profile.SynchronizationActivity;
 import com.pwr.mycookbook.ui.user_profile.UserProfileActivity;
@@ -101,7 +102,7 @@ public class DrawerMenuItem {
                 if(mCallBack != null)mCallBack.onTermsMenuSelected();
                 break;
             case DRAWER_MENU_ITEM_OPTIONS:
-                Toast.makeText(mContext, "Ustawienia", Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext.getApplicationContext(), SettingsActivity.class));
                 if(mCallBack != null)mCallBack.onLogoutMenuSelected();
                 break;
         }

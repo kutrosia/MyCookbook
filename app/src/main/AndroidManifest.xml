@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pwr.mycookbook">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -23,30 +24,27 @@
         <activity
             android:name=".ui.recepie_detail.RecipeDetailActivity"
             android:parentActivityName=".ui.main.MainActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ui.main.MainActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity" />
         </activity>
         <activity
             android:name=".ui.add_edit_recipe.AddEditRecipeActivity"
             android:parentActivityName=".ui.recepie_detail.RecipeDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.recepie_detail.RecipeDetailActivity"
-            > </meta-data>
+                android:value=".ui.recepie_detail.RecipeDetailActivity"> </meta-data>
         </activity>
         <activity
             android:name=".ui.category_detail.CategoryDetailActivity"
-            android:parentActivityName=".ui.main.MainActivity"
-            >
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity"> </meta-data>
         </activity>
         <activity
             android:name=".ui.user_profile.LoginActivity"
-            android:parentActivityName=".ui.main.MainActivity"
-            >
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity"> </meta-data>
@@ -67,8 +65,7 @@
         </activity>
         <activity
             android:name=".ui.user_profile.EditUserEmailActivity"
-            android:parentActivityName=".ui.user_profile.UserProfileActivity"
-            >
+            android:parentActivityName=".ui.user_profile.UserProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.user_profile.UserProfileActivity"> </meta-data>
@@ -82,16 +79,14 @@
         </activity>
         <activity
             android:name=".ui.user_profile.EditUserNameActivity"
-            android:parentActivityName=".ui.user_profile.UserProfileActivity"
-            >
+            android:parentActivityName=".ui.user_profile.UserProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.user_profile.UserProfileActivity"> </meta-data>
         </activity>
         <activity
             android:name=".ui.user_profile.EditUserPasswordActivity"
-            android:parentActivityName=".ui.user_profile.UserProfileActivity"
-            >
+            android:parentActivityName=".ui.user_profile.UserProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.user_profile.UserProfileActivity"> </meta-data>
@@ -131,6 +126,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity"> </meta-data>
         </activity>
+        <activity android:name=".ui.settings.SettingsActivity"
+            android:parentActivityName=".ui.main.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.main.MainActivity"> </meta-data>
+        </activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"
@@ -141,10 +143,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths" />
         </provider>
+
         <receiver
             android:name=".ui.timer.AlarmReicver"
-            android:exported="false"
-            > </receiver>
+            android:exported="false"> </receiver>
+
     </application>
 
 </manifest>

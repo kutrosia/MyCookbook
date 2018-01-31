@@ -1,6 +1,7 @@
 package com.pwr.mycookbook.ui.add_edit_recipe;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.pwr.mycookbook.data.file.BitmapSave;
 import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
@@ -239,6 +243,12 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         super.onBackPressed();
         recipeRepository.deleteAll(recipe);
 
+    }
+
+    @Override
+    public boolean onNavigateUp() {
+        recipeRepository.deleteAll(recipe);
+        return super.onNavigateUp();
     }
 
     @Override
