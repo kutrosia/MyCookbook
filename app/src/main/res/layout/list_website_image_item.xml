@@ -20,7 +20,7 @@
         android:id="@+id/button_choose"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="?attr/colorAccent"
         android:text="@string/btn_choose_image"
         android:textAlignment="center"
         android:layout_below="@+id/webview_item"/>

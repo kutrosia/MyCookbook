@@ -3,7 +3,7 @@
 
     <!-- Button Default Image-->
     <item
-        android:drawable="@color/colorPrimary"
+        android:drawable="?attr/colorPrimary"
         android:state_enabled="true"/>
 
     <item

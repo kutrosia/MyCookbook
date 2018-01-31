@@ -1,7 +1,9 @@
 package com.pwr.mycookbook.ui.user_profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -20,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 /**
  * Created by olaku on 01.01.2018.
@@ -36,11 +39,13 @@ public class EditUserNameActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private FirebaseAuth.AuthStateListener authListener;
-
+    private SharedPreferences sharedPreferences;
 
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_edit_username);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,6 +59,8 @@ public class EditUserNameActivity extends AppCompatActivity {
         user_name_textEdit = findViewById(R.id.profil_edit_name_editText);
         save_button = findViewById(R.id.save_button);
 
+        applyAvatar();
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         save_button.setOnClickListener(onSaveButtonClick());
@@ -62,6 +69,38 @@ public class EditUserNameActivity extends AppCompatActivity {
         user_name_textEdit.setText(firebaseUser.getDisplayName());
         setUserOnToolbar();
     }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
+    }
+
+    public void applyAvatar(){
+        String gender = sharedPreferences.getString(SettingsActivity.KEY_GENDER, "");
+        switch (gender){
+            case "1":
+                profile_photo.setImageResource(R.drawable.cook_white_grey100);
+                break;
+            case "2":
+                profile_photo.setImageResource(R.drawable.chef100);
+                break;
+        }
+
+    }
+
 
     private void setUserOnToolbar(){
         authListener = new FirebaseAuth.AuthStateListener() {

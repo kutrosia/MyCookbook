@@ -5,10 +5,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 import com.ikovac.timepickerwithseconds.MyTimePickerDialog;
 import com.ikovac.timepickerwithseconds.TimePicker;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,11 +43,14 @@ public class TimerActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long timeMilis;
     private long savedInstance;
+    private SharedPreferences sharedPreferences;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_timer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -67,6 +73,24 @@ public class TimerActivity extends AppCompatActivity {
         start_button.setEnabled(false);
         pause_button.setEnabled(false);
         stop_button.setEnabled(false);
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
     }
 
     private View.OnClickListener onTimerButtonClick() {

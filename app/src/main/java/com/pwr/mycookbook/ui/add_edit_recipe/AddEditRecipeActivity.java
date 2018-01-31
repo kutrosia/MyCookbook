@@ -2,9 +2,11 @@ package com.pwr.mycookbook.ui.add_edit_recipe;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -32,6 +34,7 @@ import com.pwr.mycookbook.data.service_db.ShoppinglistIngredientRepository;
 import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
@@ -50,10 +53,13 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
     private AddEditRecipeFragment addEditRecipeFragment;
     private AddEditRecipeIngredientsFragment addEditRecipeIngredientsFragment;
     private AddEditRecipePreparationFragment addEditRecipePreparationFragment;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_add_edit_recipe);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -84,6 +90,24 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
     }
 
     @Override

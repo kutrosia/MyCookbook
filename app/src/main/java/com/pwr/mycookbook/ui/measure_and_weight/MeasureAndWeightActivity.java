@@ -1,6 +1,8 @@
 package com.pwr.mycookbook.ui.measure_and_weight;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +29,14 @@ public class MeasureAndWeightActivity extends AppCompatActivity {
     private TextView spoon_value;
     private TextView glass_value;
     private ProductList products;
-
+    private SharedPreferences sharedPreferences;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_measure_and_weight);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,6 +59,24 @@ public class MeasureAndWeightActivity extends AppCompatActivity {
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.products_spinner_item, R.id.product_name, products_name);
         product_spinner.setAdapter(dataAdapter);
 
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
     }
 
     private AdapterView.OnItemSelectedListener onItemSelection() {

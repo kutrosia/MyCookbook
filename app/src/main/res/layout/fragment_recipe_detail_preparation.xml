@@ -20,7 +20,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="?attr/colorAccent"
         android:background="@android:color/darker_gray"
         android:layout_margin="8dp"/>
 

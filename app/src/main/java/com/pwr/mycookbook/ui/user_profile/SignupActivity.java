@@ -1,7 +1,9 @@
 package com.pwr.mycookbook.ui.user_profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -11,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 /**
  * Created by olaku on 17.12.2017.
@@ -31,13 +35,17 @@ public class SignupActivity extends AppCompatActivity {
     private EditText email_editText;
     private EditText password_editText;
     private Button signup_button;
+    private ImageView profile_photo;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authListener;
+    private SharedPreferences sharedPreferences;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_signup);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -45,10 +53,13 @@ public class SignupActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        profile_photo = findViewById(R.id.login_image);
         name_editText = findViewById(R.id.signup_name_editText);
         email_editText = findViewById(R.id.signup_email_editText);
         password_editText = findViewById(R.id.signup_password_editText);
         signup_button = findViewById(R.id.signup_button);
+
+        applyAvatar();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -66,6 +77,37 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
+    }
+
+    private void applyAvatar(){
+        String gender = sharedPreferences.getString(SettingsActivity.KEY_GENDER, "");
+        switch (gender){
+            case "1":
+                profile_photo.setImageResource(R.drawable.cook_white_grey100);
+                break;
+            case "2":
+                profile_photo.setImageResource(R.drawable.chef100);
+                break;
+        }
+
     }
 
     private View.OnClickListener onSigninButtonClick() {

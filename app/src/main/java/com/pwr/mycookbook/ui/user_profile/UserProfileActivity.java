@@ -1,7 +1,9 @@
 package com.pwr.mycookbook.ui.user_profile;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 /**
  * Created by olaku on 17.12.2017.
@@ -31,10 +34,13 @@ public class UserProfileActivity extends AppCompatActivity {
         private UserActionsListAdapter adapter;
         private FirebaseAuth firebaseAuth;
         private FirebaseAuth.AuthStateListener authListener;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_user_profile);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -50,6 +56,8 @@ public class UserProfileActivity extends AppCompatActivity {
         profile_name = findViewById(R.id.nameTxt);
         profile_email = findViewById(R.id.emailTxt);
         actions_list = findViewById(R.id.user_actions_listView);
+
+        applyAvatar();
 
         String[] titles = new String[] {
                 "Zmiana adresu e-mail",
@@ -88,6 +96,37 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             }
         };
+
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
+    }
+
+    private void applyAvatar(){
+        String gender = sharedPreferences.getString(SettingsActivity.KEY_GENDER, "");
+        switch (gender){
+            case "1":
+                profile_photo.setImageResource(R.drawable.cook_white_grey100);
+                break;
+            case "2":
+                profile_photo.setImageResource(R.drawable.chef100);
+                break;
+        }
 
     }
 

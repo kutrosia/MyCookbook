@@ -1,7 +1,9 @@
 package com.pwr.mycookbook.ui.shoppinglist_detail;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -16,6 +18,7 @@ import com.pwr.mycookbook.data.model_db.ShoppingList;
 import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
 import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.ui.add_edit_shoppinglist.AddEditShoppinglistFragment;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 /**
  * Created by olaku on 07.01.2018.
@@ -29,10 +32,13 @@ public class ShoppinglistDetailActivity extends AppCompatActivity
     private FragmentManager fm = getSupportFragmentManager();
     private ShoppinglistDetailFragment shoppinglistDetailFragment;
     private ShoppinglistRepository shoppinglistRepository;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_shoppinglist_detail);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -47,6 +53,23 @@ public class ShoppinglistDetailActivity extends AppCompatActivity
         shoppinglistDetailFragment = ShoppinglistDetailFragment.newInstance(shoppingList);
     }
 
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
+    }
 
 
     @Override

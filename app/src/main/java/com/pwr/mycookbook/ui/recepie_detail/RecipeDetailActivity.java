@@ -1,8 +1,10 @@
 package com.pwr.mycookbook.ui.recepie_detail;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -27,6 +29,7 @@ import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 import java.io.File;
 import java.util.List;
@@ -43,10 +46,13 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private FragmentManager fm = getSupportFragmentManager();
     private ShoppinglistRepository shoppinglistRepository;
     private ShoppinglistIngredientRepository shoppinglistIngredientRepository;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_recipe_detail);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,6 +75,24 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
     }
 
 

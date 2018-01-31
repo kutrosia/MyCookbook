@@ -1,8 +1,10 @@
 package com.pwr.mycookbook.ui.user_profile;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -40,6 +42,7 @@ import com.pwr.mycookbook.data.service_firebase.RemoteDatabase;
 import com.pwr.mycookbook.data.service_db.ShoppinglistIngredientRepository;
 import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.data.service_db.TrashRepository;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -72,12 +75,14 @@ public class SynchronizationActivity extends AppCompatActivity {
     private long currentTime;
 
     private List<Trash> firebaseTrash;
-
+    private SharedPreferences sharedPreferences;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_synchronization);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -122,6 +127,24 @@ public class SynchronizationActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
     }
 
     private void getFirebaseTrash() {

@@ -2,7 +2,9 @@ package com.pwr.mycookbook.ui.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.pwr.mycookbook.R;
@@ -29,6 +32,7 @@ import com.pwr.mycookbook.ui.add_edit_shoppinglist.AddEditShoppinglistFragment;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerHeader;
 import com.pwr.mycookbook.ui.navigation_drawer.DrawerMenuItem;
 import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;
+import com.pwr.mycookbook.ui.settings.SettingsActivity;
 import com.pwr.mycookbook.ui.shoppinglist_detail.ShoppinglistDetailActivity;
 import com.pwr.mycookbook.ui.shoppinglist_detail.ShoppinglistDetailFragment;
 
@@ -51,12 +55,14 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar mToolbar;
     private PlaceHolderView mGalleryView;
 
+    private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        applyStyle();
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -83,10 +89,29 @@ public class MainActivity extends AppCompatActivity implements
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void applyStyle() {
+        String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
+        switch (color){
+            case "1":
+                getTheme().applyStyle(R.style.AppTheme, true);
+                break;
+            case "2":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorGreen, true);
+                break;
+            case "3":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorBlue, true);
+                break;
+            case "4":
+                getTheme().applyStyle(R.style.OverlayPrimaryColorRed, true);
+                break;
+        }
+    }
+
 
     private void setupDrawer() {
+        String gender = sharedPreferences.getString(SettingsActivity.KEY_GENDER, "1");
         mDrawerView
-                .addView(new DrawerHeader())
+                .addView(new DrawerHeader(gender))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_PROFILE))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_PORTIONS_COUNTER))
                 .addView(new DrawerMenuItem(MainActivity.this, DrawerMenuItem.DRAWER_MENU_ITEM_TIMER))

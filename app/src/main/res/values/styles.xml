@@ -12,6 +12,36 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="OverlayPrimaryColorRed">
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBarOverlay">false</item>
+        <item name="colorPrimary">@color/color_primary_red</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_red</item>
+        <item name="colorAccent">@color/color_accent_red</item>
+    </style>
+
+    <style name="OverlayPrimaryColorGreen">
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBarOverlay">false</item>
+        <item name="colorPrimary">@color/color_primary_green</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_green</item>
+        <item name="colorAccent">@color/color_accent_green</item>
+    </style>
+
+    <style name="OverlayPrimaryColorBlue">
+        <item name="android:actionOverflowButtonStyle">@style/MyActionButtonOverflow</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBarOverlay">false</item>
+        <item name="colorPrimary">@color/color_primary_blue</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark_blue</item>
+        <item name="colorAccent">@color/color_accent_blue</item>
+    </style>
+
     <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">false</item>
         <item name="color">@android:color/white</item>
@@ -31,7 +61,7 @@
         parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
-        <item name="android:src">@drawable/bookmark_30</item>
+        <item name="android:src">@drawable/bookmark_grey30</item>
         <item name="android:background">?android:attr/actionBarItemBackground</item>
         <item name="android:contentDescription">@string/menuitem_detail_menu</item>
     </style>
