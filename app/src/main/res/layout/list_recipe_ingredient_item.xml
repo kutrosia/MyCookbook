@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/item_recipe_ingredient_icon"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/vegetarian_food_filled50"
         android:paddingLeft="5dp"/>
 
@@ -17,17 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_toStartOf="@+id/item_recipe_ingredient_edit_button"
+        android:textSize="20sp"
+        android:layout_toStartOf="@+id/item_recipe_ingredient_remove_button"
         android:layout_toEndOf="@+id/item_recipe_ingredient_icon"/>
 
-    <ImageButton
-        android:id="@+id/item_recipe_ingredient_edit_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/edit_filled_grey50"
-        android:layout_marginEnd="10dp"
-        android:layout_toStartOf="@+id/item_recipe_ingredient_remove_button"
-        />
 
     <ImageButton
         android:id="@+id/item_recipe_ingredient_remove_button"

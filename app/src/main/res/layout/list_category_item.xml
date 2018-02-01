@@ -8,7 +8,7 @@
         android:id="@+id/category_item_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="5dp"
+        android:layout_margin="5dp"
         android:src="@drawable/category_filled50"/>
 
     <TextView

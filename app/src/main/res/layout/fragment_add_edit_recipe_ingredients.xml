@@ -32,10 +32,11 @@
 
     <ImageButton
         android:id="@+id/item_recipe_ingredient_add_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/plus_green50"
-        android:layout_marginTop="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="?attr/colorAccent"
+        android:src="@drawable/plus_math_filled30"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
         android:layout_alignParentEnd="true"
         />

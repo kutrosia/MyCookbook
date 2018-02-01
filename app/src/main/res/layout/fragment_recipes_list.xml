@@ -6,47 +6,77 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/search_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/recipe_search_hint"/>
 
-        <Button
+        <TextView
+            android:id="@+id/filter_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search_edit_text"
+            android:text="@string/filter_title"
+            android:textSize="28sp"/>
+
+        <ImageButton
             android:id="@+id/search_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/search50"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="4dp"
+            android:background="?attr/colorAccent"
+            android:src="@drawable/search_filled30"
             android:layout_alignParentEnd="true"/>
 
         <Button
             android:id="@+id/category_filter_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/category_filled50"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/category_filled30"
+            android:text="@string/btn_category"
+            android:textSize="6sp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/filter_title"
             android:layout_below="@+id/search_edit_text"
             />
 
         <Button
             android:id="@+id/name_filter_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/restaurant_menu50"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/restaurant_menu_grey30"
+            android:text="@string/btn_name"
+            android:textSize="6dp"
+            android:layout_marginLeft="20dp"
             android:layout_below="@+id/search_edit_text"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@+id/category_filter_button"
             />
 
         <Button
             android:id="@+id/time_filter_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/sand_timer_filled50"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableTop="@drawable/sand_timer_filled30"
+            android:text="@string/btn_time"
+            android:textSize="6sp"
+            android:layout_marginLeft="20dp"
             android:layout_below="@+id/search_edit_text"
-            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/name_filter_button"
             />
 
     </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorAccent"
+        android:layout_margin="8dp"/>
 
     <ListView
         android:id="@+id/list_view_item"

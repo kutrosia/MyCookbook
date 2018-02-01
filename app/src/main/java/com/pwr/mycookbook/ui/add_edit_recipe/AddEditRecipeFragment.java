@@ -69,20 +69,18 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
         categoryRepository = new CategoryRepository(getContext());
         Bundle bundle = this.getArguments();
         this.recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
+        View view = getView();
+        title_TextInputLayout = view.findViewById(R.id.title_TextInputLayout);
+        category_spinner = view.findViewById(R.id.categories_spinner);
+        time_TextInputLayout = view.findViewById(R.id.time_TextInputLayout);
+        portions_TextInputLayout = view.findViewById(R.id.portions_TextInputLayout);
+        recipe_photo = view.findViewById(R.id.recipe_photo);
+        url_movie_TextInputLayout = view.findViewById(R.id.movie_url_TextInputLayout);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        View view = getView();
-        if(view!=null){
-            title_TextInputLayout = view.findViewById(R.id.title_TextInputLayout);
-            category_spinner = view.findViewById(R.id.categories_spinner);
-            time_TextInputLayout = view.findViewById(R.id.time_TextInputLayout);
-            portions_TextInputLayout = view.findViewById(R.id.portions_TextInputLayout);
-            recipe_photo = view.findViewById(R.id.recipe_photo);
-            url_movie_TextInputLayout = view.findViewById(R.id.movie_url_TextInputLayout);
-
             setItemsToSpinner();
 
             if(!recipe.isNew()){
@@ -101,7 +99,6 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
                 title = "";
                 movie_url = "";
             }
-        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -157,16 +154,33 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
         time = time_TextInputLayout.getEditText().getText().toString();
         portion = portions_TextInputLayout.getEditText().getText().toString();
         movie_url = url_movie_TextInputLayout.getEditText().getText().toString();
+
+        recipe.setTitle(title);
+        Category category = categoryList.get(category_pos);
+        recipe.setCategory_id(category.getId());
+        if(time.length()>0)
+            recipe.setTime(Integer.parseInt(time));
+        if(portion.length()>0)
+            recipe.setPortion(Integer.parseInt(portion));
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        title_TextInputLayout.getEditText().setText(title);
-        category_spinner.setSelection(category_pos);
-        time_TextInputLayout.getEditText().setText(time);
-        portions_TextInputLayout.getEditText().setText(portion);
-        url_movie_TextInputLayout.getEditText().setText(movie_url);
+        title_TextInputLayout.getEditText().setText(recipe.getTitle());
+        time_TextInputLayout.getEditText().setText(recipe.getTime());
+        portions_TextInputLayout.getEditText().setText(recipe.getPortion());
+        url_movie_TextInputLayout.getEditText().setText(recipe.getMovie());
+        if(categoryList!=null)
+            for(Category category: categoryList){
+                if(category.getId() == recipe.getCategory_id()){
+                    category_pos = categoryList.indexOf(category);
+                    category_spinner.setSelection(category_pos);
+                    if(adapter!=null)
+                        adapter.notifyDataSetChanged();
+                }
+            }
+
     }
 
     @Override

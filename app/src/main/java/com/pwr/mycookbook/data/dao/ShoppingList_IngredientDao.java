@@ -32,14 +32,14 @@ public interface ShoppingList_IngredientDao {
     @Query("SELECT * FROM shoppinglists_ingredients where modification_date > :modify_date")
     List<ShoppingList_Ingredient> getNotModified(long modify_date);
 
-    @Query("SELECT * FROM shoppinglists_ingredients WHERE `key` = :key")
+    @Query("SELECT * FROM shoppinglists_ingredients WHERE `key` LIKE :key")
     ShoppingList_Ingredient findByKey(String key);
 
     @Query("DELETE from shoppinglists_ingredients where shoppinglist_id LIKE  :shoppinglist_id")
     void deleteShoppinglistWithIngredients(final long shoppinglist_id);
 
     @Query("DELETE from shoppinglists_ingredients where " +
-            "shoppinglist_id = :shoppinglist_id and ingredient_id = :ingredient_id")
+            "shoppinglist_id LIKE :shoppinglist_id and ingredient_id LIKE :ingredient_id")
     void deleteIngredientInShoppinglist(final long shoppinglist_id, final long ingredient_id);
 
     @Query("SELECT COUNT(*) from shoppinglists_ingredients")

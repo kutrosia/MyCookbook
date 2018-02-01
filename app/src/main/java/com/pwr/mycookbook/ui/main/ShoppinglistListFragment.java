@@ -87,6 +87,12 @@ public class ShoppinglistListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        shoppingLists = shoppinglistRepository.getAll();
+        adapter = new ShoppinglistListAdapter(getContext(), R.layout.list_shoppinglist_item, shoppingLists);
+        shoppinglist_list_view.setAdapter(adapter);
+        shoppinglist_list_view.setOnItemClickListener(onItemClick());
+        adapter.notifyDataSetChanged();
+
     }
 
     /**support for device older than API 23*/

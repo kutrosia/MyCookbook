@@ -95,7 +95,7 @@ public class RecipeRepository{
         List<Recipe> recipes = recipeDao.getAll();
         List<Recipe> recipesWithMovies = new ArrayList<>();
         for(Recipe recipe: recipes){
-            if(recipe.getMovie() != null){
+            if(recipe.getMovie() != null && recipe.getMovie().length()>0){
                 recipesWithMovies.add(recipe);
             }
         }

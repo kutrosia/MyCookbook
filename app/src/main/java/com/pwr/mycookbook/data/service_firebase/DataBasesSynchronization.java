@@ -107,6 +107,8 @@ public class DataBasesSynchronization {
             createDate();
         }
         databaseSyncDate = databaseDate.getSync_date();
+        if(currentTime-databaseSyncDate < 180000)
+            return false;
         databaseModifiedDate = databaseDate.getModified_date();
         return firebaseSyncDate != databaseModifiedDate;
     }
@@ -119,12 +121,6 @@ public class DataBasesSynchronization {
     }
 
     public void synchronize() {
-        getFirebaseTrash();
-        syncCategory();
-        syncShoppinglists();
-    }
-
-    private void getFirebaseTrash() {
         remoteDatabase.getTrashList(databaseSyncDate).addOnCompleteListener(new OnCompleteListener<List<Trash>>() {
             @Override
             public void onComplete(@NonNull Task<List<Trash>> task) {
@@ -132,7 +128,8 @@ public class DataBasesSynchronization {
                     firebaseTrash = new ArrayList<>();
                 else
                     firebaseTrash = task.getResult();
-
+                syncCategory();
+                syncShoppinglists();
             }
         });
     }
@@ -222,7 +219,7 @@ public class DataBasesSynchronization {
                             public void onComplete(@NonNull Task<RecipeFb> task) {
                                 RecipeFb recipeFb = task.getResult();
                                 if(recipeFb == null){
-                                    if(isInFirebaseTrash(recipeFb.getKey(), recipeFb.getModification_date())){
+                                    if(isInFirebaseTrash(recipe.getKey(), recipe.getModification_date())){
                                         recipeRepository.deleteAll(recipe);
                                         recipeIngredientRepository.deleteRecipeWithIngredients(recipe.getId());
                                     }else{
@@ -287,11 +284,10 @@ public class DataBasesSynchronization {
     }
 
     private void addRecipeIngredientsToDatabase(long recipe_id, String recipe_key) {
-        recipeIngredientRepository.deleteRecipeWithIngredients(recipe_id);
-
         remoteDatabase.getIngredientsForRecipe(recipe_key).addOnCompleteListener(new OnCompleteListener<List<RecipeIngredientFb>>() {
             @Override
             public void onComplete(@NonNull Task<List<RecipeIngredientFb>> task) {
+                recipeIngredientRepository.deleteRecipeWithIngredients(recipe_id);
                 for(RecipeIngredientFb recipeIngredientFb: task.getResult()){
                     Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient();
                     recipe_ingredient.map(recipeIngredientFb);
@@ -319,10 +315,11 @@ public class DataBasesSynchronization {
                 for(RecipeIngredientFb recipeIngredientFb: task.getResult()){
                     remoteDatabase.deleteRecipe_Ingredient(recipeIngredientFb);
                 }
+                //insert new
+                addRecipeIngredientsToFirebase(recipe_id, recipe_key);
             }
         });
-        //insert new
-        addRecipeIngredientsToFirebase(recipe_id, recipe_key);
+
 
     }
 
@@ -400,6 +397,14 @@ public class DataBasesSynchronization {
         });
     }
 
+    private void addShoppinglistIngredientsToFirebase(String key, long id) {
+        List<ShoppingList_Ingredient> shoppingList_ingredients = shoppinglistIngredientRepository.getIngredientsForShoppinglist(id);
+        for(ShoppingList_Ingredient shoppingList_ingredient: shoppingList_ingredients){
+            shoppingList_ingredient.setShoppinglist_key(key);
+            remoteDatabase.writeNewShoppinglist_Ingredient(shoppingList_ingredient);
+        }
+    }
+
     private void addShoppinglistIngredientsToDatabase(String key, long id) {
         remoteDatabase.getIngredientsForShoppinglist(key).addOnCompleteListener(new OnCompleteListener<List<ShoppinglistIngredientFb>>() {
             @Override
@@ -413,14 +418,6 @@ public class DataBasesSynchronization {
                 }
             }
         });
-    }
-
-    private void addShoppinglistIngredientsToFirebase(String key, long id) {
-        List<ShoppingList_Ingredient> shoppingList_ingredients = shoppinglistIngredientRepository.getIngredientsForShoppinglist(id);
-        for(ShoppingList_Ingredient shoppingList_ingredient: shoppingList_ingredients){
-            shoppingList_ingredient.setShoppinglist_key(key);
-            remoteDatabase.writeNewShoppinglist_Ingredient(shoppingList_ingredient);
-        }
     }
 
     private boolean isInTrash(String key, long mod_date) {

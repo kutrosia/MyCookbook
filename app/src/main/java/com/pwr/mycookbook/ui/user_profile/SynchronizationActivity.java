@@ -77,7 +77,7 @@ public class SynchronizationActivity extends AppCompatActivity {
         sync_button = findViewById(R.id.sync_button);
         sync_button.setOnClickListener(onSyncButtonClick());
 
-        if(synchronization.isNeeded()){
+        if(synchronization.isNeeded() && !sharedPreferences.getBoolean(SettingsActivity.KEY_SYNC, false)){
             sync_button.setEnabled(true);
         }else{
             sync_button.setEnabled(false);

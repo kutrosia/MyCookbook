@@ -131,6 +131,11 @@
     <string name="title_version">Wersja</string>
     <string name="app_version">1.0.0</string>
     <string name="recipe_detail_movie_url">Link do filmu</string>
+    <string name="filter_title">Filtruj:</string>
+    <string name="btn_time">Po czasie</string>
+    <string name="btn_name">Po nazwie</string>
+    <string name="btn_category">Po kategorii</string>
+    <string name="recipe_search_hint">nazwa, składniki</string>
 
 
 </resources>

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.pwr.mycookbook.R;
@@ -38,7 +39,7 @@ public class RecipesListFragment extends Fragment {
     private Button name_filter_button;
     private Button time_filter_button;
     private EditText search_edit_text;
-    private Button search_button;
+    private ImageButton search_button;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
