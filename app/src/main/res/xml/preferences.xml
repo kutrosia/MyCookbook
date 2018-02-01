@@ -7,19 +7,6 @@
             android:title="@string/title_alarm_sound"
             android:summary="@string/summary_alarm_sound"
             />
-        <SwitchPreference
-            android:defaultValue="true"
-            android:key="@string/key_vibrate"
-            android:summary="@string/summary_vibrate"
-            android:title="@string/title_vibrate" />
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="@string/key_notification_actionbar"
-            android:summary="@string/summary_notification_actionbar"
-            android:title="@string/title_notification_actionbar" />
-
-
 
     </PreferenceCategory>
 
@@ -48,7 +35,7 @@
     <PreferenceCategory android:title="Synchronizacja">
 
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/key_sync"
             android:summary="@string/summary_sync"
             android:title="@string/title_sync" />

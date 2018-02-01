@@ -51,7 +51,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
     private Button copy_recipe_title_button;
     private Button copy_recipe_ingredients_button;
     private Button copy_recipe_description_button;
-    private Button copy_recipe_time_button;
+    private Button copy_recipe_movie_button;
     private Button copy_recipe_image_button;
     private String url;
     private HashSet<String> src;
@@ -73,7 +73,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
         copy_recipe_title_button = findViewById(R.id.copy_recipe_title);
         copy_recipe_ingredients_button = findViewById(R.id.copy_recipe_ingredients);
         copy_recipe_description_button = findViewById(R.id.copy_recipe_description);
-        copy_recipe_time_button = findViewById(R.id.copy_recipe_time);
+        copy_recipe_movie_button = findViewById(R.id.copy_recipe_movie);
         copy_recipe_image_button = findViewById(R.id.copy_recipe_photo);
 
         setWebViewSettings();
@@ -81,7 +81,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
         copy_recipe_title_button.setOnClickListener(onButtonClick());
         copy_recipe_ingredients_button.setOnClickListener(onButtonClick());
         copy_recipe_description_button.setOnClickListener(onButtonClick());
-        copy_recipe_time_button.setOnClickListener(onButtonClick());
+        copy_recipe_movie_button.setOnClickListener(onButtonClick());
         copy_recipe_image_button.setOnClickListener(onImageButtonClick());
 
         recipe = new Recipe();
@@ -172,9 +172,9 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Kopiowanie sposobu przygotowania", Toast.LENGTH_LONG).show();
                         copySelectedTextToRecipe(3);
                         break;
-                    case R.id.copy_recipe_time:
-                        Toast.makeText(getApplicationContext(), "Kopiowanie czasu przygotowania", Toast.LENGTH_LONG).show();
-                        copySelectedTextToRecipe(4);
+                    case R.id.copy_recipe_movie:
+                        Toast.makeText(getApplicationContext(), "Zapisywanie filmu z przepisem", Toast.LENGTH_LONG).show();
+                        recipe.setMovie(url);
                         break;
                 }
 
@@ -208,10 +208,6 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                                     value = removed_newlines.replaceAll("\"", "");
                                     recipe.setDescription(value);
                                     Toast.makeText(getApplicationContext(), "Dodano sposób przygotowania", Toast.LENGTH_LONG).show();
-                                    break;
-                                case 4:
-                                    Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG).show();
-                                    //recipe.setTime(Integer.parseInt(value));
                                     break;
                             }
                         }

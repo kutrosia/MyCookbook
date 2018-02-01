@@ -97,4 +97,22 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         />
 
+    <TextView
+        android:id="@+id/recipe_url_movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/recipe_detail_movie_url"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <TextView
+        android:id="@+id/recipe_url_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+
 </LinearLayout>

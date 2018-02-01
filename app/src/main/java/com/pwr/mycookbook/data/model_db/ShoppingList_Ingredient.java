@@ -131,6 +131,7 @@ public class ShoppingList_Ingredient {
 
     public void map(ShoppinglistIngredientFb shoppingList_ingredient){
         this.key = shoppingList_ingredient.getKey();
+        this.name = shoppingList_ingredient.getName();
         this.modification_date = shoppingList_ingredient.getModification_date();
         this.isToBuy = shoppingList_ingredient.isToBuy();
         this.shoppinglist_key = shoppingList_ingredient.getShoppinglist_key();

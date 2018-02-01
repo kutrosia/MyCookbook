@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.data.model_db.Category;
@@ -38,12 +39,14 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
     private ArrayAdapter<String> adapter;
     private TextInputLayout time_TextInputLayout;
     private TextInputLayout portions_TextInputLayout;
+    private TextInputLayout url_movie_TextInputLayout;
     private List<Category> categoryList;
 
     private String title;
     private int category_pos;
     private String time;
     private String portion;
+    private String movie_url;
 
     private static final String EXTRA_RECIPE = "recipe";
 
@@ -78,6 +81,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
             time_TextInputLayout = view.findViewById(R.id.time_TextInputLayout);
             portions_TextInputLayout = view.findViewById(R.id.portions_TextInputLayout);
             recipe_photo = view.findViewById(R.id.recipe_photo);
+            url_movie_TextInputLayout = view.findViewById(R.id.movie_url_TextInputLayout);
 
             setItemsToSpinner();
 
@@ -85,6 +89,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
                 title = recipe.getTitle();
                 time = String.valueOf(recipe.getTime());
                 portion = String.valueOf(recipe.getPortion());
+                movie_url = recipe.getMovie();
 
                 try{
                     recipe_photo.setImageURI(Uri.fromFile(new File(recipe.getPhoto())));
@@ -94,8 +99,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
 
             }else{
                 title = "";
-                time = "0";
-                portion = "0";
+                movie_url = "";
             }
         }
     }
@@ -152,6 +156,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
         category_pos = category_spinner.getSelectedItemPosition();
         time = time_TextInputLayout.getEditText().getText().toString();
         portion = portions_TextInputLayout.getEditText().getText().toString();
+        movie_url = url_movie_TextInputLayout.getEditText().getText().toString();
     }
 
     @Override
@@ -161,6 +166,7 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
         category_spinner.setSelection(category_pos);
         time_TextInputLayout.getEditText().setText(time);
         portions_TextInputLayout.getEditText().setText(portion);
+        url_movie_TextInputLayout.getEditText().setText(movie_url);
     }
 
     @Override
@@ -168,8 +174,21 @@ public class AddEditRecipeFragment extends Fragment implements IRecipeSave{
         saveData();
         if(recipe != null){
             recipe.setTitle(title);
-            recipe.setTime(Integer.parseInt(time));
-            recipe.setPortion(Integer.parseInt(portion));
+            if(time.length()>0){
+                try{
+                    recipe.setTime(Integer.parseInt(time));
+                }catch (Exception e){
+                    Toast.makeText(getContext(), "Czas musi być liczbą", Toast.LENGTH_LONG).show();
+                }
+            }
+            if(portion.length()>0){
+                try{
+                    recipe.setPortion(Integer.parseInt(portion));
+                }catch (Exception e){
+                    Toast.makeText(getContext(), "Porcja musi być liczbą", Toast.LENGTH_LONG).show();
+                }
+            }
+            recipe.setMovie(movie_url);
             if(category_pos >= 0){
                 Category category = categoryList.get(category_pos);
                 recipe.setCategory_id(category.getId());

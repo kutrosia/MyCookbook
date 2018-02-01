@@ -3,7 +3,7 @@
 
     <!-- Button Default Image-->
     <item
-        android:drawable="?attr/colorPrimary"
+        android:drawable="@color/colorAccent"
         android:state_enabled="true"/>
 
     <item

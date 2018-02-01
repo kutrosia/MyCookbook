@@ -1,4 +1,4 @@
-package com.pwr.mycookbook.ui.import_recipe_from_website;
+package com.pwr.mycookbook.ui.add_movie;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,41 +11,45 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.data.model_db.Recipe;
+import com.pwr.mycookbook.data.service_db.RecipeRepository;
 import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
+import java.util.List;
+
 /**
- * Created by olaku on 04.01.2018.
+ * Created by olaku on 01.02.2018.
  */
 
-public class WebsiteImagesGalleryActivity extends AppCompatActivity {
+public class MoviesGalleryActivity extends AppCompatActivity {
 
-    private GridView images_grid_view;
-    private WebsiteImagesGalleryAdapter adapter;
-    public static final String EXTRA_URLS = "urls";
+    private GridView movies_grid_view;
+    private MoviesGalleryAdapter adapter;
+    private RecipeRepository recipeRepository;
+    private List<Recipe> recipesWithMovie;
     private SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         applyStyle();
-        setContentView(R.layout.activity_website_image_gallery);
+        setContentView(R.layout.activity_movies_gallery);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        images_grid_view = findViewById(R.id.images_grid_view);
-
-        String resurces = (String) getIntent().getExtras().get(EXTRA_URLS);
-        String[] images = resurces.split(" ");
-
-        adapter = new WebsiteImagesGalleryAdapter(images, R.layout.list_website_image_item, WebsiteImagesGalleryActivity.this);
-        images_grid_view.setAdapter(adapter);
-        images_grid_view.setOnItemClickListener(onImageClick());
+        recipeRepository = new RecipeRepository(getApplicationContext());
+        recipesWithMovie = recipeRepository.getAllMovies();
+        movies_grid_view = findViewById(R.id.movies_grid_view);
+        adapter = new MoviesGalleryAdapter(recipesWithMovie, R.layout.list_movie_item, MoviesGalleryActivity.this);
+        movies_grid_view.setAdapter(adapter);
+        movies_grid_view.setOnItemClickListener(onMovieItemClick());
         adapter.notifyDataSetChanged();
 
     }
@@ -68,18 +72,14 @@ public class WebsiteImagesGalleryActivity extends AppCompatActivity {
         }
     }
 
-    private AdapterView.OnItemClickListener onImageClick() {
+    private AdapterView.OnItemClickListener onMovieItemClick() {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), adapter.getItem(i).toString(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent();
-                intent.putExtra("img", adapter.getItem(i).toString());
-                setResult(2, intent);
-                finish();
+                Intent intent = new Intent(MoviesGalleryActivity.this, MovieViewActivity.class);
+                intent.putExtra(MovieViewActivity.EXTRA_RECIPE, recipesWithMovie.get(i));
+                startActivity(intent);
             }
         };
     }
-
-
 }

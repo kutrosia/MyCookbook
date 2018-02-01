@@ -183,18 +183,32 @@ public class TimerActivity extends AppCompatActivity {
 
     private void showNotification() {
         Toast.makeText(getApplicationContext(), "Czas gotowania zakończony!", Toast.LENGTH_LONG).show();
+
+
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Intent intent = new Intent(TimerActivity.this, AlarmReicver.class);
         PendingIntent pIntent = PendingIntent.getActivity(TimerActivity.this, 0, intent, 0);
+        Notification notification;
 
-        Notification notification = new Notification.Builder(this)
-                .setContentTitle("Gotowe!")
-                .setContentText("Czas przygotowania zakończył się!")
-                .setSmallIcon(R.drawable.dossier_25)
-                .setContentIntent(pIntent)
-                .setSound(soundUri)
-                .setAutoCancel(true)
-                .build();
+
+        if(sharedPreferences.getBoolean(SettingsActivity.KEY_ALARM_SOUND, true) == true){
+            notification = new Notification.Builder(this)
+                    .setContentTitle("Gotowe!")
+                    .setContentText("Czas przygotowania zakończył się!")
+                    .setSmallIcon(R.drawable.dossier_25)
+                    .setContentIntent(pIntent)
+                    .setSound(soundUri)
+                    .setAutoCancel(true)
+                    .build();
+        }else{
+            notification = new Notification.Builder(this)
+                    .setContentTitle("Gotowe!")
+                    .setContentText("Czas przygotowania zakończył się!")
+                    .setSmallIcon(R.drawable.dossier_25)
+                    .setContentIntent(pIntent)
+                    .setAutoCancel(true)
+                    .build();
+        }
 
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manager.notify(0, notification);

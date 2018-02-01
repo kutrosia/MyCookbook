@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:text="@string/timer_title"
-        android:textColor="@color/colorAccent"
+        android:textColor="?attr/colorAccent"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:textSize="48sp"/>

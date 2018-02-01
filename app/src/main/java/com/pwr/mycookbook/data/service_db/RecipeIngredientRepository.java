@@ -43,7 +43,7 @@ public class RecipeIngredientRepository {
     }
 
     public void delete(Recipe_Ingredient recipe_ingredient) {
-        addToTrash(recipe_ingredient);
+        //addToTrash(recipe_ingredient);
         setUpdateDate(getCurrentTime());
         recipe_ingredientDao.delete(recipe_ingredient);
     }

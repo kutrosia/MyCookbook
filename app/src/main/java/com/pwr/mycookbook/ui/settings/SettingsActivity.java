@@ -24,7 +24,7 @@ import com.pwr.mycookbook.R;
  * Created by olaku on 31.01.2018.
  */
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     public static final String KEY_ALARM_SOUND = "key_alarm_sound";
     public static final String KEY_VIBRATE = "key_vibrate";
@@ -69,5 +69,12 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onNavigateUp() {
         Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_LONG).show();
         return super.onNavigateUp();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if(key.equals(KEY_APPEARANCE_COLOR)){
+            applyStyle();
+        }
     }
 }

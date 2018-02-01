@@ -42,7 +42,7 @@ public class ShoppinglistIngredientRepository {
     }
 
     public void delete(ShoppingList_Ingredient shoppinglist_ingredients) {
-        addToTrash(shoppinglist_ingredients);
+        //addToTrash(shoppinglist_ingredients);
         setUpdateDate(getCurrentTime());
         shoppingList_ingredientDao.delete(shoppinglist_ingredients);
     }

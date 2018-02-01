@@ -621,8 +621,9 @@ public class RemoteDatabase {
     }
 
     public void setTrashList(List<Trash> trashList){
-        for(Trash trash: trashList){
-            trashEndPoint.setValue(trash);
-        }
+        if(trashList != null)
+            for(Trash trash: trashList){
+                trashEndPoint.setValue(trash);
+            }
     }
 }

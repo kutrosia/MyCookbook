@@ -11,6 +11,7 @@ import com.mindorks.placeholderview.annotations.Layout;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.pwr.mycookbook.R;
+import com.pwr.mycookbook.ui.add_movie.MoviesGalleryActivity;
 import com.pwr.mycookbook.ui.measure_and_weight.MeasureAndWeightActivity;
 import com.pwr.mycookbook.ui.settings.SettingsActivity;
 import com.pwr.mycookbook.ui.timer.TimerActivity;
@@ -80,7 +81,6 @@ public class DrawerMenuItem {
     private void onMenuItemClick(){
         switch (mMenuPosition){
             case DRAWER_MENU_ITEM_PROFILE:
-                Toast.makeText(mContext, "Profil", Toast.LENGTH_SHORT).show();
                 mContext.startActivity(new Intent(mContext.getApplicationContext(), UserProfileActivity.class));
                 if(mCallBack != null)mCallBack.onProfileMenuSelected();
                 break;
@@ -93,11 +93,10 @@ public class DrawerMenuItem {
                 if(mCallBack != null)mCallBack.onNotificationsMenuSelected();
                 break;
             case DRAWER_MENU_ITEM_VIDEOS:
-                Toast.makeText(mContext, "Filmy", Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext.getApplicationContext(), MoviesGalleryActivity.class));
                 if(mCallBack != null)mCallBack.onSettingsMenuSelected();
                 break;
             case DRAWER_MENU_ITEM_SYNC:
-                Toast.makeText(mContext, "Synchronizacja", Toast.LENGTH_SHORT).show();
                 mContext.startActivity(new Intent(mContext.getApplicationContext(), SynchronizationActivity.class));
                 if(mCallBack != null)mCallBack.onTermsMenuSelected();
                 break;

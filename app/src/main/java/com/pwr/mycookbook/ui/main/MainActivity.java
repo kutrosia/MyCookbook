@@ -24,6 +24,7 @@ import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.data.model_db.Category;
 import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.data.model_db.ShoppingList;
+import com.pwr.mycookbook.data.service_firebase.DataBasesSynchronization;
 import com.pwr.mycookbook.ui.add_edit_category.AddEditCategoryFragment;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
 import com.pwr.mycookbook.ui.category_detail.CategoryDetailActivity;
@@ -69,6 +70,14 @@ public class MainActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        if(sharedPreferences.getBoolean(SettingsActivity.KEY_SYNC, false)){
+            DataBasesSynchronization synchronization = new DataBasesSynchronization(getApplicationContext());
+            if(synchronization.isNeeded()){
+                Toast.makeText(getApplicationContext(), "Sprawdzanie synchronizacji", Toast.LENGTH_SHORT).show();
+                synchronization.synchronize();
+            }
+        }
 
         mDrawer = findViewById(R.id.drawerLayout);
         mDrawerView = findViewById(R.id.drawerView);

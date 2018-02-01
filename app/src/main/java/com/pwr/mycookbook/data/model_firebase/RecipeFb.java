@@ -16,9 +16,17 @@ public class RecipeFb {
     private String category_key;
     private String description;
     private String note;
-    private String photo;
     private long modification_date;
     private String key;
+    private String movie;
+
+    public String getMovie() {
+        return movie;
+    }
+
+    public void setMovie(String movie) {
+        this.movie = movie;
+    }
 
     public String getTitle() {
         return title;
@@ -68,14 +76,6 @@ public class RecipeFb {
         this.note = note;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
     public long getModification_date() {
         return modification_date;
     }
@@ -99,7 +99,7 @@ public class RecipeFb {
         this.time = recipe.getTime();
         this.description = recipe.getDescription();
         this.note = recipe.getNote();
-        this.photo = recipe.getPhoto();
+        this.movie = recipe.getMovie();
         this.key = recipe.getKey();
         this.modification_date = recipe.getModification_date();
     }

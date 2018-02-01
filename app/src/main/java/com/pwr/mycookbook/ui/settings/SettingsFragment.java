@@ -15,8 +15,7 @@ import com.pwr.mycookbook.R;
  * Created by olaku on 30.01.2018.
  */
 
-public class SettingsFragment extends PreferenceFragment
-        implements SharedPreferences.OnSharedPreferenceChangeListener  {
+public class SettingsFragment extends PreferenceFragment {
 
 
     public static final String KEY_ALARM_SOUND = "key_alarm_sound";
@@ -30,33 +29,14 @@ public class SettingsFragment extends PreferenceFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
-    }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_ALARM_SOUND)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            Toast.makeText(getContext(), sharedPreferences.getString(key, ""), Toast.LENGTH_LONG).show();
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }else if (key.equals(KEY_VIBRATE)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }else if (key.equals(KEY_NOTIFICATION_ACTIONBAR)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }else if (key.equals(KEY_APPEARANCE_COLOR)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }else if (key.equals(KEY_GENDER)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }else if (key.equals(KEY_ALARM_SOUND)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }else if (key.equals(KEY_SYNC)) {
-            android.preference.Preference connectionPref = findPreference(key);
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }
+        android.preference.Preference myPref = findPreference(getString(R.string.key_appearance_color));
+        myPref.setOnPreferenceChangeListener(new android.preference.Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(android.preference.Preference preference, Object o) {
+                getActivity().recreate();
+                return true;
+            }
+        });
     }
 }

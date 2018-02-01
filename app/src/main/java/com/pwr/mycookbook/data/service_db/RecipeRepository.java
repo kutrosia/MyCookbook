@@ -8,6 +8,7 @@ import com.pwr.mycookbook.data.model_db.DatabaseDate;
 import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.data.model_db.Trash;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -88,6 +89,17 @@ public class RecipeRepository{
 
     public List<Recipe> getAllWithIngredients(String ingredient1, String ingredient2, String ingredient3) {
         return recipeDao.getAllWithIngredients(ingredient1, ingredient2, ingredient3);
+    }
+
+    public List<Recipe> getAllMovies(){
+        List<Recipe> recipes = recipeDao.getAll();
+        List<Recipe> recipesWithMovies = new ArrayList<>();
+        for(Recipe recipe: recipes){
+            if(recipe.getMovie() != null){
+                recipesWithMovies.add(recipe);
+            }
+        }
+        return recipesWithMovies;
     }
 
     public int getCount() {

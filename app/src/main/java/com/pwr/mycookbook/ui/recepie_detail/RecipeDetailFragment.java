@@ -27,6 +27,7 @@ public class RecipeDetailFragment extends Fragment {
     private TextView recipe_category;
     private TextView recipe_time;
     private TextView recipe_portions;
+    private TextView recipe_movie_url;
     private ImageView photo;
 
 
@@ -61,6 +62,7 @@ public class RecipeDetailFragment extends Fragment {
         recipe_time = view.findViewById(R.id.recipe_time);
         recipe_portions = view.findViewById(R.id.recipe_portions);
         photo = view.findViewById(R.id.recipe_photo);
+        recipe_movie_url = view.findViewById(R.id.recipe_url_movie);
 
         setRecipeInfo();
     }
@@ -88,6 +90,8 @@ public class RecipeDetailFragment extends Fragment {
                     toast.show();
                 }
             }
+
+            recipe_movie_url.setText(recipe.getMovie());
         }
     }
 

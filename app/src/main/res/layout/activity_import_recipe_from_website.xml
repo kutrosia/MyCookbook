@@ -39,12 +39,12 @@
         android:layout_toRightOf="@+id/copy_recipe_ingredients"/>
 
     <Button
-        android:id="@+id/copy_recipe_time"
+        android:id="@+id/copy_recipe_movie"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/sand_timer_filled_grey50"
+        android:drawableTop="@drawable/play_button_filled_grey50"
         android:textSize="9sp"
-        android:text="Czas"
+        android:text="Film"
         android:layout_below="@+id/toolbar"
         android:layout_toRightOf="@+id/copy_recipe_description"/>
 
@@ -57,7 +57,7 @@
         android:text="Obraz"
         android:layout_below="@+id/toolbar"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/copy_recipe_time"/>
+        android:layout_toRightOf="@+id/copy_recipe_movie"/>
 
     <LinearLayout
         android:layout_width="match_parent"

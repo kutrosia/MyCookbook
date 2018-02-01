@@ -12,6 +12,7 @@ public class ShoppinglistIngredientFb {
     private boolean isToBuy;
     private long modification_date;
     private String key;
+    private String name;
 
     public String getShoppinglist_key() {
         return shoppinglist_key;
@@ -19,6 +20,14 @@ public class ShoppinglistIngredientFb {
 
     public void setShoppinglist_key(String shoppinglist_key) {
         this.shoppinglist_key = shoppinglist_key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isToBuy() {
@@ -47,6 +56,7 @@ public class ShoppinglistIngredientFb {
 
     public void map(ShoppingList_Ingredient shoppingList_ingredient){
         this.key = shoppingList_ingredient.getKey();
+        this.name = shoppingList_ingredient.getName();
         this.modification_date = shoppingList_ingredient.getModification_date();
         this.isToBuy = shoppingList_ingredient.isToBuy();
         this.shoppinglist_key = shoppingList_ingredient.getShoppinglist_key();

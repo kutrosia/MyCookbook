@@ -66,6 +66,9 @@ public class Recipe implements Serializable {
     @ColumnInfo(name = "key")
     private String key;
 
+    @ColumnInfo(name = "movie")
+    private String movie;
+
     public Recipe(long id, String title, int time, int portion, long category_id, String description, String note, String photo, Bitmap photo_bitmap, boolean isNew, long modification_date) {
         this.id = id;
         this.title = title;
@@ -89,6 +92,14 @@ public class Recipe implements Serializable {
         this.note = recipe.note;
         this.photo = recipe.photo;
         this.modification_date = recipe.modification_date;
+    }
+
+    public String getMovie() {
+        return movie;
+    }
+
+    public void setMovie(String movie) {
+        this.movie = movie;
     }
 
     public String getCategory_key() {
@@ -230,7 +241,7 @@ public class Recipe implements Serializable {
         this.time = recipe.getTime();
         this.description = recipe.getDescription();
         this.note = recipe.getNote();
-        this.photo = recipe.getPhoto();
+        this.movie = recipe.getMovie();
         this.key = recipe.getKey();
         this.modification_date = recipe.getModification_date();
     }

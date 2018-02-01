@@ -50,11 +50,9 @@ public class AddEditShoppinglistFragment extends DialogFragment {
 
     public static AddEditShoppinglistFragment newInstance(ShoppingList shoppingList) {
         AddEditShoppinglistFragment frag = new AddEditShoppinglistFragment();
-        if(shoppingList != null){
-            Bundle args = new Bundle();
-            args.putSerializable("shoppinglist", shoppingList);
-            frag.setArguments(args);
-        }
+        Bundle args = new Bundle();
+        args.putSerializable("shoppinglist", shoppingList);
+        frag.setArguments(args);
         return frag;
     }
 
@@ -68,10 +66,10 @@ public class AddEditShoppinglistFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
+        try{
             shoppinglist = (ShoppingList) getArguments().getSerializable("shoppinglist");
         }catch(NullPointerException e){
-            Log.i("NullPointerException", e.getMessage());
+            Log.e("NullPointerException", e.getMessage());
         }
     }
 

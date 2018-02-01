@@ -26,7 +26,7 @@
     <string name="recipe_detail_ingredients">Składniki</string>
     <string name="recipe_detail_note">Notatka</string>
     <string name="recipe_detail_category">Kategoria</string>
-    <string name="recipe_detail_time">Czas</string>
+    <string name="recipe_detail_time">Czas w minutach</string>
     <string name="recipe_detail_portions">Porcje</string>
     <string name="ingredient_name">Nazwa składnika</string>
     <string name="new_ingredient_title">Nowy składnik</string>
@@ -130,6 +130,7 @@
     <string name="summary_about">Aplikacja stworzona na potrzeby własne i innych. Ułatwia kolekcjonowanie przepisów kulinarnych oraz oferuje się jako pomocnik kuchenny.</string>
     <string name="title_version">Wersja</string>
     <string name="app_version">1.0.0</string>
+    <string name="recipe_detail_movie_url">Link do filmu</string>
 
 
 </resources>

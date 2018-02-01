@@ -67,25 +67,14 @@ public class WebsiteImagesGalleryAdapter extends BaseAdapter {
         }
 
         try{
-            //holder.image.getSettings().setLoadsImagesAutomatically(true);
-            //holder.image.getSettings().setJavaScriptEnabled(true);
-            //holder.image.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             holder.image.setClickable(false);
             holder.image.setFocusable(false);
             holder.image.setFocusableInTouchMode(false);
-            /*holder.image.dispatchTouchEvent(null);
-            holder.image.onTouchEvent(null);*/
             holder.image.loadDataWithBaseURL(null, "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img width=\"100dp\" height=\"100dp\" src=\"" + src[position] + "\"></td></tr></table></body></html>", "html/css", "utf-8", null);
 
         }catch (Exception e){
 
         }
-        /*holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, src[position], Toast.LENGTH_LONG).show();
-            }
-        });*/
 
         return row;
     }
