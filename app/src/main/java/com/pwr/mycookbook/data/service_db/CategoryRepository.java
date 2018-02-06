@@ -61,7 +61,7 @@ public class CategoryRepository {
     }
 
     public List<Category> getNotModified(long modify_date) {
-        return categoryDao.getNotModified(modify_date);
+        return categoryDao.getModified(modify_date);
     }
 
     public int countCategories() {

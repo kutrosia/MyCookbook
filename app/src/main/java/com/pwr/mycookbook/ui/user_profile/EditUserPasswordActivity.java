@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,7 +67,40 @@ public class EditUserPasswordActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         save_button.setOnClickListener(onSaveButtonClick());
+        user_new_password_editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if(id == EditorInfo.IME_ACTION_DONE){
+                    changePassword();
+                }
+                return false;
+            }
+        });
         setUserOnToolbar();
+    }
+
+    private void changePassword() {
+        String oldPassword = user_old_password_editText.getText().toString().trim();
+        String newPassword = user_new_password_editText.getText().toString().trim();
+
+        if (newPassword.equals("")) {
+
+        }else if(newPassword.length() < 6){
+            Toast.makeText(getApplicationContext(), "Nowe hasło musi mieć co najmniej 6 znaków", Toast.LENGTH_LONG).show();
+        }else{
+            firebaseUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(EditUserPasswordActivity.this, "Hasło zostało zmienione. Zaloguj się do aplikacji ponownie używając nowego hasła.", Toast.LENGTH_LONG).show();
+                        signOut();
+                    } else {
+                        Toast.makeText(EditUserPasswordActivity.this, "Zamiana hasła nie powiodła się.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            signOut();
+        }
     }
 
     private void applyStyle() {
@@ -123,29 +158,7 @@ public class EditUserPasswordActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String oldPassword = user_old_password_editText.getText().toString().trim();
-                String newPassword = user_new_password_editText.getText().toString().trim();
-
-                if (newPassword.equals("")) {
-
-                }else if(newPassword.length() < 6){
-                    Toast.makeText(getApplicationContext(), "Nowe hasło musi mieć co najmniej 6 znaków", Toast.LENGTH_LONG).show();
-                }else{
-                    firebaseUser.updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(EditUserPasswordActivity.this, "Hasło zostało zmienione. Zaloguj się do aplikacji ponownie używając nowego hasła.", Toast.LENGTH_LONG).show();
-                                signOut();
-                            } else {
-                                Toast.makeText(EditUserPasswordActivity.this, "Zamiana hasła nie powiodła się.", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                    signOut();
-                }
-
+                changePassword();
             }
 
         };

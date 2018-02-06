@@ -62,9 +62,9 @@ public class ShoppinglistIngredientsListAdapter extends ArrayAdapter<ShoppingLis
         }
         ShoppingList_Ingredient shoppingList_ingredient = shoppingList_ingredients.get(position);
         if(shoppingList_ingredient.isToBuy()){
-            holder.line.setVisibility(View.VISIBLE);
-        }else{
             holder.line.setVisibility(View.INVISIBLE);
+        }else{
+            holder.line.setVisibility(View.VISIBLE);
         }
         holder.titleTextView.setText(shoppingList_ingredient.getName());
         holder.image.setImageResource(R.drawable.vegetarian_food_filled50);

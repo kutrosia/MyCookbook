@@ -82,7 +82,7 @@
     <string name="btn_sign_out">Sign Out</string>
     <string name="lbl_forgot_password">Forgot password?</string>
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
-    <string name="btn_signup">ZAREJESTRUJ</string>
+    <string name="btn_signup">Rejestracja</string>
     <string name="action_logout">Wyloguj</string>
     <string name="action_signout">Usuń konto</string>
     <string name="btn_save">Zapisz</string>
@@ -136,6 +136,8 @@
     <string name="btn_name">Po nazwie</string>
     <string name="btn_category">Po kategorii</string>
     <string name="recipe_search_hint">nazwa, składniki</string>
+    <string name="shoppinglist_title">Tytuł listy</string>
+    <string name="no_account_txt">Nie masz konta?</string>
 
 
 </resources>

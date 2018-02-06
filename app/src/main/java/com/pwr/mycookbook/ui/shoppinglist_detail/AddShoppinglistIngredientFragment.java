@@ -1,4 +1,4 @@
-package com.pwr.mycookbook.ui.add_edit_shoppinglist;
+package com.pwr.mycookbook.ui.shoppinglist_detail;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,22 +15,21 @@ import android.widget.TextView;
 
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.data.model_db.ShoppingList;
-import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
-
-import java.util.Calendar;
+import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
+import com.pwr.mycookbook.data.service_db.ShoppinglistIngredientRepository;
 
 /**
- * Created by olaku on 25.11.2017.
+ * Created by olaku on 03.02.2018.
  */
 
-public class AddEditShoppinglistFragment extends DialogFragment {
+public class AddShoppinglistIngredientFragment extends DialogFragment {
 
     private TextInputLayout nameTextInputLayout;
     private Button createButton;
     private Button cancelButton;
     private TextView addEditIngredientTitle;
     private ShoppingList shoppinglist;
-    private ShoppinglistRepository shoppinglistRepository;
+    private ShoppinglistIngredientRepository shoppinglistIngredientRepository;
     private DialogInterface.OnDismissListener onDismissListener;
 
     public void setOnDismissListener(DialogInterface.OnDismissListener onDismissListener) {
@@ -45,22 +44,15 @@ public class AddEditShoppinglistFragment extends DialogFragment {
         }
     }
 
-    public AddEditShoppinglistFragment() {
+    public AddShoppinglistIngredientFragment() {
     }
 
-    public static AddEditShoppinglistFragment newInstance(ShoppingList shoppingList) {
-        AddEditShoppinglistFragment frag = new AddEditShoppinglistFragment();
+    public static AddShoppinglistIngredientFragment newInstance(ShoppingList shoppingList) {
+        AddShoppinglistIngredientFragment frag = new AddShoppinglistIngredientFragment();
         Bundle args = new Bundle();
         args.putSerializable("shoppinglist", shoppingList);
         frag.setArguments(args);
         return frag;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        shoppinglistRepository = new ShoppinglistRepository(getContext());
-        return inflater.inflate(R.layout.fragment_add_edit_shoppinglist, container);
     }
 
     @Override
@@ -74,17 +66,21 @@ public class AddEditShoppinglistFragment extends DialogFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        shoppinglistIngredientRepository = new ShoppinglistIngredientRepository(getContext());
+        return inflater.inflate(R.layout.fragment_add_edit_ingredient, container);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         nameTextInputLayout = view.findViewById(R.id.ingredient_name_TextInputLayout);
-        if(shoppinglist != null)
-            nameTextInputLayout.getEditText().setText(shoppinglist.getName());
+
         nameTextInputLayout.requestFocus();
 
         addEditIngredientTitle = view.findViewById(R.id.add_edit_ingredient_title);
-        addEditIngredientTitle.setText(R.string.new_shoppinglist_title);
-        if(shoppinglist !=null)
-            addEditIngredientTitle.setText(R.string.edit_shoppinglist_title);
+        addEditIngredientTitle.setText(R.string.new_ingredient_title);
 
         createButton = view.findViewById(R.id.create_button);
         cancelButton = view.findViewById(R.id.cancel_button);
@@ -104,7 +100,7 @@ public class AddEditShoppinglistFragment extends DialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddEditShoppinglistFragment.this.dismiss();
+                AddShoppinglistIngredientFragment.this.dismiss();
             }
         };
     }
@@ -114,22 +110,14 @@ public class AddEditShoppinglistFragment extends DialogFragment {
             @Override
             public void onClick(View v) {
                 String name = nameTextInputLayout.getEditText().getText().toString();
-                Calendar rightNow = Calendar.getInstance();
-                long currentTime = rightNow.getTimeInMillis();
-
-                if(nameTextInputLayout.getEditText().getText() != null){
-                    if(shoppinglist == null){
-                        shoppinglist = new ShoppingList();
-                        shoppinglist.setModification_date(currentTime);
-                        shoppinglist.setName(name);
-                        shoppinglistRepository.insertAll(shoppinglist);
-                    }else{
-                        shoppinglist.setName(name);
-                        shoppinglist.setModification_date(currentTime);
-                        shoppinglistRepository.update(shoppinglist);
-                    }
+                if(name.length() > 0){
+                    ShoppingList_Ingredient shoppingList_ingredient = new ShoppingList_Ingredient();
+                    shoppingList_ingredient.setName(name);
+                    shoppingList_ingredient.setToBuy(true);
+                    shoppingList_ingredient.setShoppinglist_id(shoppinglist.getId());
+                    shoppinglistIngredientRepository.insertAll(shoppingList_ingredient);
                 }
-                AddEditShoppinglistFragment.this.dismiss();
+                AddShoppinglistIngredientFragment.this.dismiss();
             }
         };
     }

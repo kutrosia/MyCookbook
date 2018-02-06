@@ -49,9 +49,6 @@ public class Recipe implements Serializable {
     private String photo;
 
     @Ignore
-    private Bitmap photo_bitmap;
-
-    @Ignore
     private boolean isNew;
 
     @Ignore
@@ -69,19 +66,6 @@ public class Recipe implements Serializable {
     @ColumnInfo(name = "movie")
     private String movie;
 
-    public Recipe(long id, String title, int time, int portion, long category_id, String description, String note, String photo, Bitmap photo_bitmap, boolean isNew, long modification_date) {
-        this.id = id;
-        this.title = title;
-        this.time = time;
-        this.portion = portion;
-        this.category_id = category_id;
-        this.description = description;
-        this.note = note;
-        this.photo = photo;
-        this.photo_bitmap = photo_bitmap;
-        this.isNew = isNew;
-        this.modification_date = modification_date;
-    }
 
     public Recipe(Recipe recipe){
         this.title = recipe.title;
@@ -204,14 +188,6 @@ public class Recipe implements Serializable {
 
     public String getPhoto() {
         return photo;
-    }
-
-    public Bitmap getPhoto_bitmap() {
-        return photo_bitmap;
-    }
-
-    public void setPhoto_bitmap(Bitmap photo) {
-        this.photo_bitmap = photo;
     }
 
     public boolean isNew() {

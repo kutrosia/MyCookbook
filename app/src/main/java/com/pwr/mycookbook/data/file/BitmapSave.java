@@ -1,7 +1,11 @@
 package com.pwr.mycookbook.data.file;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
@@ -20,7 +24,7 @@ public class BitmapSave {
     private OutputStream fOut;
 
     private void createImageFile(){
-        file = new File(getAlbumStorageDir("/MyCookbook"), "IMG_" + System.currentTimeMillis() + ".jpg");
+        file = new File(getAlbumStorageDir("/My cookbook"), "IMG_" + System.currentTimeMillis() + ".jpg");
     }
 
     private void createFileOutputStream(){
@@ -50,10 +54,20 @@ public class BitmapSave {
         return file.getPath();
     }
 
-    public void saveBitmap(Bitmap bitmap){
+    private void setValuesToImage(Context context){
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        values.put(MediaStore.MediaColumns.DATA, getFilePath());
+
+        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+
+    public void saveBitmap(Bitmap bitmap, Context context){
         if(bitmap != null){
             createImageFile();
             createFileOutputStream();
+            setValuesToImage(context);
             writeBitmapToFile(bitmap);
         }
     }
@@ -61,6 +75,7 @@ public class BitmapSave {
     public File getAlbumStorageDir(String albumName) {
         File file = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), albumName);
+
         if (!file.mkdirs()) {
             Log.e("ALBUM", "Directory not created");
         }

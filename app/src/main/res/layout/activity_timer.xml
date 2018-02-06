@@ -24,7 +24,7 @@
         android:id="@+id/timer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/sand_timer_filled_pink100"
+        android:drawableLeft="@drawable/sand_timer_filled_pink100"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:layout_below="@+id/timer_title"

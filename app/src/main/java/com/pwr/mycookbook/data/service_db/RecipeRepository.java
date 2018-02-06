@@ -39,6 +39,9 @@ public class RecipeRepository{
     }
 
     public void updateAll(Recipe recipe) {
+        if(recipe.getTitle().length()==0){
+            deleteAll(recipe);
+        }
         long currentTime = getCurrentTime();
         recipe.setModification_date(currentTime);
         setUpdateDate(currentTime);

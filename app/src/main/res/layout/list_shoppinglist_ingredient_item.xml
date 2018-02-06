@@ -24,11 +24,10 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:backgroundTint="?attr/colorAccent"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginStart="5dp"
-        android:background="@android:color/darker_gray"
+        android:background="?attr/colorAccent"
         />
 
 

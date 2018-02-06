@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import com.pwr.mycookbook.data.model_db.ShoppingList;
 import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
 import com.pwr.mycookbook.data.service_db.ShoppinglistRepository;
 import com.pwr.mycookbook.ui.add_edit_shoppinglist.AddEditShoppinglistFragment;
+import com.pwr.mycookbook.ui.recepie_detail.RecipeDetailActivity;
 import com.pwr.mycookbook.ui.settings.SettingsActivity;
 
 /**
@@ -93,8 +96,25 @@ public class ShoppinglistDetailActivity extends AppCompatActivity
                 addEditShoppinglistFragment.show(fm, "Edytuja listę zakupów");
                 break;
             case R.id.action_remove_shoppinglist:
-                shoppinglistRepository.delete(shoppingList);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShoppinglistDetailActivity.this);
+                builder.setMessage("Na pewno chcesz usunąć listę zakupów?")
+                        .setTitle("Usuń listę")
+                        .setPositiveButton("Usuń", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                shoppinglistRepository.delete(shoppingList);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cofnij", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
         }
         return super.onOptionsItemSelected(item);

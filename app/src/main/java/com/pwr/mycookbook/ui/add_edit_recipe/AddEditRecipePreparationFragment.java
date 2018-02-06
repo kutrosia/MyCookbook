@@ -23,8 +23,6 @@ public class AddEditRecipePreparationFragment extends Fragment implements IRecip
     private static final String EXTRA_RECIPE = "recipe";
     private EditText recipe_description;
     private EditText recipe_note;
-    private String description;
-    private String note;
 
 
     public static AddEditRecipePreparationFragment newInstance(Recipe recipe) {
@@ -56,31 +54,33 @@ public class AddEditRecipePreparationFragment extends Fragment implements IRecip
         recipe_note = view.findViewById(R.id.note_editText);
 
 
-        setRecipeInfo();
+        showData();
     }
 
 
-    public void setRecipeInfo(){
+    public void showData(){
         if(!recipe.isNew()){
-            description = recipe.getDescription();
-            note = recipe.getNote();
+            recipe_description.setText(recipe.getDescription());
+            recipe_note.setText(recipe.getNote());
 
         }
+    }
 
+    public void saveData(){
+        recipe.setDescription(recipe_description.getText().toString());
+        recipe.setNote(recipe_note.getText().toString());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        description = recipe_description.getText().toString();
-        note = recipe_note.getText().toString();
+        saveData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        recipe_description.setText(description);
-        recipe_note.setText(note);
+        showData();
     }
 
     public void setRecipe(Recipe recipe){

@@ -2,8 +2,10 @@ package com.pwr.mycookbook.ui.add_edit_recipe;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,7 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
             holder.name = row.findViewById(R.id.item_recipe_ingredient_name);
             holder.image = row.findViewById(R.id.item_recipe_ingredient_icon);
             holder.remove = row.findViewById(R.id.item_recipe_ingredient_remove_button);
+            holder.edit = row.findViewById(R.id.item_recipe_ingredient_edit_button);
             row.setTag(holder);
         }
         else {
@@ -76,13 +79,33 @@ public class AddEditRecipeIngredientsAdapter extends ArrayAdapter<Recipe_Ingredi
                 notifyDataSetChanged();
             }
         });
+
+        holder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(ingredient);
+            }
+        });
         return row;
+    }
+
+    private void showDialog(Recipe_Ingredient ingredient){
+        FragmentManager fm = ((AddEditRecipeActivity)context).getSupportFragmentManager();
+        EditRecipeIngredientFragment editRecipeIngredientFragment = EditRecipeIngredientFragment.newInstance(ingredient);
+        editRecipeIngredientFragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                notifyDataSetChanged();
+            }
+        });
+        editRecipeIngredientFragment.show(fm, "Edit ingredient");
     }
 
     private class IngredientHolder{
         private ImageView image;
         private TextView name;
         private ImageButton remove;
+        private ImageButton edit;
     }
 
 }

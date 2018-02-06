@@ -24,11 +24,20 @@
 
     <ImageButton
         android:id="@+id/item_recipe_ingredient_remove_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:background="@drawable/delete_filled50"
-        android:layout_marginEnd="5dp"
+        android:layout_margin="5dp"
         android:layout_alignParentEnd="true"
+        />
+
+    <ImageButton
+        android:id="@+id/item_recipe_ingredient_edit_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/edit_filled_grey50"
+        android:layout_margin="5dp"
+        android:layout_toLeftOf="@+id/item_recipe_ingredient_remove_button"
         />
 
 </RelativeLayout>

@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,8 +67,18 @@ public class EditUserEmailActivity extends AppCompatActivity {
         save_button.setOnClickListener(onSaveButtonClick());
 
         user_email_textEdit.setText(firebaseUser.getEmail());
+        user_email_textEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if(id == EditorInfo.IME_ACTION_DONE){
+                    changeEmail();
+                }
+                return false;
+            }
+        });
         setUserOnToolbar();
     }
+
 
     private void applyStyle() {
         String color = sharedPreferences.getString(SettingsActivity.KEY_APPEARANCE_COLOR, "");
@@ -122,28 +134,31 @@ public class EditUserEmailActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = user_email_textEdit.getText().toString().trim();
-
-                if (email.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Podaj adres email", Toast.LENGTH_LONG).show();
-                }else{
-                    firebaseUser.updateEmail(email)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(EditUserEmailActivity.this, "Adres email został zaktualizowany. Zaloguj się ponownie używając nowego maila.", Toast.LENGTH_LONG).show();
-                                    } else {
-                                        Toast.makeText(EditUserEmailActivity.this, "Aktualizacja adresu email nie powiodła się", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-                    signOut();
-                }
-                }
-
-            };
+                changeEmail();
         }
+        };
+    }
+
+    private void changeEmail() {
+        String email = user_email_textEdit.getText().toString().trim();
+
+        if (email.equals("")) {
+            Toast.makeText(getApplicationContext(), "Podaj adres email", Toast.LENGTH_LONG).show();
+        }else{
+            firebaseUser.updateEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(EditUserEmailActivity.this, "Adres email został zaktualizowany. Zaloguj się ponownie używając nowego maila.", Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(EditUserEmailActivity.this, "Aktualizacja adresu email nie powiodła się", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+            signOut();
+        }
+    }
 
     private void signOut() {
         firebaseAuth.signOut();

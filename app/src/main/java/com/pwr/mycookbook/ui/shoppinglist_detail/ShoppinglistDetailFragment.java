@@ -3,23 +3,23 @@ package com.pwr.mycookbook.ui.shoppinglist_detail;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.data.model_db.ShoppingList;
 import com.pwr.mycookbook.data.model_db.ShoppingList_Ingredient;
 import com.pwr.mycookbook.data.service_db.ShoppinglistIngredientRepository;
-import com.pwr.mycookbook.ui.category_detail.CategoryDetailFragment;
-import com.pwr.mycookbook.ui.main.RecipeListAdapter;
 
 import java.util.List;
 
@@ -40,6 +40,8 @@ public class ShoppinglistDetailFragment extends Fragment {
     private ShoppinglistDetailFragment.ShoppinglistItemListener listener;
     private ShoppinglistIngredientsListAdapter adapter;
     private List<ShoppingList_Ingredient> ingredients;
+    private FloatingActionButton floatingActionButton;
+
 
 
     public static ShoppinglistDetailFragment newInstance(ShoppingList shoppingList)
@@ -55,13 +57,16 @@ public class ShoppinglistDetailFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_category_detail, container, false);
+        View view =  inflater.inflate(R.layout.fragment_shoppinglist_detail, container, false);
         shoppinglistIngredientRepository = new ShoppinglistIngredientRepository(getContext());
-        ingredients_list_view = view.findViewById(R.id.recepies_categorized_list_view);
+        ingredients_list_view = view.findViewById(R.id.ingredients_list_view);
+        floatingActionButton = view.findViewById(R.id.floating_action_button);
+
+        floatingActionButton.setOnClickListener(onFloatingButtonClick());
+
         Bundle bundle = getActivity().getIntent().getExtras();
         if(bundle != null){
             this.shoppingList = (ShoppingList) bundle.getSerializable(EXTRA_SHOPPINGLIST);
-            Toast.makeText(getContext(), this.shoppingList.getName(), Toast.LENGTH_LONG).show();
             try {
                 ingredients = shoppinglistIngredientRepository.getIngredientsForShoppinglist(shoppingList.getId());
                 adapter = new ShoppinglistIngredientsListAdapter(getContext(), R.layout.list_shoppinglist_ingredient_item, ingredients);
@@ -71,6 +76,28 @@ public class ShoppinglistDetailFragment extends Fragment {
         }
         return view;
 
+    }
+
+    private View.OnClickListener onFloatingButtonClick() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                AddShoppinglistIngredientFragment addShoppinglistIngredientFragment = AddShoppinglistIngredientFragment.newInstance(shoppingList);
+                addShoppinglistIngredientFragment.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        ingredients = shoppinglistIngredientRepository.getIngredientsForShoppinglist(shoppingList.getId());
+                        adapter = new ShoppinglistIngredientsListAdapter(getContext(), R.layout.list_shoppinglist_ingredient_item, ingredients);
+                        ingredients_list_view.setAdapter(adapter);
+                        ingredients_list_view.setOnItemClickListener(onItemClick());
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                addShoppinglistIngredientFragment.show(fm, "New ingredient");
+            }
+        };
     }
 
     @SuppressLint("StaticFieldLeak")

@@ -5,14 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.settings.SettingsActivity;
@@ -72,7 +69,6 @@ public class WebsiteImagesGalleryActivity extends AppCompatActivity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(), adapter.getItem(i).toString(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent();
                 intent.putExtra("img", adapter.getItem(i).toString());
                 setResult(2, intent);

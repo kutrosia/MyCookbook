@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/profil_edit_email_editText"
             android:hint="@string/hint_new_email"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:inputType="textEmailAddress"/>
     </android.support.design.widget.TextInputLayout>
 
@@ -66,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
+        android:background="?attr/colorAccent"
         android:text="@string/btn_save"
         />
 

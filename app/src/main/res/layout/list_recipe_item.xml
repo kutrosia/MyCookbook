@@ -12,9 +12,13 @@
 
     <TextView
         android:id="@+id/recipe_item_title"
-        style = "@style/TitleStyle"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@+id/recipe_item_image"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/indieflower"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@+id/recipe_item_image"/>
 
 
 

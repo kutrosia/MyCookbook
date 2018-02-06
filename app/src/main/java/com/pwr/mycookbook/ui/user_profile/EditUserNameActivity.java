@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -67,7 +69,34 @@ public class EditUserNameActivity extends AppCompatActivity {
 
 
         user_name_textEdit.setText(firebaseUser.getDisplayName());
+        user_name_textEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if(id == EditorInfo.IME_ACTION_DONE){
+                    changeUsername();
+                }
+                return false;
+            }
+        });
         setUserOnToolbar();
+    }
+
+    private void changeUsername() {
+        String name = user_name_textEdit.getText().toString().trim();
+
+        if (name.equals("")) {
+            user_name_textEdit.setError("Wprowadź nazwę użytkownika");
+            Toast.makeText(getApplicationContext(), "Nazwa użytkownika nie może być pusta", Toast.LENGTH_LONG).show();
+        }else{
+            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name).build();
+            firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    finish();
+                }
+            });
+        }
     }
 
     private void applyStyle() {
@@ -125,21 +154,7 @@ public class EditUserNameActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = user_name_textEdit.getText().toString().trim();
-
-                if (name.equals("")) {
-                    user_name_textEdit.setError("Wprowadź nazwę użytkownika");
-                    Toast.makeText(getApplicationContext(), "Nazwa użytkownika nie może być pusta", Toast.LENGTH_LONG).show();
-                }else{
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(name).build();
-                    firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            finish();
-                        }
-                    });
-                }
+                changeUsername();
 
             }
 

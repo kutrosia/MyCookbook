@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -57,6 +59,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
     private HashSet<String> src;
     private SharedPreferences sharedPreferences;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +149,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
         };
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void setWebViewSettings() {
         url = "http://www.google.com/";
         webView.setWebViewClient(new MyBrowser());
@@ -200,13 +204,20 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                                     break;
                                 case 2:
                                     removed_newlines = value.replace("\\n", "@");
-                                    recipe.setIngredients(removed_newlines);
+                                    value = removed_newlines.replaceAll("\"", "");
+                                    String oldIngredients = recipe.getIngredients();
+                                    if(oldIngredients == null)
+                                        oldIngredients = "";
+                                        recipe.setIngredients(oldIngredients + "@" + value);
                                     Toast.makeText(getApplicationContext(), "Dodano składniki", Toast.LENGTH_LONG).show();
                                     break;
                                 case 3:
                                     removed_newlines = value.replace("\\n", " ");
                                     value = removed_newlines.replaceAll("\"", "");
-                                    recipe.setDescription(value);
+                                    String oldDescription = recipe.getDescription();
+                                    if(oldDescription == null)
+                                        oldDescription = "";
+                                        recipe.setDescription(oldDescription + " " + value);
                                     Toast.makeText(getApplicationContext(), "Dodano sposób przygotowania", Toast.LENGTH_LONG).show();
                                     break;
                             }
@@ -267,7 +278,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
                     if(bitmap != null){
                         Toast.makeText(getApplicationContext(), "Zapisywanie obrazu...", Toast.LENGTH_LONG).show();
                         BitmapSave bs = new BitmapSave();
-                        bs.saveBitmap(bitmap);
+                        bs.saveBitmap(bitmap, getApplicationContext());
                         recipe.setPhoto(bs.getFilePath());
                     }
                 }
@@ -288,7 +299,7 @@ public class ImportRecipeFromWebsiteActivity extends AppCompatActivity {
         @JavascriptInterface
         public void callback(String value, int button)
         {
-            Toast.makeText(getApplicationContext(), value, Toast.LENGTH_LONG).show();
+
 
         }
     }

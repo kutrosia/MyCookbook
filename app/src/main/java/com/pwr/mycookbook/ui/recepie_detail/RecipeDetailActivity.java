@@ -1,5 +1,6 @@
 package com.pwr.mycookbook.ui.recepie_detail;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import com.pwr.mycookbook.ui.main.PagerAdapter;
 import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.ui.add_edit_recipe.AddEditRecipeActivity;
 import com.pwr.mycookbook.ui.settings.SettingsActivity;
+import com.pwr.mycookbook.ui.shoppinglist_detail.ShoppinglistDetailActivity;
 
 import java.io.File;
 import java.util.List;
@@ -56,10 +59,10 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_detail);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        //toolbar.setLogo(ContextCompat.getDrawable(getApplicationContext(), R.drawable.dossier_50));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
 
         recipeRepository = new RecipeRepository(getApplicationContext());
         recipe = (Recipe) getIntent().getExtras().get(EXTRA_RECIPE);
@@ -114,8 +117,25 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_remove_recipe:
-                recipeRepository.deleteAll(recipe);
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(RecipeDetailActivity.this);
+                builder.setMessage("Na pewno chcesz usunąć przepis?")
+                        .setTitle("Usuń przepis")
+                        .setPositiveButton("Usuń", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                recipeRepository.deleteAll(recipe);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cofnij", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
             case R.id.action_share:
                 File file = new RecipePDF().writeRecipeToPDF(recipe, getApplicationContext());
@@ -127,7 +147,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 break;
             case R.id.action_download_recipe:
                 new RecipePDF().writeRecipeToPDF(recipe, getApplicationContext());
-                Toast.makeText(getApplicationContext(), "Przepis został zapisany w folderze pobrane.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Przepis został zapisany w folderze Moje pliki/Download.", Toast.LENGTH_LONG).show();
                 break;
             case R.id.action_generate_shoppinglist:
                 shoppinglistRepository = new ShoppinglistRepository(getApplicationContext());
@@ -136,13 +156,18 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 ShoppingList shoppingList = new ShoppingList();
                 shoppingList.setName(recipe.getTitle());
                 long shoppinglist_id = shoppinglistRepository.insertAll(shoppingList)[0];
+                shoppingList = shoppinglistRepository.findById(shoppinglist_id);
                 List<Recipe_Ingredient> recipe_ingredients = recipeIngredientRepository.getIngredientsForRecipe(recipe.getId());
                 for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
                     ShoppingList_Ingredient shoppingList_ingredient = new ShoppingList_Ingredient();
                     shoppingList_ingredient.setName(recipe_ingredient.getName());
+                    shoppingList_ingredient.setToBuy(true);
                     shoppingList_ingredient.setShoppinglist_id(shoppinglist_id);
                     shoppinglistIngredientRepository.insertAll(shoppingList_ingredient);
                 }
+                intent = new Intent(this, ShoppinglistDetailActivity.class);
+                intent.putExtra(ShoppinglistDetailActivity.EXTRA_SHOPPINGLIST, shoppingList);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);

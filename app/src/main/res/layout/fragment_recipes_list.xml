@@ -12,6 +12,7 @@
             android:id="@+id/search_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:imeOptions="actionSearch"
             android:hint="@string/recipe_search_hint"/>
 
         <TextView
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/search_edit_text"
             android:text="@string/filter_title"
-            android:textSize="28sp"/>
+            android:textSize="20sp"/>
 
         <ImageButton
             android:id="@+id/search_button"
@@ -38,7 +39,7 @@
             android:background="@color/white"
             android:drawableTop="@drawable/category_filled30"
             android:text="@string/btn_category"
-            android:textSize="6sp"
+            android:textSize="8sp"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/filter_title"
             android:layout_below="@+id/search_edit_text"
@@ -51,7 +52,7 @@
             android:background="@color/white"
             android:drawableTop="@drawable/restaurant_menu_grey30"
             android:text="@string/btn_name"
-            android:textSize="6dp"
+            android:textSize="8dp"
             android:layout_marginLeft="20dp"
             android:layout_below="@+id/search_edit_text"
             android:layout_toRightOf="@+id/category_filter_button"
@@ -64,7 +65,7 @@
             android:background="@color/white"
             android:drawableTop="@drawable/sand_timer_filled30"
             android:text="@string/btn_time"
-            android:textSize="6sp"
+            android:textSize="8sp"
             android:layout_marginLeft="20dp"
             android:layout_below="@+id/search_edit_text"
             android:layout_toRightOf="@+id/name_filter_button"

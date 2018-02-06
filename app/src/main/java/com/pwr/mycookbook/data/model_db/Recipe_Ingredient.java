@@ -8,6 +8,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.pwr.mycookbook.data.model_firebase.RecipeIngredientFb;
 
+import java.io.Serializable;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 /**
@@ -19,7 +21,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                         @ForeignKey(entity = Recipe.class,
                         parentColumns = "id", childColumns = "recipe_id", onDelete = CASCADE)
         })
-public class Recipe_Ingredient {
+public class Recipe_Ingredient implements Serializable{
 
     public long recipe_id;
 

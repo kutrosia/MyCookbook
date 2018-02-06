@@ -33,7 +33,7 @@ public interface CategoryDao {
 
 
     @Query("SELECT * FROM categories where modification_date > :modify_date")
-    List<Category> getNotModified(long modify_date);
+    List<Category> getModified(long modify_date);
 
 
     @Query("SELECT COUNT(*) from categories")

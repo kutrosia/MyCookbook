@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
@@ -60,6 +61,7 @@ public class WebsiteImagesGalleryAdapter extends BaseAdapter {
             holder = new WebsiteImagesGalleryAdapter.ImageHolder();
             holder.image = row.findViewById(R.id.webview_item);
 
+
             row.setTag(holder);
         }
         else{
@@ -67,11 +69,16 @@ public class WebsiteImagesGalleryAdapter extends BaseAdapter {
         }
 
         try{
+
+            String s="<html><body style=\"margin: 0; padding: 0\"><IMG  width=\"100%\" height=\"100%\" src=\""+src[position]+"\"><body><html>";
+            holder.image.loadData(s, "text/html","UTF-8");
+            /*holder.image.getSettings().setLoadsImagesAutomatically(true);
+            holder.image.getSettings().setJavaScriptEnabled(true);
             holder.image.setClickable(false);
             holder.image.setFocusable(false);
             holder.image.setFocusableInTouchMode(false);
-            holder.image.loadDataWithBaseURL(null, "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img width=\"100dp\" height=\"100dp\" src=\"" + src[position] + "\"></td></tr></table></body></html>", "html/css", "utf-8", null);
-
+            holder.image.loadDataWithBaseURL(src[position], "<html><head></head><body><table style=\"width:100%; height:100%;\"><tr><td style=\"vertical-align:middle;\"><img width=\"100dp\" height=\"100dp\" src=\"" + src[position] + "\"></td></tr></table></body></html>", "html/css", "utf-8", null);
+*/
         }catch (Exception e){
 
         }

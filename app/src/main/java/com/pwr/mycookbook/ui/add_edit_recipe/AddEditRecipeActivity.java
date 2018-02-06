@@ -70,10 +70,7 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
         recipeRepository = new RecipeRepository(getApplicationContext());
         recipeIngredientRepository = new RecipeIngredientRepository(getApplicationContext());
         recipe = (Recipe) getIntent().getExtras().get(EXTRA_RECIPE);
-        if(recipe.isNew() || recipe.isImported()){
-            long recipe_id = recipeRepository.insertAll(recipe)[0];
-            recipe = recipeRepository.findById(recipe_id);
-        }
+
         ViewPager viewPager = findViewById(R.id.pager);
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
 
@@ -141,30 +138,22 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
 
     public void insertOrUpdateRecipeToDb(){
-        recipeRepository.updateAll(recipe);
-        addRecipeIngredients();
-    }
+        long recipe_id;
+        if(recipe.isNew() || recipe.isImported()){
+            recipe_id = recipeRepository.insertAll(recipe)[0];
+        }else{
+            recipeRepository.updateAll(recipe);
+            recipe_id = recipe.getId();
+        }
 
-    private void addRecipeIngredients() {
-        for(Recipe_Ingredient recipe_ingredient: recipe_ingredients) {
+        for(Recipe_Ingredient recipe_ingredient: recipe_ingredients){
             if(recipe_ingredient.isNew()){
+                recipe_ingredient.setRecipe_id(recipe_id);
                 recipeIngredientRepository.insertAll(recipe_ingredient);
             }else{
                 recipeIngredientRepository.update(recipe_ingredient);
             }
         }
-    }
-
-    private long addRecipeAndGetId(long currentTime) {
-        long recipe_id;
-        recipe.setModification_date(currentTime);
-        if (recipe.isNew() || recipe.isImported()) {
-            recipe_id = recipeRepository.insertAll(recipe)[0];
-        } else {
-            recipe_id = recipe.getId();
-            recipeRepository.updateAll(recipe);
-        }
-        return recipe_id;
     }
 
 
@@ -207,7 +196,7 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
 
                     if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
 
-                        PickImageDialog.build(new PickSetup()).show(this);
+                        PickImageDialog.build(new PickSetup()).show(AddEditRecipeActivity.this);
 
                     } else {
 
@@ -226,22 +215,11 @@ public class AddEditRecipeActivity extends AppCompatActivity implements IPickRes
             Bitmap bitmap = pickResult.getBitmap();
 
             BitmapSave bs = new BitmapSave();
-            bs.saveBitmap(bitmap);
+            bs.saveBitmap(bitmap, getApplicationContext());
             String path = bs.getFilePath();
 
-            recipe.setPhoto_bitmap(bitmap);
             recipe.setPhoto(path);
             addEditRecipeFragment.setPhoto(bitmap);
-
-
-            /*ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
-            values.put(MediaStore.Images.ImageColumns.BUCKET_ID, file.toString().toLowerCase(Locale.US).hashCode());
-            values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, file.getName().toLowerCase(Locale.US));
-            values.put("_data", file.getAbsolutePath());
-
-            ContentResolver cr = getContentResolver();
-            cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);*/
 
         }
     }

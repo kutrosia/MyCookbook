@@ -87,7 +87,8 @@ public class DataBasesSynchronization {
             remoteDatabase.getDatabaseSyncDate().addOnCompleteListener(new OnCompleteListener<Long>() {
                 @Override
                 public void onComplete(@NonNull Task<Long> task) {
-                    firebaseSyncDate = task.getResult();
+                    if(task.getResult() != null)
+                        firebaseSyncDate = task.getResult();
                 }
             });
         }

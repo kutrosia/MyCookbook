@@ -31,7 +31,7 @@
             android:id="@+id/title_editText"
             android:hint="@string/recipe_title"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
+            android:inputType="text"/>
     </android.support.design.widget.TextInputLayout>
 
 
@@ -62,7 +62,7 @@
             android:id="@+id/time_editText"
             android:hint="@string/recipe_detail_time"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
+            android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 
     <!--Portions-->
@@ -78,7 +78,7 @@
             android:id="@+id/portions_editText"
             android:hint="@string/recipe_detail_portions"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"/>
+            android:inputType="number"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/movie_url_editText"
             android:hint="@string/recipe_detail_movie_url"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:inputType="textUri"/>
     </android.support.design.widget.TextInputLayout>
 

@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorAccent"
         android:text="@string/btn_choose_image"
+        android:typeface="normal"
         android:textAlignment="center"
         android:layout_below="@+id/webview_item"/>
 

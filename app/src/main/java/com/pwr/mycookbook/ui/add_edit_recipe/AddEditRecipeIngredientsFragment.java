@@ -18,6 +18,7 @@ import com.pwr.mycookbook.R;
 import com.pwr.mycookbook.data.model_db.Recipe;
 import com.pwr.mycookbook.data.model_db.Recipe_Ingredient;
 import com.pwr.mycookbook.data.service_db.RecipeIngredientRepository;
+import com.pwr.mycookbook.data.service_db.RecipeRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
 
     private Recipe recipe;
     private RecipeIngredientRepository recipeIngredientRepository;
+    private RecipeRepository recipeRepository;
     private static final String EXTRA_RECIPE = "recipe";
     private ListView listView;
     private AddEditRecipeIngredientsAdapter adapter;
@@ -50,22 +52,12 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recipeIngredientRepository = new RecipeIngredientRepository(getContext());
+        recipeRepository = new RecipeRepository(getContext());
         Bundle bundle = this.getArguments();
         recipe = (Recipe) bundle.getSerializable(EXTRA_RECIPE);
         recipe_ingredients = recipeIngredientRepository.getIngredientsForRecipe(recipe.getId());
         if(recipe_ingredients == null)
             recipe_ingredients = new ArrayList<>();
-    }
-
-    private void importIngredients() {
-        String ingredients_txt = recipe.getIngredients();
-        if(ingredients_txt != null){
-            String[] ingredients_set = ingredients_txt.split("[@]");
-            for(int i=0; i<ingredients_set.length; i++){
-                addNewRecipeIngredientToList(ingredients_set[i]);
-            }
-            setRecipeInfo();
-        }
     }
 
     @Override
@@ -75,8 +67,6 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
          ingredient_name_EditText = view.findViewById(R.id.item_recipe_ingredient_name);
          ingredient_add_button = view.findViewById(R.id.item_recipe_ingredient_add_button);
          listView = view.findViewById(R.id.shoppinglist_list_view);
-
-
          ingredient_add_button.setOnClickListener(onButtonAddClick());
 
         if(recipe.isImported())
@@ -87,6 +77,17 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
         return view;
     }
 
+    private void importIngredients() {
+        String ingredients_txt = recipe.getIngredients();
+        if(ingredients_txt != null){
+            String[] ingredients_set = ingredients_txt.split("[@]");
+            Toast.makeText(getContext(), String.valueOf(ingredients_set.length), Toast.LENGTH_LONG).show();
+            for(int i=0; i<ingredients_set.length; i++){
+                addNewRecipeIngredientToList(ingredients_set[i]);
+            }
+            setRecipeInfo();
+        }
+    }
 
     private View.OnClickListener onButtonAddClick() {
         return new View.OnClickListener() {
@@ -103,7 +104,8 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
         if (name.equals("")) {
             Toast.makeText(getContext(), "Składnik musi posiadać nazwę", Toast.LENGTH_LONG).show();
         } else {
-            Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient(recipe.getId(), name);
+            Recipe_Ingredient recipe_ingredient = new Recipe_Ingredient();
+            recipe_ingredient.setName(name);
             recipe_ingredient.setNew(true);
             recipe_ingredients.add(recipe_ingredient);
             setRecipeInfo();
@@ -111,26 +113,12 @@ public class AddEditRecipeIngredientsFragment extends Fragment implements IRecip
     }
 
 
-    @SuppressLint("StaticFieldLeak")
     public void setRecipeInfo(){
-            new AsyncTask<Void, Void, Void>(){
 
-                @Override
-                protected Void doInBackground(Void... voids) {
-                   adapter = new AddEditRecipeIngredientsAdapter(getContext(),
-                            R.layout.list_recipe_ingredient_item, recipe_ingredients);
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-                    super.onPostExecute(aVoid);
-                    listView.setAdapter(adapter);
-
-                }
-
-            }.execute();
-
+       adapter = new AddEditRecipeIngredientsAdapter(getContext(),
+                R.layout.list_recipe_ingredient_item, recipe_ingredients);
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

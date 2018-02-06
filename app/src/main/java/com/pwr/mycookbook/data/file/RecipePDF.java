@@ -1,8 +1,15 @@
 package com.pwr.mycookbook.data.file;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -25,25 +32,29 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import static android.content.Context.DOWNLOAD_SERVICE;
+
 /**
  * Created by olaku on 13.12.2017.
  */
 
 public class RecipePDF {
 
-    private static final String TITLE_FONT = "res/font/amatic_bold.ttf";
+    private static final String TITLE_FONT = "res/font/caviardreams_bolditalic.ttf";
     private static final String SUBTITLE_FONT = "res/font/caviar_dreams_bold.ttf";
     private static final String TEXT_FONT = "res/font/caviardreams.ttf";
     private static final String PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/";
-    private static final int titleSize = 40;
-    private static final int subtitleSize = 30;
-    private static final int textSize = 28;
+    private static final int titleSize = 30;
+    private static final int subtitleSize = 20;
+    private static final int textSize = 16;
     private File file;
     private RecipeIngredientRepository recipeIngredientRepository;
+    private Context context;
 
 
 
     public File writeRecipeToPDF(Recipe recipe, Context context){
+        this.context = context;
         Document doc = new Document();
         recipeIngredientRepository = new RecipeIngredientRepository(context);
         try {
@@ -67,13 +78,14 @@ public class RecipePDF {
             doc.open();
 
             Bitmap bitmap = null;
-            if(recipe.getPhoto_bitmap()!=null){
-                bitmap = recipe.getPhoto_bitmap();
-
-            }else if(!recipe.getPhoto().isEmpty()){
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                bitmap = BitmapFactory.decodeFile(recipe.getPhoto(), options);
+            if(recipe.getPhoto()!= null && recipe.getPhoto().length() > 0){
+                try{
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    bitmap = BitmapFactory.decodeFile(recipe.getPhoto(), options);
+                }catch (Exception e){
+                    bitmap = null;
+                }
             }
             if(bitmap !=null){
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -82,7 +94,6 @@ public class RecipePDF {
                 image.setAlignment(Image.MIDDLE);
                 doc.add(image);
             }
-
             Paragraph title_paragraph = new Paragraph(recipe.getTitle(), titleFont);
 
             doc.add(title_paragraph);
@@ -101,7 +112,7 @@ public class RecipePDF {
 
             doc.add(portion_paragraph);
 
-            doc.newPage();
+            doc.add(new Paragraph(" "));
 
             String string_ingredients = context.getString(R.string.doc_ingredients) ;
             Paragraph ingredients_paragraph = new Paragraph(string_ingredients, subtitleFont);
@@ -119,7 +130,7 @@ public class RecipePDF {
                 doc.add(ingredient_paragraph);
             }
 
-            doc.newPage();
+            doc.add(new Paragraph(" "));
 
             String string_description = context.getString(R.string.doc_description);
             Paragraph description_paragraph = new Paragraph(string_description, subtitleFont);
@@ -153,7 +164,8 @@ public class RecipePDF {
         }
         finally
         {
-            doc.close();
+            if(doc.isOpen())
+                doc.close();
         }
 
         return file;
